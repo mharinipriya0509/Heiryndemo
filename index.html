@@ -4,306 +4,422 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Heiryn — Inherit What Matters</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--cream:#fdf8f1;--cream2:#f5ede0;--cream3:#ece0cc;--warm:#fffcf7;--terra:#b85c36;--terra2:#9a4527;--terra3:#e8896a;--amber:#c0882a;--amber2:#e0ab4a;--sage:#5e7e5e;--bark:#3e2a1a;--bark2:#6a4535;--dust:#8c7260;--dust2:#b09080;--text:#261710;--text2:#5a3e2e;--text3:#907060;--bd:rgba(62,42,26,.10);--bd2:rgba(62,42,26,.20);--sh:0 4px 20px rgba(38,23,16,.08);--sh2:0 8px 36px rgba(38,23,16,.13);--r:10px;--r2:18px}
+:root{
+  --cream:#fdf8f1;--cream2:#f5ede0;--cream3:#ece0cc;--warm:#fffcf7;
+  --terra:#b85c36;--terra2:#9a4527;--terra3:#e8896a;
+  --amber:#c0882a;--amber2:#e0ab4a;
+  --sage:#5e7e5e;--sage2:#8aab8a;
+  --bark:#3e2a1a;--bark2:#6a4535;
+  --dust:#8c7260;--dust2:#b09080;
+  --text:#261710;--text2:#5a3e2e;--text3:#907060;
+  --bd:rgba(62,42,26,.10);--bd2:rgba(62,42,26,.20);
+  --sh:0 4px 20px rgba(38,23,16,.08);--sh2:0 8px 36px rgba(38,23,16,.13);
+  --r:10px;--r2:18px;
+}
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
 body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;font-weight:400;min-height:100vh;overflow-x:hidden}
 .page{display:none;min-height:100vh;flex-direction:column}.page.active{display:flex}
 
-/* NAV */
-.l-nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3.5rem;background:rgba(255,252,247,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:50}
-.l-logo{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--bark);letter-spacing:.06em;display:flex;flex-direction:column;line-height:1}
-.l-logo small{font-family:'Lora',serif;font-style:italic;font-size:.65rem;color:var(--dust2);letter-spacing:.22em;font-weight:400;margin-top:2px}
-.l-nav-links{display:flex;gap:2.5rem}
-.l-nav-links a{font-size:.82rem;color:var(--text3);text-decoration:none;letter-spacing:.06em;transition:color .2s}
-.l-nav-links a:hover{color:var(--terra)}
-.bg{background:transparent;border:1.5px solid var(--bd2);color:var(--bark2);padding:.5rem 1.3rem;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.05em;border-radius:var(--r);cursor:pointer;transition:all .2s}
+/* ── NAV ── */
+.lnav{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3.5rem;background:rgba(255,252,247,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:50}
+.logo{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;color:var(--bark);letter-spacing:.06em;display:flex;flex-direction:column;line-height:1}
+.logo small{font-family:'Lora',serif;font-style:italic;font-size:.62rem;color:var(--dust2);letter-spacing:.22em;font-weight:400;margin-top:2px}
+.navlinks{display:flex;gap:2.5rem}
+.navlinks a{font-size:.8rem;color:var(--text3);text-decoration:none;letter-spacing:.06em;transition:color .2s}.navlinks a:hover{color:var(--terra)}
+.bg{background:transparent;border:1.5px solid var(--bd2);color:var(--bark2);padding:.48rem 1.2rem;font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:600;border-radius:var(--r);cursor:pointer;transition:all .2s}
 .bg:hover{border-color:var(--terra);color:var(--terra);background:rgba(184,92,54,.05)}
-.bf{background:var(--terra);border:none;color:#fff;padding:.5rem 1.3rem;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.05em;border-radius:var(--r);cursor:pointer;transition:all .2s;box-shadow:0 2px 10px rgba(184,92,54,.28)}
+.bf{background:var(--terra);border:none;color:#fff;padding:.48rem 1.2rem;font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700;border-radius:var(--r);cursor:pointer;transition:all .2s;box-shadow:0 2px 10px rgba(184,92,54,.28)}
 .bf:hover{background:var(--terra2);transform:translateY(-1px)}
 
-/* HERO */
-.l-hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 62px)}
-.hl{padding:6rem 4rem 6rem 4.5rem;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(150deg,var(--warm) 60%,var(--cream2))}
-.eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(184,92,54,.08);border:1px solid rgba(184,92,54,.16);border-radius:50px;padding:.3rem .9rem;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);font-weight:700;margin-bottom:2rem;width:fit-content;animation:fU .7s ease both .2s}
+/* ── HERO ── */
+.lhero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 60px)}
+.hl{padding:5.5rem 4rem 5.5rem 4.5rem;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(150deg,var(--warm) 55%,var(--cream2))}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(184,92,54,.08);border:1px solid rgba(184,92,54,.16);border-radius:50px;padding:.28rem .9rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);font-weight:700;margin-bottom:1.8rem;width:fit-content;animation:fU .7s ease both .2s}
 .edot{width:6px;height:6px;border-radius:50%;background:var(--terra);animation:pulse 2s ease-in-out infinite}
-.hh{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,3.5vw,3.6rem);line-height:1.1;color:var(--bark);font-weight:700;animation:fU .7s ease both .35s}
+.hh{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,3.5vw,3.5rem);line-height:1.1;color:var(--bark);font-weight:700;animation:fU .7s ease both .35s}
 .hh em{color:var(--terra);font-style:italic}
-.hsub{margin-top:1.2rem;font-family:'Lora',serif;font-size:.95rem;color:var(--text3);line-height:1.85;max-width:400px;animation:fU .7s ease both .5s}
-.hbtns{margin-top:2.5rem;display:flex;gap:.9rem;flex-wrap:wrap;animation:fU .7s ease both .65s}
-.blg{padding:.8rem 2rem;font-size:.88rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-weight:700;letter-spacing:.05em;cursor:pointer;transition:all .25s}
-.blg.p{background:var(--terra);border:none;color:#fff;box-shadow:0 3px 16px rgba(184,92,54,.32)}.blg.p:hover{background:var(--terra2);transform:translateY(-1px)}
+.hsub{margin-top:1.1rem;font-family:'Lora',serif;font-size:.93rem;color:var(--text3);line-height:1.85;max-width:400px;animation:fU .7s ease both .5s}
+.hbtns{margin-top:2.4rem;display:flex;gap:.9rem;flex-wrap:wrap;animation:fU .7s ease both .65s}
+.blg{padding:.75rem 1.9rem;font-size:.86rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-weight:700;letter-spacing:.05em;cursor:pointer;transition:all .25s}
+.blg.p{background:var(--terra);border:none;color:#fff;box-shadow:0 3px 14px rgba(184,92,54,.32)}.blg.p:hover{background:var(--terra2);transform:translateY(-1px)}
 .blg.s{background:transparent;border:1.5px solid var(--bd2);color:var(--bark2)}.blg.s:hover{border-color:var(--amber);color:var(--amber)}
-.hr{background:linear-gradient(150deg,var(--cream2),var(--cream3));display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hr{background:linear-gradient(150deg,var(--cream2),var(--cream3));display:flex;align-items:center;justify-content:center}
 .rcards{display:flex;flex-direction:column;gap:1.2rem;padding:3rem;width:100%;max-width:360px}
 .rpick{border-radius:var(--r2);padding:2rem 2.2rem;cursor:pointer;transition:all .3s;animation:fU .7s ease both}
-.rpick.rec{background:linear-gradient(135deg,var(--bark) 0%,#5a3a25 100%);color:#fff;animation-delay:.4s}
-.rpick.rcp{background:linear-gradient(135deg,var(--terra) 0%,#8a3215 100%);color:#fff;animation-delay:.55s}
+.rpick.rec{background:linear-gradient(135deg,var(--bark),#5a3a25);color:#fff;animation-delay:.4s}
+.rpick.rcp{background:linear-gradient(135deg,var(--terra),#8a3215);color:#fff;animation-delay:.55s}
 .rpick:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
 .rpick h3{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:.4rem}
-.rpick p{font-size:.78rem;opacity:.78;line-height:1.65;margin-bottom:1.2rem}
-.rpbtn{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:#fff;padding:.45rem 1.1rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s}
-.rpbtn:hover{background:rgba(255,255,255,.28)}
+.rpick p{font-size:.76rem;opacity:.78;line-height:1.65;margin-bottom:1.2rem}
+.rpbtn{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:#fff;padding:.4rem 1rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:600;cursor:pointer}
 
-/* FEATURES */
-.lf{padding:4rem 4.5rem;background:var(--cream2);border-top:1px solid var(--bd)}
-.lf h2{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:500;color:var(--bark);text-align:center;margin-bottom:2.5rem}
-.lf h2 em{color:var(--terra);font-style:italic}
+/* ── FEATURES ── */
+.lfeat{padding:4rem 4.5rem;background:var(--cream2);border-top:1px solid var(--bd)}
+.lfeat h2{font-family:'Playfair Display',serif;font-size:1.65rem;font-weight:500;color:var(--bark);text-align:center;margin-bottom:2.4rem}
+.lfeat h2 em{color:var(--terra);font-style:italic}
 .frow{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
-.fc{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.8rem;transition:all .3s}
+.fc{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.7rem;transition:all .3s}
 .fc:hover{box-shadow:var(--sh);transform:translateY(-2px);border-color:var(--bd2)}
-.fc .fi{font-size:1.6rem;margin-bottom:.8rem}
-.fc h4{font-family:'Lora',serif;font-size:.92rem;color:var(--bark);margin-bottom:.4rem}
-.fc p{font-size:.78rem;color:var(--text3);line-height:1.7}
+.fc .fic{font-size:1.5rem;margin-bottom:.7rem}
+.fc h4{font-family:'Lora',serif;font-size:.9rem;color:var(--bark);margin-bottom:.35rem}
+.fc p{font-size:.76rem;color:var(--text3);line-height:1.7}
 
-/* AUTH */
+/* ── AUTH ── */
 #pg-auth{background:var(--cream)}
-.aw{flex:1;display:grid;grid-template-columns:420px 1fr;min-height:100vh}
+.aw{flex:1;display:grid;grid-template-columns:400px 1fr;min-height:100vh}
 .al{background:linear-gradient(160deg,var(--bark) 0%,#2a1508 55%,var(--terra2) 100%);padding:4rem 3rem;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
-.al::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='30' fill='none' stroke='%23ffffff' stroke-opacity='0.025' stroke-width='1'/%3E%3C/svg%3E")}
-.ab{position:relative}.ab h2{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:#fff;letter-spacing:.08em}
-.ab p{font-family:'Lora',serif;font-style:italic;font-size:.88rem;color:rgba(255,255,255,.5);margin-top:.3rem;letter-spacing:.15em}
-.aq{position:relative;border-left:2px solid rgba(255,255,255,.25);padding-left:1.4rem;font-family:'Lora',serif;font-style:italic;font-size:.95rem;color:rgba(255,255,255,.75);line-height:1.85}
-.afoot{position:relative;font-size:.7rem;color:rgba(255,255,255,.3);letter-spacing:.1em}
+.al::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 70%,rgba(255,255,255,.03) 0%,transparent 60%)}
+.abrand h2{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:#fff;letter-spacing:.08em;position:relative}
+.abrand p{font-family:'Lora',serif;font-style:italic;font-size:.86rem;color:rgba(255,255,255,.5);margin-top:.3rem;letter-spacing:.15em;position:relative}
+.aquote{position:relative;border-left:2px solid rgba(255,255,255,.25);padding-left:1.4rem;font-family:'Lora',serif;font-style:italic;font-size:.93rem;color:rgba(255,255,255,.75);line-height:1.85}
+.afoot{position:relative;font-size:.68rem;color:rgba(255,255,255,.28);letter-spacing:.1em}
 .ar{background:var(--warm);display:flex;align-items:center;justify-content:center;padding:3rem 2rem;overflow-y:auto}
 .abox{width:100%;max-width:440px}
 .atabs{display:grid;grid-template-columns:1fr 1fr;background:var(--cream2);border-radius:var(--r);padding:3px;margin-bottom:2.2rem}
-.atab{padding:.65rem;text-align:center;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;color:var(--text3);transition:all .2s;letter-spacing:.04em}
+.atab{padding:.62rem;text-align:center;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;color:var(--text3);transition:all .2s;letter-spacing:.04em}
 .atab.on{background:var(--warm);color:var(--bark);box-shadow:0 1px 8px rgba(38,23,16,.1)}
-.atitle{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--bark);margin-bottom:.3rem}
-.asub{font-size:.82rem;color:var(--text3);margin-bottom:2rem;line-height:1.6}
-.fg{margin-bottom:1.1rem;position:relative}
-.fl{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text2);display:block;margin-bottom:.45rem}
-.fin{width:100%;background:var(--cream2);border:1.5px solid var(--bd);border-radius:var(--r);color:var(--text);padding:.78rem 1rem;font-family:'Nunito',sans-serif;font-size:.87rem;outline:none;transition:all .22s}
+.atit{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:700;color:var(--bark);margin-bottom:.3rem}
+.asub{font-size:.8rem;color:var(--text3);margin-bottom:1.9rem;line-height:1.6}
+.fg{margin-bottom:1rem;position:relative}
+.fl{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text2);display:block;margin-bottom:.42rem}
+.fin{width:100%;background:var(--cream2);border:1.5px solid var(--bd);border-radius:var(--r);color:var(--text);padding:.75rem 1rem;font-family:'Nunito',sans-serif;font-size:.86rem;outline:none;transition:all .22s}
 .fin:focus{border-color:var(--terra);background:var(--warm);box-shadow:0 0 0 3px rgba(184,92,54,.1)}
-.fin::placeholder{color:var(--dust2)}.fin.err{border-color:#c0392b;background:rgba(192,57,43,.04)}
-.ferr{font-size:.7rem;color:#c0392b;margin-top:.3rem;display:none}.fin.err+.ferr{display:block}
+.fin::placeholder{color:var(--dust2)}.fin.err{border-color:#c0392b}
+.ferr{font-size:.68rem;color:#c0392b;margin-top:.28rem;display:none}.fin.err+.ferr{display:block}
 .fsel{appearance:none;background:var(--cream2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23907060'/%3E%3C/svg%3E") no-repeat right 1rem center}
-.rsel{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1.1rem}
+.rsel{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem}
 .ropt{padding:.9rem;border-radius:var(--r);border:1.5px solid var(--bd);cursor:pointer;text-align:center;transition:all .2s;background:var(--cream2)}
 .ropt.on{border-color:var(--terra);background:rgba(184,92,54,.07)}
-.ropt .ri{font-size:1.3rem;display:block;margin-bottom:.35rem}
-.ropt .rn{font-size:.8rem;font-weight:700;color:var(--bark)}
-.ropt .rd{font-size:.68rem;color:var(--text3);margin-top:.1rem}
+.ropt .ri{font-size:1.3rem;display:block;margin-bottom:.3rem}
+.ropt .rn{font-size:.78rem;font-weight:700;color:var(--bark)}.ropt .rd{font-size:.66rem;color:var(--text3);margin-top:.1rem}
 .pwstr{margin-top:.4rem;height:3px;background:var(--cream3);border-radius:2px;overflow:hidden}
 .pwbar{height:100%;border-radius:2px;transition:width .3s,background .3s;width:0}
-.bsub{width:100%;background:var(--terra);border:none;color:#fff;padding:.88rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.05em;cursor:pointer;transition:all .25s;box-shadow:0 3px 14px rgba(184,92,54,.28);margin-top:.8rem;position:relative;overflow:hidden}
+.bsub{width:100%;background:var(--terra);border:none;color:#fff;padding:.85rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.05em;cursor:pointer;transition:all .25s;box-shadow:0 3px 14px rgba(184,92,54,.28);margin-top:.7rem;position:relative}
 .bsub:hover{background:var(--terra2);transform:translateY(-1px)}.bsub:disabled{opacity:.55;cursor:not-allowed;transform:none}
 .bsub .bt{}.bsub .bsp{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto}
 .bsub.ld .bt{display:none}.bsub.ld .bsp{display:block}
-.aalert{padding:.8rem 1rem;border-radius:var(--r);font-size:.82rem;margin-bottom:1rem;display:none}
+.aalert{padding:.75rem 1rem;border-radius:var(--r);font-size:.8rem;margin-bottom:.9rem;display:none}
 .aalert.err{background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.2);color:#b03020}
 .aalert.ok{background:rgba(94,126,94,.08);border:1px solid rgba(94,126,94,.2);color:#3a6a3a}
 .aalert.on{display:block}
-.aswitch{text-align:center;font-size:.8rem;color:var(--text3);margin-top:1.4rem}
+.aswitch{text-align:center;font-size:.78rem;color:var(--text3);margin-top:1.3rem}
 .aswitch a{color:var(--terra);cursor:pointer;font-weight:700;text-decoration:none}
-.bkl{display:block;text-align:center;font-size:.75rem;color:var(--text3);margin-top:.6rem;cursor:pointer}
+.bkl{display:block;text-align:center;font-size:.73rem;color:var(--text3);margin-top:.5rem;cursor:pointer}
 .bkl:hover{color:var(--terra)}
 
-/* DASHBOARD */
+/* ── DASHBOARD ── */
 .dsh{flex:1;display:grid;grid-template-columns:252px 1fr;min-height:100vh}
 .sb{display:flex;flex-direction:column;border-right:1px solid var(--bd)}
 .sb-rec{background:var(--bark)}.sb-rcp{background:#7a2e10}
-.sbt{padding:1.5rem 1.4rem;border-bottom:1px solid rgba(255,255,255,.07)}
-.sbl{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#fff;letter-spacing:.06em}
-.sbrt{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:.2rem}
-.sbu{padding:1rem 1.4rem;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:.8rem}
-.sbav{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--terra3),var(--amber2));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.9rem;color:#fff;font-weight:700;flex-shrink:0}
-.sbun{font-size:.84rem;font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sbue{font-size:.66rem;color:rgba(255,255,255,.38)}
-.sbnav{flex:1;padding:.8rem 0;overflow-y:auto}
-.sbsc{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.7rem 1.4rem .3rem}
-.ni{display:flex;align-items:center;gap:.8rem;padding:.68rem 1.4rem;cursor:pointer;color:rgba(255,255,255,.52);font-size:.81rem;font-weight:500;transition:all .18s;border-left:3px solid transparent}
+.sbt{padding:1.4rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.sbl{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:#fff;letter-spacing:.06em}
+.sbrt{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-top:.2rem}
+.sbu{padding:.9rem 1.4rem;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:.8rem}
+.sbav{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--terra3),var(--amber2));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.88rem;color:#fff;font-weight:700;flex-shrink:0}
+.sbun{font-size:.82rem;font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sbue{font-size:.64rem;color:rgba(255,255,255,.36)}
+.sbnav{flex:1;padding:.6rem 0;overflow-y:auto}
+.sbsc{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.22);padding:.6rem 1.4rem .25rem}
+.ni{display:flex;align-items:center;gap:.8rem;padding:.62rem 1.4rem;cursor:pointer;color:rgba(255,255,255,.5);font-size:.79rem;font-weight:500;transition:all .18s;border-left:3px solid transparent}
 .ni:hover{color:rgba(255,255,255,.82);background:rgba(255,255,255,.05)}
 .ni.on{color:#fff;background:rgba(255,255,255,.09);border-left-color:var(--terra3)}
-.ni .ic{font-size:.95rem;flex-shrink:0;opacity:.85}
-.ni .bdg{margin-left:auto;background:var(--terra);color:#fff;font-size:.58rem;font-weight:700;padding:.12rem .45rem;border-radius:50px}
-.sbbot{padding:1rem 1.4rem;border-top:1px solid rgba(255,255,255,.07)}
-.slout{display:flex;align-items:center;gap:.6rem;font-size:.78rem;color:rgba(255,255,255,.38);cursor:pointer;transition:color .2s;background:none;border:none;font-family:'Nunito',sans-serif}
-.slout:hover{color:rgba(255,255,255,.65)}
+.ni .ic{font-size:.92rem;flex-shrink:0;opacity:.82}
+.ni .bdg{margin-left:auto;background:var(--terra);color:#fff;font-size:.56rem;font-weight:700;padding:.1rem .42rem;border-radius:50px}
+.ni .bdg.gr{background:var(--sage)}.ni .bdg.am{background:var(--amber)}
+.sbbot{padding:.9rem 1.4rem;border-top:1px solid rgba(255,255,255,.07)}
+.slout{display:flex;align-items:center;gap:.6rem;font-size:.76rem;color:rgba(255,255,255,.35);cursor:pointer;transition:color .2s;background:none;border:none;font-family:'Nunito',sans-serif}
+.slout:hover{color:rgba(255,255,255,.62)}
 .dmain{overflow-y:auto;background:var(--cream)}
-.dh{background:var(--warm);border-bottom:1px solid var(--bd);padding:1.2rem 2.2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-.dhtit{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--bark)}
-.dhsub{font-size:.75rem;color:var(--text3);margin-top:.1rem}
+.dh{background:var(--warm);border-bottom:1px solid var(--bd);padding:1.1rem 2.2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.dhtit{font-family:'Playfair Display',serif;font-size:1.28rem;font-weight:700;color:var(--bark)}
+.dhsub{font-size:.73rem;color:var(--text3);margin-top:.1rem}
 .dhact{display:flex;gap:.7rem}
 .dp{display:none;padding:2rem 2.2rem}.dp.on{display:block}
 
-/* STATS */
+/* ── COMMON COMPONENTS ── */
 .srow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
-.stl{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.4rem;position:relative;overflow:hidden}
+.stl{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.3rem;position:relative;overflow:hidden}
 .stl::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;border-radius:0 0 var(--r2) var(--r2)}
-.stl.a::after{background:linear-gradient(to right,var(--amber),var(--amber2))}.stl.t::after{background:linear-gradient(to right,var(--terra),var(--terra3))}.stl.g::after{background:linear-gradient(to right,var(--sage),#8aab8a)}.stl.b::after{background:linear-gradient(to right,var(--bark),var(--bark2))}
-.stvi{font-size:1.3rem;margin-bottom:.7rem}.stvl{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--bark)}.stlb{font-size:.72rem;color:var(--text3);margin-top:.15rem}
-
-/* SH */
-.sh{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--bark);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between}
-.sh small{font-family:'Lora',serif;font-style:italic;font-weight:400;font-size:.82rem;color:var(--text3)}
-
-/* EMPTY */
-.empty{text-align:center;padding:3.5rem 2rem;background:var(--warm);border:1.5px dashed var(--bd2);border-radius:var(--r2)}
-.ei{font-size:2.5rem;margin-bottom:1rem;opacity:.5}.eh4{font-family:'Lora',serif;font-size:1rem;color:var(--bark2);margin-bottom:.4rem}
-.ep{font-size:.8rem;color:var(--text3);line-height:1.7}
-.ecta{margin-top:1.2rem;display:inline-block;background:var(--terra);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s}
-.ecta:hover{background:var(--terra2)}
-
-/* MEM LIST */
-.mlist{display:flex;flex-direction:column;gap:.7rem}
-.mit{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1rem 1.2rem;display:flex;align-items:center;gap:1rem;transition:all .22s;cursor:pointer}
+.stl.a::after{background:linear-gradient(to right,var(--amber),var(--amber2))}.stl.t::after{background:linear-gradient(to right,var(--terra),var(--terra3))}.stl.g::after{background:linear-gradient(to right,var(--sage),var(--sage2))}.stl.b::after{background:linear-gradient(to right,var(--bark),var(--bark2))}
+.stvi{font-size:1.25rem;margin-bottom:.6rem}.stvl{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;color:var(--bark)}.stlb{font-size:.7rem;color:var(--text3);margin-top:.12rem}
+.sh{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--bark);margin-bottom:.9rem;display:flex;align-items:center;justify-content:space-between}
+.sh small{font-family:'Lora',serif;font-style:italic;font-weight:400;font-size:.8rem;color:var(--text3)}
+.empty{text-align:center;padding:3rem 2rem;background:var(--warm);border:1.5px dashed var(--bd2);border-radius:var(--r2)}
+.ei{font-size:2.4rem;margin-bottom:.9rem;opacity:.5}.eh4{font-family:'Lora',serif;font-size:.95rem;color:var(--bark2);margin-bottom:.35rem}.ep{font-size:.78rem;color:var(--text3);line-height:1.7}
+.ecta{margin-top:1rem;display:inline-block;background:var(--terra);color:#fff;border:none;padding:.55rem 1.3rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s}.ecta:hover{background:var(--terra2)}
+.mlist{display:flex;flex-direction:column;gap:.6rem}
+.mit{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:.95rem 1.15rem;display:flex;align-items:center;gap:.95rem;transition:all .22s;cursor:pointer}
 .mit:hover{box-shadow:var(--sh);border-color:var(--bd2)}
-.mic{font-size:1.3rem;flex-shrink:0}.mib{flex:1;min-width:0}
-.mit1{font-size:.86rem;font-weight:600;color:var(--bark);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mit2{font-size:.7rem;color:var(--text3);margin-top:.12rem}
-.mlk{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .55rem;border-radius:50px;font-weight:700;flex-shrink:0}
+.mic{font-size:1.25rem;flex-shrink:0}.mib{flex:1;min-width:0}
+.mit1{font-size:.84rem;font-weight:600;color:var(--bark);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mit2{font-size:.68rem;color:var(--text3);margin-top:.1rem}
+.mlk{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.16rem .52rem;border-radius:50px;font-weight:700;flex-shrink:0}
 .ml-o{background:rgba(94,126,94,.1);color:var(--sage)}.ml-l{background:rgba(62,42,26,.07);color:var(--bark2)}.ml-s{background:rgba(184,92,54,.08);color:var(--terra)}
-.mdel{background:none;border:none;color:var(--dust2);font-size:.9rem;cursor:pointer;padding:.2rem .4rem;border-radius:6px;transition:all .2s;flex-shrink:0;opacity:0}
+.mdel{background:none;border:none;color:var(--dust2);font-size:.85rem;cursor:pointer;padding:.18rem .38rem;border-radius:6px;transition:all .2s;flex-shrink:0;opacity:0}
 .mit:hover .mdel{opacity:1}.mdel:hover{color:#c0392b;background:rgba(192,57,43,.08)}
+.twoc{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.twoc3{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem}
+.igrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.itile{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.25rem;cursor:pointer;transition:all .28s}
+.itile:hover{transform:translateY(-2px);box-shadow:var(--sh);border-color:var(--bd2)}
+.itile .ih{display:flex;align-items:center;gap:.7rem;margin-bottom:.6rem}
+.itile h4{font-family:'Lora',serif;font-size:.86rem;color:var(--bark)}
+.itile p{font-size:.72rem;color:var(--text3);line-height:1.62}
+.itc{margin-top:.6rem;font-size:.66rem;color:var(--dust);font-weight:700}
+.pring{position:relative;width:72px;height:72px;flex-shrink:0}
+.pring svg{transform:rotate(-90deg)}
+.prl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.prp{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--bark);line-height:1}
+.prs{font-size:.5rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em}
 
-/* RECORD */
-.rcard{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.8rem;margin-bottom:1.3rem}
-.rwave{height:56px;background:var(--cream2);border-radius:var(--r);display:flex;align-items:center;justify-content:center;gap:3px;padding:0 1.5rem;flex:1;overflow:hidden}
-.wb{width:3px;border-radius:3px;background:var(--terra3);opacity:.3;animation:wp 1.2s ease-in-out infinite}
+/* ── RECORD ── */
+.rcard{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.7rem;margin-bottom:1.2rem}
+.rwave{height:52px;background:var(--cream2);border-radius:var(--r);display:flex;align-items:center;justify-content:center;gap:3px;padding:0 1.4rem;flex:1;overflow:hidden}
+.wb{width:3px;border-radius:3px;background:var(--terra3);opacity:.28;animation:wp 1.2s ease-in-out infinite}
 .wb.lv{opacity:1}
-.wb:nth-child(1){height:10px;animation-delay:0s}.wb:nth-child(2){height:22px;animation-delay:.1s}.wb:nth-child(3){height:34px;animation-delay:.2s}.wb:nth-child(4){height:26px;animation-delay:.3s}.wb:nth-child(5){height:16px;animation-delay:.4s}.wb:nth-child(6){height:38px;animation-delay:.15s}.wb:nth-child(7){height:28px;animation-delay:.25s}.wb:nth-child(8){height:20px;animation-delay:.35s}.wb:nth-child(9){height:14px;animation-delay:.05s}.wb:nth-child(10){height:32px;animation-delay:.45s}
-.rtmr{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--bark);font-weight:700}
+.wb:nth-child(1){height:9px;animation-delay:0s}.wb:nth-child(2){height:20px;animation-delay:.1s}.wb:nth-child(3){height:32px;animation-delay:.2s}.wb:nth-child(4){height:24px;animation-delay:.3s}.wb:nth-child(5){height:15px;animation-delay:.4s}.wb:nth-child(6){height:36px;animation-delay:.15s}.wb:nth-child(7){height:26px;animation-delay:.25s}.wb:nth-child(8){height:18px;animation-delay:.35s}.wb:nth-child(9){height:12px;animation-delay:.05s}.wb:nth-child(10){height:30px;animation-delay:.45s}
+.rtmr{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--bark);font-weight:700}
 .rbtns{display:flex;gap:.7rem;margin-top:1rem;flex-wrap:wrap}
-.rbtn{padding:.65rem 1.3rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:.45rem}
+.rbtn{padding:.6rem 1.2rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:.42rem}
 .rbtn.st{background:var(--terra);border:none;color:#fff;box-shadow:0 2px 10px rgba(184,92,54,.3)}.rbtn.st:hover{background:var(--terra2)}
 .rbtn.sp{background:var(--cream2);border:1.5px solid var(--bd2);color:var(--text2)}.rbtn.sp:hover{border-color:var(--terra);color:var(--terra)}
 .rbtn.sv{background:var(--amber);border:none;color:#fff}.rbtn.sv:hover{background:#a07020}
-.rbtn:disabled{opacity:.45;cursor:not-allowed}
-
-/* LOCK CARDS */
-.lgrid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
-.lcard{background:var(--cream2);border:1.5px solid var(--bd);border-radius:var(--r2);padding:1.2rem;cursor:pointer;transition:all .22s;position:relative;overflow:hidden}
-.lcard.on{border-color:var(--terra);background:rgba(184,92,54,.05)}
-.lcard::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;border-radius:var(--r2) 0 0 var(--r2)}
-.lcard.lt::before{background:var(--amber)}.lcard.le::before{background:var(--terra3)}.lcard.la::before{background:var(--sage)}.lcard.ld::before{background:var(--bark2)}
-.lcn{font-size:.82rem;font-weight:700;color:var(--bark);margin-bottom:.25rem}
-.lcd{font-size:.72rem;color:var(--text3);line-height:1.6}
-
-/* CAT GRID */
-.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
-.ctile{background:var(--warm);border:1.5px solid var(--bd);border-radius:var(--r2);padding:1.3rem;cursor:pointer;transition:all .25s;text-align:center}
+.rbtn.cs{background:transparent;border:1.5px solid var(--bd2);color:var(--text3)}.rbtn.cs:hover{border-color:var(--bark2);color:var(--bark2)}
+.rbtn:disabled{opacity:.4;cursor:not-allowed}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-bottom:1.4rem}
+.ctile{background:var(--warm);border:1.5px solid var(--bd);border-radius:var(--r2);padding:1.2rem;cursor:pointer;transition:all .25s;text-align:center}
 .ctile:hover,.ctile.on{border-color:var(--terra);background:rgba(184,92,54,.04);transform:translateY(-2px);box-shadow:var(--sh)}
-.ctile .ci{font-size:1.6rem;margin-bottom:.6rem}
-.ctile h4{font-family:'Lora',serif;font-size:.88rem;color:var(--bark);margin-bottom:.25rem}
-.ctile p{font-size:.7rem;color:var(--text3);line-height:1.55}
-.ctc{margin-top:.6rem;display:inline-block;background:var(--cream2);border-radius:50px;font-size:.62rem;color:var(--dust);padding:.12rem .55rem;font-weight:700}
+.ctile .ci{font-size:1.5rem;margin-bottom:.55rem}
+.ctile h4{font-family:'Lora',serif;font-size:.86rem;color:var(--bark);margin-bottom:.22rem}
+.ctile p{font-size:.68rem;color:var(--text3);line-height:1.52}
+.ctc{margin-top:.5rem;display:inline-block;background:var(--cream2);border-radius:50px;font-size:.6rem;color:var(--dust);padding:.1rem .52rem;font-weight:700}
 
-/* PROG */
-.pring{position:relative;width:76px;height:76px;flex-shrink:0}
-.pring svg{transform:rotate(-90deg)}
-.prl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.prp{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--bark);line-height:1}
-.prs{font-size:.52rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em}
+/* ── CONSENT SETTINGS (from screenshot) ── */
+.cs-page{padding:2rem 2.2rem}
+.cs-section{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.6rem;margin-bottom:1.2rem}
+.cs-section-title{display:flex;align-items:center;gap:.6rem;font-family:'Lora',serif;font-size:1rem;font-weight:500;color:var(--amber);margin-bottom:1.2rem}
+.cs-section-title span{font-size:1.2rem}
+/* Radio buttons */
+.cs-radio-group{display:flex;flex-direction:column;gap:.9rem}
+.cs-radio{display:flex;align-items:flex-start;gap:.9rem;cursor:pointer;padding:.5rem;border-radius:var(--r);transition:background .2s}
+.cs-radio:hover{background:var(--cream2)}
+.cs-radio input[type="radio"]{display:none}
+.cs-radio-dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--bd2);background:var(--warm);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .2s}
+.cs-radio.selected .cs-radio-dot{border-color:var(--amber);background:var(--amber)}
+.cs-radio.selected .cs-radio-dot::after{content:'';width:7px;height:7px;border-radius:50%;background:#fff}
+.cs-radio-body h4{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:.15rem}
+.cs-radio-body p{font-size:.72rem;color:var(--text3);line-height:1.55}
+/* Life event chips */
+.chip-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.5rem}
+.chip{background:var(--cream2);border:1.5px solid var(--bd);border-radius:50px;padding:.32rem .9rem;font-size:.76rem;color:var(--text2);font-weight:600;cursor:pointer;transition:all .2s}
+.chip:hover{border-color:var(--terra3);color:var(--terra)}
+.chip.on{background:rgba(184,92,54,.1);border-color:var(--terra);color:var(--terra)}
+.chip.add{background:transparent;border-style:dashed;color:var(--text3)}
+/* Toggles */
+.toggle-row{display:flex;align-items:flex-start;justify-content:space-between;padding:.9rem 0;border-bottom:1px solid var(--bd);gap:1rem}
+.toggle-row:last-child{border-bottom:none;padding-bottom:0}
+.toggle-body h4{font-size:.86rem;font-weight:700;color:var(--text);margin-bottom:.18rem}
+.toggle-body p{font-size:.72rem;color:var(--text3);line-height:1.5;max-width:360px}
+.toggle-sw{width:46px;height:26px;border-radius:50px;background:var(--cream3);border:none;cursor:pointer;position:relative;transition:background .25s;flex-shrink:0;outline:none}
+.toggle-sw::after{content:'';position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;top:3px;left:3px;transition:left .25s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.toggle-sw.on{background:var(--amber)}
+.toggle-sw.on::after{left:23px}
+/* Age input */
+.age-inp-wrap{display:none;margin-top:.7rem}
+.age-inp-wrap.show{display:flex;align-items:center;gap:.7rem}
+.age-inp{width:80px;background:var(--cream2);border:1.5px solid var(--bd);border-radius:var(--r);padding:.6rem .8rem;font-family:'Nunito',sans-serif;font-size:.88rem;color:var(--text);outline:none}
+.age-inp:focus{border-color:var(--amber)}
+/* Custom event */
+.custom-inp-wrap{display:none;margin-top:.7rem}
+.custom-inp-wrap.show{display:block}
+.custom-inp{width:100%;background:var(--cream2);border:1.5px solid var(--bd);border-radius:var(--r);padding:.6rem .9rem;font-family:'Nunito',sans-serif;font-size:.84rem;color:var(--text);outline:none}
+.custom-inp:focus{border-color:var(--amber)}
 
-/* CONV */
-.cw{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden}
-.ct{background:var(--cream2);padding:1rem 1.4rem;display:flex;align-items:center;gap:.9rem;border-bottom:1px solid var(--bd)}
-.cava{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--terra),#8a2e10);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1rem;color:#fff;font-weight:700;flex-shrink:0;border:2px solid var(--cream3)}
-.cinf h4{font-family:'Lora',serif;font-size:.9rem;color:var(--bark)}.cinf p{font-size:.68rem;color:var(--text3)}
-.clv{margin-left:auto;display:flex;align-items:center;gap:.35rem;font-size:.68rem;color:var(--sage);font-weight:700}
-.cdot{width:6px;height:6px;border-radius:50%;background:#5e7e5e;animation:pulse 2s ease-in-out infinite}
-.cmsgs{padding:1.4rem;min-height:280px;max-height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:1rem}
-.cmsgs::-webkit-scrollbar{width:3px}.cmsgs::-webkit-scrollbar-thumb{background:var(--cream3);border-radius:2px}
-.mr{display:flex;gap:.7rem;max-width:78%}.mr.ai{align-self:flex-start}.mr.usr{align-self:flex-end;flex-direction:row-reverse}
-.mrav{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-family:'Playfair Display',serif;font-weight:700}
-.mr.ai .mrav{background:linear-gradient(135deg,var(--terra),#8a2e10);color:#fff}.mr.usr .mrav{background:var(--cream3);color:var(--bark2)}
-.mb{padding:.8rem 1.1rem;border-radius:var(--r2);font-size:.86rem;line-height:1.75}
-.mr.ai .mb{background:var(--cream2);color:var(--text);border:1px solid var(--bd);font-family:'Lora',serif;font-style:italic;font-size:.92rem}
-.mr.usr .mb{background:var(--terra);color:#fff;border-bottom-right-radius:4px}
-.tw{padding:0 1.4rem .5rem;display:none}.tw.on{display:flex;align-items:center;gap:3px}
-.td{width:6px;height:6px;border-radius:50%;background:var(--terra3);animation:tb 1.2s ease-in-out infinite}
-.td:nth-child(2){animation-delay:.2s}.td:nth-child(3){animation-delay:.4s}
-.tlbl{font-size:.68rem;color:var(--text3);margin-left:.5rem}
-.cps{display:flex;gap:.5rem;flex-wrap:wrap;padding:.5rem 1.4rem}
-.cpb{background:var(--cream2);border:1px solid var(--bd);border-radius:50px;padding:.28rem .75rem;font-size:.7rem;color:var(--text3);cursor:pointer;transition:all .18s;font-family:'Nunito',sans-serif}
-.cpb:hover{border-color:var(--terra3);color:var(--terra)}
-.cir{border-top:1px solid var(--bd);padding:.9rem 1.2rem;display:flex;gap:.7rem;background:var(--warm)}
-.cin{flex:1;background:var(--cream2);border:1.5px solid var(--bd);border-radius:var(--r);color:var(--text);padding:.7rem .9rem;font-family:'Nunito',sans-serif;font-size:.85rem;outline:none;transition:all .22s}
-.cin:focus{border-color:var(--terra);background:var(--warm)}
-.csnd{background:var(--terra);border:none;color:#fff;padding:.7rem 1.3rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .22s}
-.csnd:hover{background:var(--terra2)}.csnd:disabled{opacity:.45;cursor:not-allowed}
-
-/* TL */
-.tl{display:flex;flex-direction:column;gap:0}
-.tlr{display:flex;gap:1.3rem;padding:1.1rem 0;border-bottom:1px solid var(--bd);position:relative}
+/* ── TIMELINE ── */
+.tl{display:flex;flex-direction:column}
+.tlr{display:flex;gap:1.2rem;padding:1rem 0;border-bottom:1px solid var(--bd)}
 .tlr:last-child{border-bottom:none}
-.tldw{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:3px}
-.tld{width:13px;height:13px;border-radius:50%;border:2px solid var(--terra);background:var(--warm);flex-shrink:0}
+.tldw{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:2px}
+.tld{width:12px;height:12px;border-radius:50%;border:2px solid var(--terra);background:var(--warm);flex-shrink:0}
 .tld.fill{background:var(--terra)}.tld.dim{border-color:var(--cream3)}
-.tll{width:1px;flex:1;background:var(--bd);min-height:18px;margin:3px 0}
-.tlt{font-size:.68rem;color:var(--text3);flex-shrink:0;width:82px;padding-top:2px;font-weight:700;letter-spacing:.04em}
-.tlb h4{font-family:'Lora',serif;font-size:.88rem;color:var(--bark);margin-bottom:.2rem}
-.tlb p{font-size:.74rem;color:var(--text3);line-height:1.6}
-.tltag{display:inline-flex;align-items:center;gap:.2rem;margin-top:.35rem;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+.tll{width:1px;flex:1;background:var(--bd);min-height:16px;margin:3px 0}
+.tlt{font-size:.66rem;color:var(--text3);flex-shrink:0;width:82px;padding-top:2px;font-weight:700;letter-spacing:.04em}
+.tlb h4{font-family:'Lora',serif;font-size:.86rem;color:var(--bark);margin-bottom:.18rem}
+.tlb p{font-size:.72rem;color:var(--text3);line-height:1.6}
+.tltag{display:inline-flex;align-items:center;gap:.2rem;margin-top:.3rem;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
 .tltag.ok{color:var(--sage)}.tltag.wt{color:var(--amber)}.tltag.sl{color:var(--dust)}
 
-/* INH GRID */
-.igrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.itile{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.3rem;cursor:pointer;transition:all .28s}
-.itile:hover{transform:translateY(-2px);box-shadow:var(--sh);border-color:var(--bd2)}
-.itile .ih{display:flex;align-items:center;gap:.7rem;margin-bottom:.7rem}
-.itile h4{font-family:'Lora',serif;font-size:.88rem;color:var(--bark)}
-.itile p{font-size:.74rem;color:var(--text3);line-height:1.65}
-.itc{margin-top:.7rem;font-size:.68rem;color:var(--dust);font-weight:700}
-
-/* LEDGER */
-.lbox{background:var(--bark);border-radius:var(--r2);padding:1.8rem;font-family:'Courier New',monospace;font-size:.73rem;color:rgba(255,255,255,.78);overflow-x:auto}
-.lhdr{color:rgba(255,255,255,.3);font-size:.6rem;letter-spacing:.2em;margin-bottom:.8rem}
-.lrow{display:flex;gap:1.2rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.07);align-items:center;min-width:600px}
+/* ── LEDGER ── */
+.lbox{background:var(--bark);border-radius:var(--r2);padding:1.7rem;font-family:'Courier New',monospace;font-size:.71rem;color:rgba(255,255,255,.76);overflow-x:auto}
+.lhdr{color:rgba(255,255,255,.28);font-size:.58rem;letter-spacing:.2em;margin-bottom:.8rem}
+.lrow{display:flex;gap:1.1rem;padding:.48rem 0;border-bottom:1px solid rgba(255,255,255,.07);align-items:center;min-width:580px}
 .lrow:last-child{border-bottom:none}
-.lhsh{color:var(--terra3);width:110px;flex-shrink:0;font-size:.7rem}.ltm{color:rgba(255,255,255,.35);width:140px;flex-shrink:0}
-.lev{flex:1;font-size:.72rem}.lok{color:#5e9e5e;flex-shrink:0}
-.lem{text-align:center;color:rgba(255,255,255,.25);padding:2rem;font-size:.78rem}
+.lhsh{color:var(--terra3);width:110px;flex-shrink:0}.ltm{color:rgba(255,255,255,.33);width:140px;flex-shrink:0}.lev{flex:1}.lok{color:#5e9e5e;flex-shrink:0}
+.lem{text-align:center;color:rgba(255,255,255,.22);padding:1.8rem;font-size:.76rem}
 
-/* FAM */
-.fitem{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1rem 1.2rem;display:flex;align-items:center;gap:1rem;margin-bottom:.7rem}
-.fav{width:36px;height:36px;border-radius:50%;background:var(--cream3);display:flex;align-items:center;justify-content:center;font-size:.88rem;font-family:'Playfair Display',serif;font-weight:700;color:var(--bark2);flex-shrink:0}
-.fbn{font-size:.86rem;font-weight:600;color:var(--bark)}.fbr{font-size:.7rem;color:var(--text3)}
-.fdel{background:none;border:none;color:var(--dust2);font-size:.85rem;cursor:pointer;padding:.2rem .4rem;border-radius:6px;transition:all .2s;flex-shrink:0;opacity:0;margin-left:auto}
+/* ── CONVERSATION ── */
+.cw{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden}
+.ctop{background:var(--cream2);padding:.95rem 1.4rem;display:flex;align-items:center;gap:.9rem;border-bottom:1px solid var(--bd)}
+.cava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--terra),#8a2e10);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.95rem;color:#fff;font-weight:700;flex-shrink:0;border:2px solid var(--cream3)}
+.cinf h4{font-family:'Lora',serif;font-size:.88rem;color:var(--bark)}.cinf p{font-size:.66rem;color:var(--text3)}
+.clv{margin-left:auto;display:flex;align-items:center;gap:.32rem;font-size:.66rem;color:var(--sage);font-weight:700}
+.cdot{width:5px;height:5px;border-radius:50%;background:var(--sage2);animation:pulse 2s ease-in-out infinite}
+.cmsgs{padding:1.3rem;min-height:260px;max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:.9rem}
+.cmsgs::-webkit-scrollbar{width:3px}.cmsgs::-webkit-scrollbar-thumb{background:var(--cream3);border-radius:2px}
+.mr{display:flex;gap:.65rem;max-width:80%}.mr.ai{align-self:flex-start}.mr.usr{align-self:flex-end;flex-direction:row-reverse}
+.mrav{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-family:'Playfair Display',serif;font-weight:700}
+.mr.ai .mrav{background:linear-gradient(135deg,var(--terra),#8a2e10);color:#fff}.mr.usr .mrav{background:var(--cream3);color:var(--bark2)}
+.mb{padding:.75rem 1.05rem;border-radius:var(--r2);font-size:.84rem;line-height:1.75}
+.mr.ai .mb{background:var(--cream2);color:var(--text);border:1px solid var(--bd);font-family:'Lora',serif;font-style:italic;font-size:.9rem}
+.mr.usr .mb{background:var(--terra);color:#fff;border-bottom-right-radius:4px}
+.tw{padding:0 1.3rem .4rem;display:none}.tw.on{display:flex;align-items:center;gap:3px}
+.td{width:5px;height:5px;border-radius:50%;background:var(--terra3);animation:tb 1.2s ease-in-out infinite}
+.td:nth-child(2){animation-delay:.2s}.td:nth-child(3){animation-delay:.4s}
+.tlbl{font-size:.66rem;color:var(--text3);margin-left:.45rem}
+.cps{display:flex;gap:.45rem;flex-wrap:wrap;padding:.45rem 1.3rem}
+.cpb{background:var(--cream2);border:1px solid var(--bd);border-radius:50px;padding:.25rem .7rem;font-size:.68rem;color:var(--text3);cursor:pointer;transition:all .18s;font-family:'Nunito',sans-serif}
+.cpb:hover{border-color:var(--terra3);color:var(--terra)}
+.cir{border-top:1px solid var(--bd);padding:.85rem 1.15rem;display:flex;gap:.7rem;background:var(--warm);flex-direction:column}
+.cin{flex:1;background:var(--cream2);border:1.5px solid var(--bd);border-radius:var(--r);color:var(--text);padding:.68rem .9rem;font-family:'Nunito',sans-serif;font-size:.83rem;outline:none;transition:all .22s}
+.cin:focus{border-color:var(--terra);background:var(--warm)}
+.cin-row{display:flex;gap:.6rem;align-items:center}
+.csnd{background:var(--terra);border:none;color:#fff;padding:.68rem 1.2rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .22s}
+.csnd:hover{background:var(--terra2)}.csnd:disabled{opacity:.45;cursor:not-allowed}
+
+/* ── NLP EMOTION INDICATOR ── */
+.nlp-bar{display:none;padding:.55rem 1rem;background:linear-gradient(135deg,rgba(192,136,42,.08),rgba(94,126,94,.06));border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);font-size:.72rem;color:var(--text2);display:flex;align-items:center;gap:.7rem}
+.nlp-bar.on{display:flex}
+.nlp-label{font-weight:700;color:var(--bark)}
+.nlp-pill{padding:.18rem .6rem;border-radius:50px;font-size:.66rem;font-weight:700}
+.nlp-pill.grief{background:rgba(108,92,133,.12);color:#6c5c85}
+.nlp-pill.anxiety{background:rgba(192,136,42,.12);color:var(--amber)}
+.nlp-pill.joy{background:rgba(94,126,94,.12);color:var(--sage)}
+.nlp-pill.heartbreak{background:rgba(184,92,54,.12);color:var(--terra)}
+.nlp-pill.neutral{background:rgba(62,42,26,.07);color:var(--dust)}
+.nlp-pill.confusion{background:rgba(62,80,130,.1);color:#3c5082}
+.nlp-surf{font-size:.7rem;color:var(--terra);font-weight:600;cursor:pointer;text-decoration:underline;margin-left:auto}
+
+/* ── GRIEF COUNSELLOR ── */
+.grief-hero{background:linear-gradient(135deg,#2d4a2d 0%,#1a3020 100%);border-radius:var(--r2);padding:2rem;color:#fff;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.grief-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(138,171,138,.12) 0%,transparent 60%)}
+.grief-hero h2{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;margin-bottom:.5rem;position:relative}
+.grief-hero p{font-size:.82rem;opacity:.78;line-height:1.75;max-width:480px;position:relative;margin-bottom:1.5rem}
+.grief-modes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.gmode{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.4rem;cursor:pointer;transition:all .28s;text-align:center}
+.gmode:hover{transform:translateY(-2px);box-shadow:var(--sh);border-color:var(--bd2)}
+.gmode.on{border-color:var(--sage);background:rgba(94,126,94,.06)}
+.gmode .gic{font-size:1.6rem;margin-bottom:.6rem}
+.gmode h4{font-family:'Lora',serif;font-size:.9rem;color:var(--bark);margin-bottom:.25rem}
+.gmode p{font-size:.7rem;color:var(--text3);line-height:1.6}
+.gchat{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden}
+.gchat-top{background:linear-gradient(135deg,#2d4a2d,#1a3020);padding:.95rem 1.4rem;display:flex;align-items:center;gap:.9rem}
+.gchat-ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--sage),#2d4a2d);display:flex;align-items:center;justify-content:center;font-size:1rem;border:2px solid rgba(138,171,138,.3);flex-shrink:0}
+.gchat-inf h4{font-family:'Lora',serif;font-size:.88rem;color:#fff}
+.gchat-inf p{font-size:.66rem;color:rgba(255,255,255,.55)}
+.gchat-live{margin-left:auto;display:flex;align-items:center;gap:.32rem;font-size:.66rem;color:var(--sage2);font-weight:700}
+.gchat-msgs{padding:1.3rem;min-height:240px;max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:.9rem}
+.gmr{display:flex;gap:.6rem;max-width:82%}.gmr.c{align-self:flex-start}.gmr.u{align-self:flex-end;flex-direction:row-reverse}
+.gmrav{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.72rem}
+.gmr.c .gmrav{background:linear-gradient(135deg,var(--sage),#2d4a2d);color:#fff}
+.gmr.u .gmrav{background:var(--cream3);color:var(--bark2);font-family:'Playfair Display',serif;font-weight:700}
+.gmb{padding:.75rem 1.05rem;border-radius:var(--r2);font-size:.84rem;line-height:1.75}
+.gmr.c .gmb{background:rgba(94,126,94,.08);color:var(--text);border:1px solid rgba(94,126,94,.15);font-family:'Lora',serif;font-style:italic}
+.gmr.u .gmb{background:var(--sage);color:#fff;border-bottom-right-radius:4px}
+.grief-tools{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.2rem}
+.gtool{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.2rem;cursor:pointer;transition:all .25s}
+.gtool:hover{box-shadow:var(--sh);border-color:var(--bd2);transform:translateY(-1px)}
+.gtool h4{font-family:'Lora',serif;font-size:.88rem;color:var(--bark);margin-bottom:.3rem;display:flex;align-items:center;gap:.5rem}
+.gtool p{font-size:.72rem;color:var(--text3);line-height:1.6}
+.crisis-banner{background:linear-gradient(135deg,rgba(192,57,43,.1),rgba(192,57,43,.04));border:1.5px solid rgba(192,57,43,.2);border-radius:var(--r2);padding:1.2rem 1.5rem;margin-top:1.2rem;display:flex;align-items:center;gap:1.2rem}
+.crisis-banner p{font-size:.78rem;color:var(--text2);line-height:1.65;flex:1}
+.crisis-btn{background:var(--terra);border:none;color:#fff;padding:.5rem 1.1rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
+.crisis-btn:hover{background:var(--terra2)}
+
+/* ── DUAL COMMUNICATION (cross-generational dialogue) ── */
+.thread-card{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;margin-bottom:1rem}
+.thread-hdr{background:var(--cream2);padding:1rem 1.4rem;display:flex;align-items:center;gap:.9rem;border-bottom:1px solid var(--bd)}
+.thread-title h4{font-family:'Lora',serif;font-size:.9rem;color:var(--bark)}
+.thread-title p{font-size:.68rem;color:var(--text3);margin-top:.1rem}
+.thread-badge{margin-left:auto;font-size:.62rem;font-weight:700;padding:.18rem .55rem;border-radius:50px}
+.tb-active{background:rgba(94,126,94,.1);color:var(--sage)}
+.tb-new{background:rgba(192,136,42,.12);color:var(--amber)}
+.thread-msgs{padding:1.2rem;display:flex;flex-direction:column;gap:.8rem}
+.tmsg{display:flex;gap:.7rem;max-width:85%}
+.tmsg.orig{align-self:flex-start}
+.tmsg.reply{align-self:flex-end;flex-direction:row-reverse}
+.tmsg-ava{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;font-family:'Playfair Display',serif}
+.tmsg.orig .tmsg-ava{background:linear-gradient(135deg,var(--bark),var(--bark2));color:#fff}
+.tmsg.reply .tmsg-ava{background:var(--cream3);color:var(--bark2)}
+.tmsg-bub{padding:.8rem 1rem;border-radius:var(--r2);font-size:.84rem;line-height:1.7}
+.tmsg.orig .tmsg-bub{background:var(--cream2);border:1px solid var(--bd);font-family:'Lora',serif;font-style:italic;color:var(--text)}
+.tmsg.reply .tmsg-bub{background:var(--terra);color:#fff;border-bottom-right-radius:4px}
+.tmsg-time{font-size:.62rem;color:var(--text3);margin-top:.25rem;text-align:right}
+.thread-reply-bar{border-top:1px solid var(--bd);padding:.85rem 1.2rem;display:flex;gap:.6rem;background:var(--cream2)}
+.thread-inp{flex:1;background:var(--warm);border:1.5px solid var(--bd);border-radius:var(--r);color:var(--text);padding:.65rem .9rem;font-family:'Nunito',sans-serif;font-size:.82rem;outline:none;transition:all .22s}
+.thread-inp:focus{border-color:var(--terra);background:var(--warm)}
+.thread-send{background:var(--terra);border:none;color:#fff;padding:.65rem 1.1rem;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:700;cursor:pointer;transition:all .2s}
+.thread-send:hover{background:var(--terra2)}
+.dual-empty{text-align:center;padding:2.5rem 2rem;background:var(--warm);border:1.5px dashed rgba(94,126,94,.3);border-radius:var(--r2)}
+
+/* ── VAULT ── */
+.vault-quote{background:linear-gradient(135deg,var(--cream2),var(--warm));border:1px solid var(--bd);border-radius:var(--r2);padding:1.8rem;border-left:3px solid var(--terra2);margin-bottom:1.3rem}
+.vault-quote p{font-family:'Lora',serif;font-style:italic;font-size:.92rem;color:var(--text2);line-height:1.85;max-width:520px}
+.vitem{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.2rem;text-align:center}
+.vitem h4{font-family:'Lora',serif;font-size:.84rem;color:var(--bark);margin:.55rem 0 .22rem}
+.vitem p{font-size:.68rem;color:var(--text3);line-height:1.55}
+.vseal{display:inline-block;margin-top:.55rem;font-size:.58rem;letter-spacing:.2em;color:var(--dust);text-transform:uppercase}
+
+/* ── FAMILY ── */
+.fitem{background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:.95rem 1.15rem;display:flex;align-items:center;gap:.9rem;margin-bottom:.65rem}
+.fav{width:34px;height:34px;border-radius:50%;background:var(--cream3);display:flex;align-items:center;justify-content:center;font-size:.86rem;font-family:'Playfair Display',serif;font-weight:700;color:var(--bark2);flex-shrink:0}
+.fbn{font-size:.84rem;font-weight:600;color:var(--bark)}.fbr{font-size:.68rem;color:var(--text3)}
+.fdel{background:none;border:none;color:var(--dust2);font-size:.82rem;cursor:pointer;padding:.18rem .35rem;border-radius:6px;transition:all .2s;flex-shrink:0;opacity:0;margin-left:auto}
 .fitem:hover .fdel{opacity:1}.fdel:hover{color:#c0392b;background:rgba(192,57,43,.08)}
 
-/* MODAL */
+/* ── MODALS ── */
 .mbg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:none;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(6px)}
 .mbg.open{display:flex}
-.mbox{background:var(--warm);border:1px solid var(--bd2);border-radius:var(--r2);padding:2.5rem;max-width:460px;width:100%;position:relative;animation:mIn .3s ease}
-.mc{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.3rem;color:var(--dust2);cursor:pointer;line-height:1;transition:color .2s}.mc:hover{color:var(--text)}
+.mbox{background:var(--warm);border:1px solid var(--bd2);border-radius:var(--r2);padding:2.3rem;max-width:520px;width:100%;position:relative;animation:mIn .3s ease;max-height:88vh;overflow-y:auto}
+.mbox.wide{max-width:680px}
+.mc{position:absolute;top:.9rem;right:.9rem;background:none;border:none;font-size:1.25rem;color:var(--dust2);cursor:pointer;line-height:1;transition:color .2s}.mc:hover{color:var(--text)}
 .mbox h3{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--bark);margin-bottom:.3rem}
-.mbox p{font-size:.8rem;color:var(--text3);margin-bottom:1.8rem;line-height:1.6}
+.mbox .msub{font-size:.78rem;color:var(--text3);margin-bottom:1.6rem;line-height:1.6}
+
+/* CONSENT MODAL specific */
+.cs-modal-section{background:var(--cream2);border:1px solid var(--bd);border-radius:var(--r2);padding:1.4rem;margin-bottom:1rem}
+.cs-modal-section h4{display:flex;align-items:center;gap:.5rem;font-family:'Lora',serif;font-size:.95rem;font-weight:500;color:var(--amber);margin-bottom:1rem}
 
 /* TOAST */
-.toast{position:fixed;bottom:2rem;right:2rem;z-index:999;background:var(--bark);color:#fff;border-radius:var(--r);padding:.8rem 1.3rem;font-size:.83rem;font-weight:600;box-shadow:var(--sh2);transform:translateY(80px);opacity:0;transition:all .35s}
+.toast{position:fixed;bottom:2rem;right:2rem;z-index:999;background:var(--bark);color:#fff;border-radius:var(--r);padding:.75rem 1.25rem;font-size:.8rem;font-weight:600;box-shadow:var(--sh2);transform:translateY(80px);opacity:0;transition:all .35s;display:flex;align-items:center;gap:.5rem}
 .toast.show{transform:translateY(0);opacity:1}
 
-.twoc{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.twoc3{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem}
+/* EGRID */
 .egrid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
 
-@keyframes fU{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.38;transform:scale(.78)}}
+@keyframes fU{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.36;transform:scale(.76)}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes wp{0%,100%{transform:scaleY(.55);opacity:.25}50%{transform:scaleY(1);opacity:1}}
+@keyframes wp{0%,100%{transform:scaleY(.52);opacity:.22}50%{transform:scaleY(1);opacity:1}}
 @keyframes tb{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-@keyframes mIn{from{opacity:0;transform:translateY(-14px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-@media(max-width:860px){.dsh{grid-template-columns:1fr}.sb{display:none}.l-hero{grid-template-columns:1fr}.hr{display:none}.aw{grid-template-columns:1fr}.al{display:none}.srow{grid-template-columns:1fr 1fr}.cgrid{grid-template-columns:1fr 1fr}.twoc,.twoc3,.igrid{grid-template-columns:1fr}.l-nav{padding:1rem 1.5rem}.l-nav-links{display:none}.hl{padding:3.5rem 2rem}.lf{padding:3rem 2rem}.frow{grid-template-columns:1fr 1fr}.rcards{padding:2rem}}
+@keyframes mIn{from{opacity:0;transform:translateY(-12px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:860px){.dsh{grid-template-columns:1fr}.sb{display:none}.lhero{grid-template-columns:1fr}.hr{display:none}.aw{grid-template-columns:1fr}.al{display:none}.srow{grid-template-columns:1fr 1fr}.cgrid{grid-template-columns:1fr 1fr}.twoc,.twoc3,.igrid,.grief-modes,.grief-tools{grid-template-columns:1fr}.lnav{padding:1rem 1.5rem}.navlinks{display:none}.hl{padding:3.5rem 2rem}.lfeat{padding:3rem 2rem}.frow{grid-template-columns:1fr 1fr}.rcards{padding:2rem}}
 </style>
 </head>
 <body>
 
-<!-- LANDING -->
+<!-- ══════════════════════ LANDING ══════════════════════ -->
 <div class="page active" id="pg-landing">
-  <nav class="l-nav">
-    <div class="l-logo">HEIRYN<small>inherit what matters</small></div>
-    <div class="l-nav-links"><a href="#">How it Works</a><a href="#">Features</a><a href="#">Pricing</a></div>
+  <nav class="lnav">
+    <div class="logo">HEIRYN<small>inherit what matters</small></div>
+    <div class="navlinks"><a href="#">How it Works</a><a href="#">Features</a><a href="#">Pricing</a></div>
     <div style="display:flex;gap:.7rem">
       <button class="bg" onclick="goAuth('in')">Sign In</button>
       <button class="bf" onclick="goAuth('up')">Begin Legacy</button>
     </div>
   </nav>
-  <div class="l-hero">
+  <div class="lhero">
     <div class="hl">
       <div class="eyebrow"><span class="edot"></span>AI Memory Platform · Consent-First · Built for India</div>
       <h1 class="hh">Preserve not just<br>the face. Preserve<br><em>the presence.</em></h1>
@@ -320,25 +436,25 @@ body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;f
       </div>
     </div>
   </div>
-  <div class="lf">
+  <div class="lfeat">
     <h2>Seven layers of <em>emotional inheritance</em></h2>
     <div class="frow">
-      <div class="fc"><div class="fi">🕰️</div><h4>Temporal Consent Layers</h4><p>Messages unlock at life events — graduation, wedding, first child. Some sealed for years.</p></div>
-      <div class="fc"><div class="fi">💫</div><h4>Emotion-State Unlocking</h4><p>Surfaces the exact memory your loved one recorded for your emotional moment.</p></div>
-      <div class="fc"><div class="fi">🌳</div><h4>Inheritance Engine</h4><p>Values Wills, Recipe Archives, Family Constitutions. Things worth more than property.</p></div>
-      <div class="fc"><div class="fi">🔒</div><h4>Apology Vault</h4><p>Private messages releasing only upon death — for words that could never be spoken alive.</p></div>
-      <div class="fc"><div class="fi">🔗</div><h4>Tamper Evidence Ledger</h4><p>Every recording immutably timestamped. Trust built into the architecture itself.</p></div>
-      <div class="fc"><div class="fi">🗣️</div><h4>Multilingual Voice AI</h4><p>Telugu, Hindi, Tamil, Punjabi. Built for India, in every Indian language.</p></div>
+      <div class="fc"><div class="fic">🕰️</div><h4>Temporal Consent Layers</h4><p>Messages unlock at life events. Graduation, wedding, first child — or a dead man's switch.</p></div>
+      <div class="fc"><div class="fic">💫</div><h4>NLP Emotion Detection</h4><p>Real-time sentiment analysis surfaces the right memory for your exact emotional moment.</p></div>
+      <div class="fc"><div class="fic">🌳</div><h4>Inheritance Engine</h4><p>Values Wills, Recipe Archives, Family Constitutions. Things worth more than property.</p></div>
+      <div class="fc"><div class="fic">🔒</div><h4>Apology Vault + Dead Man's Switch</h4><p>Private messages with dual-authentication, releasing only when the time is right.</p></div>
+      <div class="fc"><div class="fic">💬</div><h4>Cross-Generational Dialogue</h4><p>Recipients reply to memories. A living thread of family wisdom grows across time.</p></div>
+      <div class="fc"><div class="fic">🫂</div><h4>Grief Counsellor</h4><p>AI-powered therapeutic support, plus connection to real grief professionals when needed.</p></div>
     </div>
   </div>
 </div>
 
-<!-- AUTH -->
+<!-- ══════════════════════ AUTH ══════════════════════ -->
 <div class="page" id="pg-auth">
   <div class="aw">
     <div class="al">
-      <div class="ab"><h2>HEIRYN</h2><p>inherit what matters</p></div>
-      <div class="aq">The most precious things should never be lost. A photograph can't talk. A voicemail can't respond to the life that keeps moving after they're gone.</div>
+      <div class="abrand"><h2>HEIRYN</h2><p>inherit what matters</p></div>
+      <div class="aquote">The most precious things should never be lost. A photograph can't talk. A voicemail can't respond to the life that keeps moving after they're gone.</div>
       <div class="afoot">© 2026 HEIRYN · Consent-First AI Memory</div>
     </div>
     <div class="ar">
@@ -347,21 +463,19 @@ body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;f
           <div class="atab on" id="tab-in" onclick="swTab('in')">Sign In</div>
           <div class="atab" id="tab-up" onclick="swTab('up')">Create Account</div>
         </div>
-        <!-- SIGN IN -->
         <div id="f-si">
-          <div class="atitle">Welcome back</div>
+          <div class="atit">Welcome back</div>
           <div class="asub">Sign in with your registered email and password.</div>
           <div class="aalert" id="si-alrt"></div>
-          <div class="fg"><label class="fl">Email</label><input class="fin" id="si-em" type="email" placeholder="you@email.com" oninput="clrAlrt('si-alrt')"><div class="ferr">Please enter a valid email.</div></div>
-          <div class="fg"><label class="fl">Password</label><input class="fin" id="si-pw" type="password" placeholder="••••••••" oninput="clrAlrt('si-alrt')"><div class="ferr">Password is required.</div></div>
+          <div class="fg"><label class="fl">Email</label><input class="fin" id="si-em" type="email" placeholder="you@email.com" oninput="clrA('si-alrt')"><div class="ferr">Please enter a valid email.</div></div>
+          <div class="fg"><label class="fl">Password</label><input class="fin" id="si-pw" type="password" placeholder="••••••••" oninput="clrA('si-alrt')" onkeydown="if(event.key==='Enter')doSignIn()"><div class="ferr">Password is required.</div></div>
           <button class="bsub" id="si-btn" onclick="doSignIn()"><span class="bt">Sign In</span><div class="bsp"></div></button>
           <div class="aswitch">No account? <a onclick="swTab('up')">Create one</a></div>
           <a class="bkl" onclick="showPage('pg-landing')">← Back to home</a>
         </div>
-        <!-- SIGN UP -->
         <div id="f-su" style="display:none">
-          <div class="atitle">Create your account</div>
-          <div class="asub">All fields are required. Your data is stored securely on this device.</div>
+          <div class="atit">Create your account</div>
+          <div class="asub">All fields required. Stored securely on this device.</div>
           <div class="aalert" id="su-alrt"></div>
           <div class="fg"><label class="fl">I am a…</label>
             <div class="rsel">
@@ -369,16 +483,13 @@ body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;f
               <div class="ropt" id="ro-rcp" onclick="pickRole('recipient')"><span class="ri">💌</span><div class="rn">Recipient</div><div class="rd">I access loved ones' memories</div></div>
             </div>
           </div>
-          <div class="fg"><label class="fl">Full Name</label><input class="fin" id="su-nm" type="text" placeholder="Your full name" oninput="clrAlrt('su-alrt')"><div class="ferr">Please enter your name.</div></div>
-          <div class="fg"><label class="fl">Email</label><input class="fin" id="su-em" type="email" placeholder="you@email.com" oninput="clrAlrt('su-alrt')"><div class="ferr">Please enter a valid email.</div></div>
+          <div class="fg"><label class="fl">Full Name</label><input class="fin" id="su-nm" type="text" placeholder="Your full name" oninput="clrA('su-alrt')"><div class="ferr">Please enter your name.</div></div>
+          <div class="fg"><label class="fl">Email</label><input class="fin" id="su-em" type="email" placeholder="you@email.com" oninput="clrA('su-alrt')"><div class="ferr">Please enter a valid email.</div></div>
           <div class="fg"><label class="fl">Primary Language</label>
-            <select class="fin fsel" id="su-lg">
-              <option value="">— Select —</option>
-              <option>Telugu</option><option>Hindi</option><option>Tamil</option><option>Kannada</option><option>Punjabi</option><option>Malayalam</option><option>English</option>
-            </select>
+            <select class="fin fsel" id="su-lg"><option value="">— Select —</option><option>Telugu</option><option>Hindi</option><option>Tamil</option><option>Kannada</option><option>Punjabi</option><option>Malayalam</option><option>English</option></select>
           </div>
-          <div class="fg"><label class="fl">Password</label><input class="fin" id="su-pw" type="password" placeholder="Min. 8 characters" oninput="chkPw(this);clrAlrt('su-alrt')"><div class="pwstr"><div class="pwbar" id="pwbar"></div></div><div class="ferr">Password must be at least 8 characters.</div></div>
-          <div class="fg"><label class="fl">Confirm Password</label><input class="fin" id="su-pw2" type="password" placeholder="Re-enter password" oninput="clrAlrt('su-alrt')"><div class="ferr">Passwords do not match.</div></div>
+          <div class="fg"><label class="fl">Password</label><input class="fin" id="su-pw" type="password" placeholder="Min. 8 characters" oninput="chkPw(this);clrA('su-alrt')"><div class="pwstr"><div class="pwbar" id="pwbar"></div></div><div class="ferr">Password must be at least 8 characters.</div></div>
+          <div class="fg"><label class="fl">Confirm Password</label><input class="fin" id="su-pw2" type="password" placeholder="Re-enter password" oninput="clrA('su-alrt')"><div class="ferr">Passwords do not match.</div></div>
           <button class="bsub" id="su-btn" onclick="doSignUp()"><span class="bt">Create Account</span><div class="bsp"></div></button>
           <div class="aswitch">Already have an account? <a onclick="swTab('in')">Sign in</a></div>
           <a class="bkl" onclick="showPage('pg-landing')">← Back to home</a>
@@ -388,7 +499,7 @@ body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;f
   </div>
 </div>
 
-<!-- RECORDER DASHBOARD -->
+<!-- ══════════════════════ RECORDER DASHBOARD ══════════════════════ -->
 <div class="page" id="pg-recorder">
   <div class="dsh">
     <div class="sb sb-rec">
@@ -401,18 +512,21 @@ body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;f
         <div class="ni" onclick="swR('r-ml')"><span class="ic">📚</span>My Memories</div>
         <div class="ni" onclick="swR('r-in')"><span class="ic">🌳</span>Inheritance Engine</div>
         <div class="sbsc">Consent & Security</div>
-        <div class="ni" onclick="swR('r-lk')"><span class="ic">🔒</span>Consent Locks</div>
+        <div class="ni" onclick="swR('r-cs')"><span class="ic">⚙️</span>Consent Settings</div>
+        <div class="ni" onclick="swR('r-lk')"><span class="ic">🔒</span>Lock Timeline</div>
         <div class="ni" onclick="swR('r-vt')"><span class="ic">🗝️</span>Apology Vault</div>
         <div class="ni" onclick="swR('r-ld')"><span class="ic">🔗</span>Tamper Ledger</div>
         <div class="sbsc">Family</div>
         <div class="ni" onclick="swR('r-fm')"><span class="ic">👨‍👩‍👧</span>Family Access</div>
+        <div class="ni" onclick="swR('r-dc')"><span class="ic">💬</span>Dialogue Threads<span class="bdg am" id="r-dc-bdg" style="display:none">0</span></div>
       </div>
       <div class="sbbot"><button class="slout" onclick="doLogout()">← Sign Out</button></div>
     </div>
     <div class="dmain" id="rec-main">
+
       <!-- Overview -->
       <div class="dp on" id="r-hm">
-        <div class="dh"><div><div class="dhtit">Your Legacy Overview</div><div class="dhsub">Everything you have preserved so far</div></div><div class="dhact"><button class="bf" style="padding:.5rem 1.1rem;font-size:.8rem;border-radius:8px" onclick="swR('r-rc')">+ New Recording</button></div></div>
+        <div class="dh"><div><div class="dhtit">Your Legacy Overview</div><div class="dhsub">Everything you have preserved so far</div></div><div class="dhact"><button class="bf" style="padding:.48rem 1.1rem;font-size:.78rem;border-radius:8px" onclick="swR('r-rc')">+ New Recording</button></div></div>
         <div style="padding:2rem 2.2rem">
           <div class="srow">
             <div class="stl a"><div class="stvi">🎙️</div><div class="stvl" id="st-rc">0</div><div class="stlb">Recordings Made</div></div>
@@ -423,101 +537,188 @@ body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;f
           <div class="twoc3">
             <div>
               <div class="sh">Recent Recordings</div>
-              <div id="r-hm-list"><div class="empty"><div class="ei">🎙️</div><div class="eh4">No recordings yet</div><p class="ep">Start with something simple — a memory, a recipe, or advice for a hard day.</p><button class="ecta" onclick="swR('r-rc')">Make Your First Recording</button></div></div>
+              <div id="r-hm-list"><div class="empty"><div class="ei">🎙️</div><div class="eh4">No recordings yet</div><p class="ep">Start with something simple — a memory, advice, or a recipe.</p><button class="ecta" onclick="swR('r-rc')">Make Your First Recording</button></div></div>
             </div>
             <div>
               <div class="sh">Profile Progress</div>
-              <div style="background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.4rem">
+              <div style="background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.3rem">
                 <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
-                  <div class="pring"><svg width="76" height="76" viewBox="0 0 76 76"><circle cx="38" cy="38" r="30" fill="none" stroke="var(--cream3)" stroke-width="6"/><circle cx="38" cy="38" r="30" fill="none" stroke="var(--terra)" stroke-width="6" stroke-dasharray="188" id="prog-c" stroke-dashoffset="188" stroke-linecap="round"/></svg><div class="prl"><div class="prp" id="prog-p">0%</div><div class="prs">Done</div></div></div>
-                  <div style="font-size:.78rem;color:var(--text3);line-height:1.8" id="prog-cats"></div>
+                  <div class="pring"><svg width="72" height="72" viewBox="0 0 72 72"><circle cx="36" cy="36" r="28" fill="none" stroke="var(--cream3)" stroke-width="6"/><circle cx="36" cy="36" r="28" fill="none" stroke="var(--terra)" stroke-width="6" stroke-dasharray="176" id="prog-c" stroke-dashoffset="176" stroke-linecap="round"/></svg><div class="prl"><div class="prp" id="prog-p">0%</div><div class="prs">Done</div></div></div>
+                  <div style="font-size:.74rem;color:var(--text3);line-height:1.8" id="prog-cats"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <!-- Record -->
       <div class="dp" id="r-rc">
         <div class="dh"><div><div class="dhtit">Record a Memory</div><div class="dhsub">Your voice, preserved forever</div></div></div>
         <div style="padding:2rem 2.2rem">
           <div class="sh">Choose a Category</div>
           <div class="cgrid" id="cat-g">
-            <div class="ctile on" data-cat="Life Wisdom" onclick="pickCat(this)"><div class="ci">📖</div><h4>Life Wisdom</h4><p>Values, beliefs, life lessons</p><span class="ctc" id="cc-Life Wisdom">0</span></div>
-            <div class="ctile" data-cat="Recipes" onclick="pickCat(this)"><div class="ci">🍛</div><h4>Recipes</h4><p>In hand measurements, in your voice</p><span class="ctc" id="cc-Recipes">0</span></div>
+            <div class="ctile on" data-cat="Life Wisdom" onclick="pickCat(this)"><div class="ci">📖</div><h4>Life Wisdom</h4><p>Values, beliefs, lessons</p><span class="ctc" id="cc-Life Wisdom">0</span></div>
+            <div class="ctile" data-cat="Recipes" onclick="pickCat(this)"><div class="ci">🍛</div><h4>Recipes</h4><p>In hand measurements</p><span class="ctc" id="cc-Recipes">0</span></div>
             <div class="ctile" data-cat="Love Messages" onclick="pickCat(this)"><div class="ci">❤️</div><h4>Love Messages</h4><p>For each person you love</p><span class="ctc" id="cc-Love Messages">0</span></div>
             <div class="ctile" data-cat="Family History" onclick="pickCat(this)"><div class="ci">🌾</div><h4>Family History</h4><p>Stories, places, origins</p><span class="ctc" id="cc-Family History">0</span></div>
             <div class="ctile" data-cat="Apology Vault" onclick="pickCat(this)"><div class="ci">🕊️</div><h4>Apology Vault</h4><p>Sealed until death</p><span class="ctc" id="cc-Apology Vault">0</span></div>
-            <div class="ctile" data-cat="Health History" onclick="pickCat(this)"><div class="ci">💊</div><h4>Health History</h4><p>For your family's future</p><span class="ctc" id="cc-Health History">0</span></div>
+            <div class="ctile" data-cat="Health History" onclick="pickCat(this)"><div class="ci">💊</div><h4>Health History</h4><p>For family's future</p><span class="ctc" id="cc-Health History">0</span></div>
           </div>
           <div class="rcard">
             <div class="sh">Recording Studio — <span id="rc-cl">Life Wisdom</span></div>
             <div class="fg"><label class="fl">Recording Title</label><input class="fin" id="rc-ti" placeholder="e.g. Advice for hard times…"></div>
-            <div style="display:flex;align-items:center;gap:1rem;margin-top:.5rem">
+            <div style="display:flex;align-items:center;gap:1rem;margin-top:.4rem">
               <div class="rwave" id="rwave"><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
               <div class="rtmr" id="rtmr">0:00</div>
             </div>
             <div class="rbtns">
               <button class="rbtn st" id="rc-sb" onclick="togRec()">🎙 Start Recording</button>
               <button class="rbtn sv" onclick="saveRec()">💾 Save Memory</button>
-            </div>
-          </div>
-          <div class="rcard">
-            <div class="sh">Set Consent Lock</div>
-            <p style="font-size:.78rem;color:var(--text3);margin-bottom:1rem;line-height:1.7">Choose when this recording unlocks for your family.</p>
-            <div class="lgrid">
-              <div class="lcard lt on" onclick="pickLock(this)"><div class="lcn">⏳ Immediately Available</div><div class="lcd">Family can access this as soon as it's saved</div></div>
-              <div class="lcard le" onclick="pickLock(this)"><div class="lcn">📅 Event-Triggered</div><div class="lcd">Graduation, Wedding, First Child…</div></div>
-              <div class="lcard la" onclick="pickLock(this)"><div class="lcn">🎂 Age-Locked</div><div class="lcd">Unlocks when recipient turns a specific age</div></div>
-              <div class="lcard ld" onclick="pickLock(this)"><div class="lcn">🔒 On Death Only</div><div class="lcd">Released only after you pass away</div></div>
+              <button class="rbtn cs" onclick="openCS()">⚙️ Consent Settings</button>
             </div>
           </div>
         </div>
       </div>
+
       <!-- Memories -->
       <div class="dp" id="r-ml">
-        <div class="dh"><div><div class="dhtit">My Memories</div><div class="dhsub" id="r-mc">0 recordings</div></div><div class="dhact"><button class="bf" style="padding:.5rem 1.1rem;font-size:.8rem;border-radius:8px" onclick="swR('r-rc')">+ New</button></div></div>
+        <div class="dh"><div><div class="dhtit">My Memories</div><div class="dhsub" id="r-mc">0 recordings</div></div><div class="dhact"><button class="bf" style="padding:.48rem 1.1rem;font-size:.78rem;border-radius:8px" onclick="swR('r-rc')">+ New</button></div></div>
         <div style="padding:2rem 2.2rem"><div id="r-ml-list"><div class="empty"><div class="ei">📚</div><div class="eh4">No memories saved yet</div><p class="ep">Every memory you record appears here.</p><button class="ecta" onclick="swR('r-rc')">Record Now</button></div></div></div>
       </div>
+
       <!-- Inheritance -->
       <div class="dp" id="r-in">
         <div class="dh"><div><div class="dhtit">Inheritance Engine</div><div class="dhsub">What truly matters can now be inherited</div></div></div>
-        <div style="padding:2rem 2.2rem">
-          <div class="igrid">
-            <div class="itile"><div class="ih"><span>📜</span><h4>Values Will</h4></div><p>Principles and life philosophy to carry forward through generations.</p><div class="itc" id="in-Life Wisdom">0 entries</div></div>
-            <div class="itile"><div class="ih"><span>🍛</span><h4>Recipe Archive</h4></div><p>In hand measurements. In your voice. The recipes that made your house smell like home.</p><div class="itc" id="in-Recipes">0 recipes</div></div>
-            <div class="itile"><div class="ih"><span>🌾</span><h4>Family History</h4></div><p>Stories, origins, ancestral places — preserved before they are lost.</p><div class="itc" id="in-Family History">0 entries</div></div>
-            <div class="itile"><div class="ih"><span>❤️</span><h4>Love Messages</h4></div><p>Personal messages for the people who matter most.</p><div class="itc" id="in-Love Messages">0 messages</div></div>
-            <div class="itile"><div class="ih"><span>💊</span><h4>Health Archive</h4></div><p>Medical history and records for your family's future.</p><div class="itc" id="in-Health History">0 entries</div></div>
-            <div class="itile" style="border-style:dashed;border-color:var(--bd2);cursor:pointer" onclick="swR('r-rc')"><div class="ih"><span>➕</span><h4>Add Recording</h4></div><p>Every recording strengthens your family's inheritance.</p></div>
+        <div style="padding:2rem 2.2rem"><div class="igrid">
+          <div class="itile"><div class="ih"><span>📜</span><h4>Values Will</h4></div><p>Principles to carry forward through generations.</p><div class="itc" id="in-Life Wisdom">0 entries</div></div>
+          <div class="itile"><div class="ih"><span>🍛</span><h4>Recipe Archive</h4></div><p>In your voice, in hand measurements.</p><div class="itc" id="in-Recipes">0 recipes</div></div>
+          <div class="itile"><div class="ih"><span>🌾</span><h4>Family History</h4></div><p>Stories, origins, ancestral places.</p><div class="itc" id="in-Family History">0 entries</div></div>
+          <div class="itile"><div class="ih"><span>❤️</span><h4>Love Messages</h4></div><p>Personal messages for people who matter most.</p><div class="itc" id="in-Love Messages">0 messages</div></div>
+          <div class="itile"><div class="ih"><span>💊</span><h4>Health Archive</h4></div><p>Medical history for your family's future.</p><div class="itc" id="in-Health History">0 entries</div></div>
+          <div class="itile" style="border-style:dashed;border-color:var(--bd2);cursor:pointer" onclick="swR('r-rc')"><div class="ih"><span>➕</span><h4>Add Recording</h4></div><p>Every recording strengthens your family's inheritance.</p></div>
+        </div></div>
+      </div>
+
+      <!-- CONSENT SETTINGS (matching screenshot exactly) -->
+      <div class="dp" id="r-cs">
+        <div class="dh"><div><div class="dhtit">Consent Settings</div><div class="dhsub">Control exactly when and how each memory unlocks</div></div></div>
+        <div class="cs-page">
+          <!-- Unlock Trigger -->
+          <div class="cs-section">
+            <div class="cs-section-title"><span>🔒</span>Unlock Trigger</div>
+            <div class="cs-radio-group" id="cs-trigger-group">
+              <label class="cs-radio selected" data-val="life_event" onclick="csPick(this,'trigger')">
+                <div class="cs-radio-dot"></div>
+                <div class="cs-radio-body"><h4>Life Event</h4><p>Unlocks at a specific milestone</p></div>
+              </label>
+              <label class="cs-radio" data-val="age_gate" onclick="csPick(this,'trigger')">
+                <div class="cs-radio-dot"></div>
+                <div class="cs-radio-body">
+                  <h4>Age Gate</h4><p>Unlocks when recipient reaches an age</p>
+                  <div class="age-inp-wrap" id="age-wrap"><input class="age-inp" id="cs-age" type="number" min="1" max="99" placeholder="25" oninput="saveCSState()"><span style="font-size:.78rem;color:var(--text3)">years old</span></div>
+                </div>
+              </label>
+              <label class="cs-radio" data-val="emotion_state" onclick="csPick(this,'trigger')">
+                <div class="cs-radio-dot"></div>
+                <div class="cs-radio-body"><h4>Emotion State</h4><p>AI detects recipient's emotional moment</p></div>
+              </label>
+              <label class="cs-radio" data-val="dead_mans_switch" onclick="csPick(this,'trigger')">
+                <div class="cs-radio-dot"></div>
+                <div class="cs-radio-body"><h4>Dead Man's Switch</h4><p>Releases upon confirmed death</p></div>
+              </label>
+              <label class="cs-radio" data-val="dual_auth" onclick="csPick(this,'trigger')">
+                <div class="cs-radio-dot"></div>
+                <div class="cs-radio-body"><h4>Dual Authentication</h4><p>Two family members unlock together</p></div>
+              </label>
+            </div>
           </div>
+          <!-- Life Event chips -->
+          <div class="cs-section" id="cs-life-event-section">
+            <div class="cs-section-title"><span>📅</span>Life Event</div>
+            <div class="chip-row" id="cs-chips">
+              <div class="chip on" data-ev="Land Dispute" onclick="csChip(this)">Land Dispute</div>
+              <div class="chip" data-ev="Marriage" onclick="csChip(this)">Marriage</div>
+              <div class="chip" data-ev="First Child" onclick="csChip(this)">First Child</div>
+              <div class="chip" data-ev="Graduation" onclick="csChip(this)">Graduation</div>
+              <div class="chip" data-ev="Bereavement" onclick="csChip(this)">Bereavement</div>
+              <div class="chip add" onclick="addCustomChip()">+ Custom</div>
+            </div>
+            <div class="custom-inp-wrap" id="custom-chip-wrap">
+              <div style="display:flex;gap:.6rem;margin-top:.6rem">
+                <input class="custom-inp" id="custom-chip-in" placeholder="e.g. Retirement, Court Verdict…" onkeydown="if(event.key==='Enter')confirmCustomChip()">
+                <button class="bf" style="padding:.5rem 1rem;font-size:.76rem" onclick="confirmCustomChip()">Add</button>
+              </div>
+            </div>
+          </div>
+          <!-- Additional Controls -->
+          <div class="cs-section">
+            <div class="cs-section-title"><span>⚙️</span>Additional Controls</div>
+            <div class="toggle-row">
+              <div class="toggle-body"><h4>Time-lock this message</h4><p>Seal for a set number of years before any unlock is possible</p>
+                <div class="age-inp-wrap" id="timelock-wrap"><input class="age-inp" id="cs-timelock-yrs" type="number" min="1" max="50" placeholder="5" oninput="saveCSState()"><span style="font-size:.78rem;color:var(--text3)">years</span></div>
+              </div>
+              <button class="toggle-sw" id="tog-timelock" onclick="togSwitch(this,'timelock')"></button>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-body"><h4>Require dual authentication</h4><p>Two family members must unlock simultaneously</p></div>
+              <button class="toggle-sw on" id="tog-dual" onclick="togSwitch(this,'dual')"></button>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-body"><h4>Allow recipient response</h4><p>Recipient can record a reply — cross-generational dialogue</p></div>
+              <button class="toggle-sw on" id="tog-reply" onclick="togSwitch(this,'reply')"></button>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-body"><h4>Tamper-evidence ledger</h4><p>Message timestamped on immutable ledger — unmodifiable</p></div>
+              <button class="toggle-sw on" id="tog-ledger" onclick="togSwitch(this,'ledger')"></button>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-body"><h4>Archive to village collective</h4><p>Share anonymised wisdom with community archive</p></div>
+              <button class="toggle-sw" id="tog-village" onclick="togSwitch(this,'village')"></button>
+            </div>
+          </div>
+          <button class="bf" style="width:100%;padding:.85rem;font-size:.88rem;margin-top:.5rem" onclick="saveCSFull()">Save Consent Settings</button>
         </div>
       </div>
-      <!-- Locks -->
+
+      <!-- Lock Timeline -->
       <div class="dp" id="r-lk">
-        <div class="dh"><div><div class="dhtit">Consent Locks</div><div class="dhsub">You control when and who receives each memory</div></div></div>
-        <div style="padding:2rem 2.2rem"><div style="background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.8rem"><div class="sh">Memory Release Timeline</div><div class="tl" id="r-tl"><div class="empty" style="border:none"><div class="ei">🔒</div><div class="eh4">No recordings yet</div><p class="ep">Record your first memory to see the timeline.</p></div></div></div></div>
+        <div class="dh"><div><div class="dhtit">Lock Timeline</div><div class="dhsub">When each memory releases</div></div></div>
+        <div style="padding:2rem 2.2rem"><div style="background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.7rem"><div class="sh">Memory Release Schedule</div><div class="tl" id="r-tl"><div class="empty" style="border:none"><div class="ei">🔒</div><div class="eh4">No recordings yet</div><p class="ep">Record your first memory to see the timeline.</p></div></div></div></div>
       </div>
+
       <!-- Vault -->
       <div class="dp" id="r-vt">
         <div class="dh"><div><div class="dhtit">Apology Vault</div><div class="dhsub">For words that could never be spoken while alive</div></div></div>
-        <div style="padding:2rem 2.2rem"><div style="background:linear-gradient(135deg,var(--cream2),var(--warm));border:1px solid var(--bd);border-radius:var(--r2);padding:2rem;border-left:3px solid var(--terra2);margin-bottom:1.5rem"><p style="font-family:'Lora',serif;font-style:italic;font-size:.93rem;color:var(--text2);line-height:1.85;max-width:520px">Some truths are too raw to speak while breathing. Some apologies need the protection of absence. The Vault holds what was left unsaid.</p></div><div class="sh">Sealed Entries</div><div id="r-vt-list"><div class="empty"><div class="ei">🗝️</div><div class="eh4">Vault is empty</div><p class="ep">Record a memory under "Apology Vault" category and set it to "On Death Only" to seal it here.</p><button class="ecta" onclick="swR('r-rc')">Add Vault Entry</button></div></div></div>
+        <div style="padding:2rem 2.2rem">
+          <div class="vault-quote"><p>Some truths are too raw to speak while breathing. Some apologies need the protection of absence. The Vault holds what was left unsaid — releasing it only when the time is right.</p></div>
+          <div class="sh">Sealed Entries</div><div id="r-vt-list"><div class="empty"><div class="ei">🗝️</div><div class="eh4">Vault is empty</div><p class="ep">Record under "Apology Vault" category to seal entries here.</p><button class="ecta" onclick="swR('r-rc')">Add Vault Entry</button></div></div>
+        </div>
       </div>
+
       <!-- Ledger -->
       <div class="dp" id="r-ld">
         <div class="dh"><div><div class="dhtit">Tamper Evidence Ledger</div><div class="dhsub">Every word, immutably yours. Forever.</div></div></div>
-        <div style="padding:2rem 2.2rem"><div class="lbox" id="r-lb"><div class="lem">No recordings yet. Every memory you save will appear here with a tamper-proof timestamp.</div></div></div>
+        <div style="padding:2rem 2.2rem"><div class="lbox" id="r-lb"><div class="lem">No recordings yet. Every memory you save appears here with a tamper-proof timestamp.</div></div></div>
       </div>
+
       <!-- Family -->
       <div class="dp" id="r-fm">
-        <div class="dh"><div><div class="dhtit">Family Access</div><div class="dhsub">Manage who receives your memories</div></div><div class="dhact"><button class="bf" style="padding:.5rem 1.1rem;font-size:.8rem;border-radius:8px" onclick="openFM()">+ Add Member</button></div></div>
+        <div class="dh"><div><div class="dhtit">Family Access</div><div class="dhsub">Manage who receives your memories</div></div><div class="dhact"><button class="bf" style="padding:.48rem 1.1rem;font-size:.78rem;border-radius:8px" onclick="openFM()">+ Add Member</button></div></div>
         <div style="padding:2rem 2.2rem"><div id="r-fm-list"><div class="empty"><div class="ei">👨‍👩‍👧</div><div class="eh4">No family members added</div><p class="ep">Add your family members so they can access your memories.</p><button class="ecta" onclick="openFM()">Add First Member</button></div></div></div>
       </div>
+
+      <!-- Dialogue Threads (recorder view) -->
+      <div class="dp" id="r-dc">
+        <div class="dh"><div><div class="dhtit">Dialogue Threads</div><div class="dhsub">Replies from your family across time</div></div></div>
+        <div style="padding:2rem 2.2rem"><div id="r-dc-list"><div class="empty"><div class="ei">💬</div><div class="eh4">No replies yet</div><p class="ep">When family members reply to your memories (if Allow Recipient Response is ON), the threads appear here.</p></div></div></div>
+      </div>
+
     </div>
   </div>
 </div>
 
-<!-- RECIPIENT DASHBOARD -->
+<!-- ══════════════════════ RECIPIENT DASHBOARD ══════════════════════ -->
 <div class="page" id="pg-recipient">
   <div class="dsh">
     <div class="sb sb-rcp">
@@ -527,15 +728,19 @@ body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;f
         <div class="sbsc">Memories</div>
         <div class="ni on" onclick="swP('p-hm')"><span class="ic">🏠</span>My Inheritance</div>
         <div class="ni" onclick="swP('p-cv')"><span class="ic">💬</span>Speak to Tata<span class="bdg">AI</span></div>
+        <div class="ni" onclick="swP('p-dc')"><span class="ic">🔄</span>Dialogue Threads</div>
         <div class="ni" onclick="swP('p-tl')"><span class="ic">🕰️</span>Memory Timeline</div>
         <div class="ni" onclick="swP('p-in')"><span class="ic">🌳</span>Inheritance Engine</div>
+        <div class="sbsc">Support</div>
+        <div class="ni" onclick="swP('p-gr')"><span class="ic">🫂</span>Grief Counsellor<span class="bdg gr">Live</span></div>
+        <div class="ni" onclick="swP('p-em')"><span class="ic">💫</span>Emotion Unlock</div>
         <div class="sbsc">Private</div>
         <div class="ni" onclick="swP('p-sl')"><span class="ic">🔒</span>Sealed Messages</div>
-        <div class="ni" onclick="swP('p-em')"><span class="ic">💫</span>Emotion Unlock</div>
       </div>
       <div class="sbbot"><button class="slout" onclick="doLogout()">← Sign Out</button></div>
     </div>
     <div class="dmain">
+
       <!-- Home -->
       <div class="dp on" id="p-hm">
         <div class="dh"><div><div class="dhtit">Your Inheritance</div><div class="dhsub" id="p-hs">Memories left for you</div></div></div>
@@ -546,9 +751,9 @@ body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;f
             <div class="stl g"><div class="stvi">💬</div><div class="stvl" id="p-cc">0</div><div class="stlb">Conversations</div></div>
             <div class="stl b"><div class="stvi">🌳</div><div class="stvl">4</div><div class="stlb">Inheritance Items</div></div>
           </div>
-          <div class="twoc" style="margin-bottom:1.8rem">
-            <div style="background:linear-gradient(135deg,var(--bark) 0%,#3a1e08 100%);border-radius:var(--r2);padding:2rem;color:#fff;cursor:pointer" onclick="swP('p-cv')"><div style="font-size:1.3rem;margin-bottom:.7rem">💬</div><h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:.4rem">Speak to Ramu Tata</h3><p style="font-size:.78rem;opacity:.72;line-height:1.65;margin-bottom:1.3rem">He is here. Tell him anything. He will respond as only he can.</p><button onclick="swP('p-cv')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;padding:.4rem 1rem;border-radius:8px;font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:700;cursor:pointer">Start Conversation →</button></div>
-            <div style="background:linear-gradient(135deg,rgba(184,92,54,.1),rgba(184,92,54,.03));border:1.5px solid rgba(184,92,54,.18);border-radius:var(--r2);padding:2rem"><div style="font-size:1.3rem;margin-bottom:.7rem">🌳</div><h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--bark);margin-bottom:.4rem">Inheritance Engine</h3><p style="font-size:.78rem;color:var(--text3);line-height:1.65;margin-bottom:1.3rem">Values, recipes, family wisdom — access everything preserved for you.</p><button onclick="swP('p-in')" style="background:var(--terra);border:none;color:#fff;padding:.4rem 1rem;border-radius:8px;font-family:'Nunito',sans-serif;font-size:.76rem;font-weight:700;cursor:pointer">View Inheritance →</button></div>
+          <div class="twoc" style="margin-bottom:1.6rem">
+            <div style="background:linear-gradient(135deg,var(--bark),#3a1e08);border-radius:var(--r2);padding:1.8rem;color:#fff;cursor:pointer" onclick="swP('p-cv')"><div style="font-size:1.25rem;margin-bottom:.6rem">💬</div><h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:.35rem">Speak to Ramu Tata</h3><p style="font-size:.76rem;opacity:.72;line-height:1.65;margin-bottom:1.2rem">He is here. Tell him anything.</p><button onclick="swP('p-cv')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;padding:.38rem .95rem;border-radius:8px;font-family:'Nunito',sans-serif;font-size:.74rem;font-weight:700;cursor:pointer">Start Conversation →</button></div>
+            <div style="background:linear-gradient(135deg,rgba(94,126,94,.12),rgba(94,126,94,.04));border:1.5px solid rgba(94,126,94,.22);border-radius:var(--r2);padding:1.8rem;cursor:pointer" onclick="swP('p-gr')"><div style="font-size:1.25rem;margin-bottom:.6rem">🫂</div><h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--bark);margin-bottom:.35rem">Grief Counsellor</h3><p style="font-size:.76rem;color:var(--text3);line-height:1.65;margin-bottom:1.2rem">Speak with a compassionate AI counsellor. Or connect to a real professional.</p><button onclick="swP('p-gr')" style="background:var(--sage);border:none;color:#fff;padding:.38rem .95rem;border-radius:8px;font-family:'Nunito',sans-serif;font-size:.74rem;font-weight:700;cursor:pointer">Open Support →</button></div>
           </div>
           <div class="sh">Available Memories</div>
           <div class="mlist">
@@ -558,70 +763,205 @@ body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;f
           </div>
         </div>
       </div>
-      <!-- Conv -->
+
+      <!-- Conversation with NLP -->
       <div class="dp" id="p-cv">
-        <div class="dh"><div><div class="dhtit">Speak to Ramu Tata</div><div class="dhsub">AI-powered · Anthropic Claude</div></div></div>
+        <div class="dh"><div><div class="dhtit">Speak to Ramu Tata</div><div class="dhsub">AI Memory · Anthropic Claude · NLP Emotion Detection Active</div></div></div>
         <div style="padding:2rem 2.2rem">
           <div class="cw">
-            <div class="ct"><div class="cava">ర</div><div class="cinf"><h4>Ramu Tata</h4><p>Retired School Teacher · Warangal · 1942–2021</p></div><div class="clv"><div class="cdot"></div>Memory Active</div></div>
+            <div class="ctop"><div class="cava">ర</div><div class="cinf"><h4>Ramu Tata</h4><p>Retired School Teacher · Warangal · 1942–2021</p></div><div class="clv"><div class="cdot"></div>Memory Active</div></div>
             <div class="cmsgs" id="c-msgs"><div class="mr ai"><div class="mrav">ర</div><div class="mb">Raa chinna ammayi… you look like you have something on your heart. Tata is here. In this house, we never let worries sit alone. Tell me.</div></div></div>
             <div class="tw" id="c-tw"><div class="td"></div><div class="td"></div><div class="td"></div><span class="tlbl">Ramu Tata is thinking…</span></div>
+            <!-- NLP BAR -->
+            <div class="nlp-bar" id="nlp-bar">
+              <span class="nlp-label">Emotion Detected:</span>
+              <span class="nlp-pill neutral" id="nlp-pill">Neutral</span>
+              <span style="font-size:.7rem;color:var(--text3)" id="nlp-conf"></span>
+              <span class="nlp-surf" id="nlp-surf" onclick="surfaceMemory()" style="display:none">Surface matching memory →</span>
+            </div>
             <div class="cps">
               <button class="cpb" onclick="setCP('Tata, I failed my exam. I feel like I let everyone down.')">I failed my exam…</button>
               <button class="cpb" onclick="setCP('Tata, I am scared about my future.')">Scared about future</button>
               <button class="cpb" onclick="setCP('Tata, I am getting married soon. I wish you were here.')">Getting married…</button>
               <button class="cpb" onclick="setCP('Tata, what advice would you give me for life?')">Life advice</button>
+              <button class="cpb" onclick="setCP('Tata, I am heartbroken and I don\'t know what to do.')">Heartbroken</button>
             </div>
-            <div class="cir"><input class="cin" id="c-in" placeholder="Tell Tata what's on your mind…" maxlength="300" onkeydown="if(event.key==='Enter')sendMsg()"><button class="csnd" id="c-snd" onclick="sendMsg()">Send</button></div>
+            <div class="cir">
+              <div class="cin-row">
+                <input class="cin" id="c-in" placeholder="Tell Tata what's on your mind…" maxlength="300" oninput="nlpDetect(this.value)" onkeydown="if(event.key==='Enter')sendMsg()">
+                <button class="csnd" id="c-snd" onclick="sendMsg()">Send</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- Dialogue Threads -->
+      <div class="dp" id="p-dc">
+        <div class="dh"><div><div class="dhtit">Dialogue Threads</div><div class="dhsub">Cross-generational conversations</div></div></div>
+        <div style="padding:2rem 2.2rem">
+          <p style="font-size:.82rem;color:var(--text3);line-height:1.82;margin-bottom:1.6rem;max-width:560px">When a recorder enables "Allow Recipient Response", you can add your own voice to their memory. These threads grow across time — a living family dialogue.</p>
+          <div id="p-dc-list">
+            <!-- Seeded demo threads -->
+            <div class="thread-card">
+              <div class="thread-hdr">
+                <div class="ctile" style="width:36px;height:36px;min-width:36px;border:none;padding:0;background:none;text-align:center;line-height:36px;font-size:1.1rem">📖</div>
+                <div class="thread-title"><h4>Advice for Hard Times</h4><p>From Ramu Tata · Recorded 2019 · Reply-enabled</p></div>
+                <span class="thread-badge tb-active">Active Thread</span>
+              </div>
+              <div class="thread-msgs" id="thread-wisdom">
+                <div class="tmsg orig"><div class="tmsg-ava">ర</div><div><div class="tmsg-bub">Raa chinna babu… when life becomes hard, remember the mango tree near our house. Every storm bent it but it never broke. That is how we Reddys are made. Bend, never break.</div><div class="tmsg-time">Ramu Tata · 2019</div></div></div>
+              </div>
+              <div class="thread-reply-bar">
+                <input class="thread-inp" id="ti-wisdom" placeholder="Write your reply to Tata…" onkeydown="if(event.key==='Enter')addThreadReply('thread-wisdom','ti-wisdom')">
+                <button class="thread-send" onclick="addThreadReply('thread-wisdom','ti-wisdom')">Reply</button>
+              </div>
+            </div>
+            <div class="thread-card">
+              <div class="thread-hdr">
+                <div style="font-size:1.1rem;flex-shrink:0">🍛</div>
+                <div class="thread-title" style="margin-left:.9rem"><h4>Mutton Curry — The 1962 Method</h4><p>From Harini Amma · Recipe Archive · Reply-enabled</p></div>
+                <span class="thread-badge tb-new">New Reply Pending</span>
+              </div>
+              <div class="thread-msgs" id="thread-recipe">
+                <div class="tmsg orig"><div class="tmsg-ava" style="background:linear-gradient(135deg,var(--terra),var(--terra2));color:#fff">H</div><div><div class="tmsg-bub">The secret is two whole cardamoms — not ground, never ground. And the oil must be smoking before the onions go in. Your great-grandmother taught me this in 1962.</div><div class="tmsg-time">Harini Amma · 2021</div></div></div>
+              </div>
+              <div class="thread-reply-bar">
+                <input class="thread-inp" id="ti-recipe" placeholder="Ask a question or share your memory of this dish…" onkeydown="if(event.key==='Enter')addThreadReply('thread-recipe','ti-recipe')">
+                <button class="thread-send" onclick="addThreadReply('thread-recipe','ti-recipe')">Reply</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Timeline -->
       <div class="dp" id="p-tl">
         <div class="dh"><div><div class="dhtit">Memory Timeline</div><div class="dhsub">When your inheritance unlocks</div></div></div>
-        <div style="padding:2rem 2.2rem"><div style="background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.8rem"><div class="tl">
+        <div style="padding:2rem 2.2rem"><div style="background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.7rem"><div class="tl">
           <div class="tlr"><div class="tldw"><div class="tld fill"></div><div class="tll"></div></div><div class="tlt">Now</div><div class="tlb"><h4>Core Conversations</h4><p>Speak to Ramu Tata anytime — the AI memory is always active</p><span class="tltag ok">✓ Always Available</span></div></div>
-          <div class="tlr"><div class="tldw"><div class="tld"></div><div class="tll"></div></div><div class="tlt">Graduation</div><div class="tlb"><h4>Wisdom for New Beginnings</h4><p>A message sealed by Ramu Tata for your graduation day</p><span class="tltag wt">📅 Event-Triggered</span></div></div>
-          <div class="tlr"><div class="tldw"><div class="tld"></div><div class="tll"></div></div><div class="tlt">Wedding Day</div><div class="tlb"><h4>Marriage Blessings</h4><p>Sealed blessings for your wedding day</p><span class="tltag wt">📅 Event-Triggered</span></div></div>
-          <div class="tlr"><div class="tldw"><div class="tld dim"></div><div class="tll"></div></div><div class="tlt">Age 25</div><div class="tlb"><h4>Financial & Life Wisdom</h4><p>Unlocks when you turn 25</p><span class="tltag sl">🔒 Age-Locked</span></div></div>
-          <div class="tlr"><div class="tldw"><div class="tld dim"></div></div><div class="tlt">After…</div><div class="tlb"><h4>The Deepest Truths</h4><p>Sealed messages releasing only after Tata is gone</p><span class="tltag sl">🔒 Sealed</span></div></div>
+          <div class="tlr"><div class="tldw"><div class="tld"></div><div class="tll"></div></div><div class="tlt">Graduation</div><div class="tlb"><h4>Wisdom for New Beginnings</h4><p>A message sealed by Ramu Tata for your graduation day</p><span class="tltag wt">📅 Life Event</span></div></div>
+          <div class="tlr"><div class="tldw"><div class="tld"></div><div class="tll"></div></div><div class="tlt">Marriage</div><div class="tlb"><h4>Marriage Blessings + Dual Auth</h4><p>Requires both you and a sibling to unlock together</p><span class="tltag wt">🔐 Dual Authentication</span></div></div>
+          <div class="tlr"><div class="tldw"><div class="tld dim"></div><div class="tll"></div></div><div class="tlt">Age 25</div><div class="tlb"><h4>Financial & Life Wisdom</h4><p>Age Gate · unlocks on your 25th birthday</p><span class="tltag sl">🎂 Age-Locked</span></div></div>
+          <div class="tlr"><div class="tldw"><div class="tld dim"></div><div class="tll"></div></div><div class="tlt">Bereavement</div><div class="tlb"><h4>Comfort for Grief</h4><p>Emotion State trigger · surfaces when grief is detected</p><span class="tltag sl">💫 Emotion-Triggered</span></div></div>
+          <div class="tlr"><div class="tldw"><div class="tld dim"></div></div><div class="tlt">Dead Man's Switch</div><div class="tlb"><h4>The Deepest Truths</h4><p>Sealed messages releasing only after confirmed passing</p><span class="tltag sl">🔒 Dead Man's Switch</span></div></div>
         </div></div></div>
       </div>
+
       <!-- Inheritance -->
       <div class="dp" id="p-in">
         <div class="dh"><div><div class="dhtit">Your Inheritance</div><div class="dhsub">What was preserved, just for you</div></div></div>
         <div style="padding:2rem 2.2rem"><div class="igrid">
           <div class="itile" onclick="toast('📖 Opening Values Will…')"><div class="ih"><span>📜</span><h4>Values Will</h4></div><p>Principles and life philosophy from Ramu Tata.</p></div>
-          <div class="itile" onclick="toast('🍛 Opening Recipe Archive…')"><div class="ih"><span>🍛</span><h4>Recipe Archive</h4></div><p>Recipes recorded in voice and hand measurements.</p></div>
-          <div class="itile" onclick="toast('🌾 Opening Family History…')"><div class="ih"><span>🌾</span><h4>Family History</h4></div><p>Stories, origins, and village histories preserved for you.</p></div>
-          <div class="itile" onclick="swP('p-cv')"><div class="ih"><span>💬</span><h4>Live Conversations</h4></div><p>Speak to Ramu Tata — respond to the life that keeps moving.</p></div>
+          <div class="itile" onclick="toast('🍛 Opening Recipe Archive…')"><div class="ih"><span>🍛</span><h4>Recipe Archive</h4></div><p>Recipes in voice and hand measurements.</p></div>
+          <div class="itile" onclick="toast('🌾 Opening Family History…')"><div class="ih"><span>🌾</span><h4>Family History</h4></div><p>Stories, origins, and village histories.</p></div>
+          <div class="itile" onclick="swP('p-cv')"><div class="ih"><span>💬</span><h4>Live Conversations</h4></div><p>Speak to Ramu Tata — the life that keeps moving.</p></div>
         </div></div>
       </div>
-      <!-- Sealed -->
-      <div class="dp" id="p-sl">
-        <div class="dh"><div><div class="dhtit">Sealed Messages</div><div class="dhsub">Waiting for the right time</div></div></div>
-        <div style="padding:2rem 2.2rem"><div style="background:linear-gradient(135deg,var(--cream2),var(--warm));border:1px solid var(--bd);border-radius:var(--r2);padding:2rem;border-left:3px solid var(--bark2);margin-bottom:1.5rem"><p style="font-family:'Lora',serif;font-style:italic;font-size:.92rem;color:var(--text2);line-height:1.85">Some messages were too precious to share while alive. They are sealed — in trust — until the time is right.</p></div>
-        <div class="mlist">
-          <div class="mit"><span class="mic">🔒</span><div class="mib"><div class="mit1">A Message from Ramu Tata</div><div class="mit2">Release: On passing · Recorded in life</div></div><span class="mlk ml-s">🔒 Sealed</span></div>
-          <div class="mit"><span class="mic">🎂</span><div class="mib"><div class="mit1">Financial Wisdom — Age 25</div><div class="mit2">Opens on your 25th birthday</div></div><span class="mlk ml-l">🎂 Waiting</span></div>
-          <div class="mit"><span class="mic">💛</span><div class="mib"><div class="mit1">For When You Become a Parent</div><div class="mit2">Event: First child</div></div><span class="mlk ml-l">📅 Waiting</span></div>
-        </div></div>
+
+      <!-- GRIEF COUNSELLOR -->
+      <div class="dp" id="p-gr">
+        <div class="dh"><div><div class="dhtit">Grief Counsellor</div><div class="dhsub">You are not alone in this</div></div></div>
+        <div style="padding:2rem 2.2rem">
+          <div class="grief-hero">
+            <h2>You don't have to carry this alone.</h2>
+            <p>Grief is not a problem to be solved. It is love with nowhere to go. Our AI counsellor is trained in compassionate grief support — or connect to a real professional.</p>
+            <div style="display:flex;gap:.8rem;flex-wrap:wrap">
+              <button class="bf" style="background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);box-shadow:none" onclick="setGriefMode('ai')">Talk to AI Counsellor</button>
+              <button class="bf" style="background:var(--sage);box-shadow:none" onclick="setGriefMode('professional')">Connect to Professional</button>
+            </div>
+          </div>
+          <div class="sh">Choose Support Mode</div>
+          <div class="grief-modes">
+            <div class="gmode on" id="gm-ai" onclick="setGriefMode('ai')"><div class="gic">🤖</div><h4>AI Counsellor</h4><p>Compassionate, available 24/7, CBT-informed responses</p></div>
+            <div class="gmode" id="gm-pro" onclick="setGriefMode('professional')"><div class="gic">👩‍⚕️</div><h4>Human Professional</h4><p>Connect to a trained grief counsellor in India</p></div>
+            <div class="gmode" id="gm-mem" onclick="setGriefMode('memory')"><div class="gic">💛</div><h4>Memory Processing</h4><p>Work through specific memories with guided reflection</p></div>
+          </div>
+          <!-- AI Counsellor Chat -->
+          <div id="grief-ai-section">
+            <div class="gchat">
+              <div class="gchat-top"><div class="gchat-ava">🌿</div><div class="gchat-inf"><h4>Ananya — Grief Counsellor AI</h4><p>CBT & ACT Informed · Grief Support Specialist</p></div><div class="gchat-live"><div class="cdot" style="background:var(--sage2)"></div>Available</div></div>
+              <div class="gchat-msgs" id="gc-msgs"><div class="gmr c"><div class="gmrav">🌿</div><div class="gmb">Hello. I'm Ananya. I'm here with you right now — there's no rush, no agenda. If you'd like to share what you're carrying today, I'm ready to listen. And if you'd rather just sit quietly for a moment first, that's okay too.</div></div></div>
+              <div class="tw" id="gc-tw" style="border-top:1px solid var(--bd);padding:.4rem 1.3rem"><div class="td" style="background:var(--sage2)"></div><div class="td" style="background:var(--sage2)"></div><div class="td" style="background:var(--sage2)"></div><span class="tlbl">Ananya is here…</span></div>
+              <div style="border-top:1px solid var(--bd);padding:.85rem 1.15rem;display:flex;gap:.6rem;background:var(--warm)">
+                <input class="cin" id="gc-in" placeholder="Share what's on your heart…" maxlength="400" onkeydown="if(event.key==='Enter')sendGriefMsg()">
+                <button class="csnd" style="background:var(--sage)" onclick="sendGriefMsg()">Send</button>
+              </div>
+            </div>
+          </div>
+          <!-- Professional Section -->
+          <div id="grief-pro-section" style="display:none">
+            <div class="grief-tools">
+              <div class="gtool" onclick="toast('📞 Connecting to iCall — 9152987821')"><h4>📞 iCall (TISS Mumbai)</h4><p>Free counselling service by trained psychology professionals. Mon–Sat, 8am–10pm.</p><p style="margin-top:.5rem;font-size:.72rem;color:var(--terra);font-weight:700">9152987821</p></div>
+              <div class="gtool" onclick="toast('📞 Connecting to Vandrevala Foundation…')"><h4>📞 Vandrevala Foundation</h4><p>24/7 mental health helpline in India. Confidential support in multiple languages.</p><p style="margin-top:.5rem;font-size:.72rem;color:var(--terra);font-weight:700">1860-2662-345</p></div>
+              <div class="gtool" onclick="toast('📧 Opening booking form for online grief counsellor…')"><h4>💻 Online Grief Therapist</h4><p>Book a 50-minute session with a licensed grief therapist via video. ₹800–₹1,500.</p><p style="margin-top:.5rem;font-size:.72rem;color:var(--sage);font-weight:700">Book Session →</p></div>
+              <div class="gtool" onclick="toast('👥 Opening grief support group directory…')"><h4>👥 Support Groups</h4><p>Find grief support groups near you or online — peer support from those who understand.</p><p style="margin-top:.5rem;font-size:.72rem;color:var(--sage);font-weight:700">Find a Group →</p></div>
+            </div>
+            <div class="crisis-banner"><span style="font-size:1.3rem">🆘</span><p>If you are in crisis or having thoughts of self-harm, please reach out immediately. iCall: 9152987821 · Vandrevala: 1860-2662-345 · NIMHANS: 080-46110007</p><button class="crisis-btn" onclick="toast('📞 Calling iCall now…')">Call Now</button></div>
+          </div>
+          <!-- Memory Processing -->
+          <div id="grief-mem-section" style="display:none">
+            <div style="background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.7rem">
+              <div class="sh">Guided Grief Reflection</div>
+              <p style="font-size:.82rem;color:var(--text3);line-height:1.8;margin-bottom:1.4rem">Choose a reflection practice. Take your time. There are no right answers here.</p>
+              <div class="egrid">
+                <div class="ctile" onclick="startReflection('gratitude')"><div class="ci">🙏</div><h4>Gratitude</h4><p>What do you miss most about them?</p></div>
+                <div class="ctile" onclick="startReflection('letter')"><div class="ci">✉️</div><h4>Unsent Letter</h4><p>Write what you never got to say</p></div>
+                <div class="ctile" onclick="startReflection('memory')"><div class="ci">🌅</div><h4>Favourite Memory</h4><p>Describe one moment in detail</p></div>
+                <div class="ctile" onclick="startReflection('legacy')"><div class="ci">🌱</div><h4>Their Legacy</h4><p>How do they live on through you?</p></div>
+                <div class="ctile" onclick="startReflection('release')"><div class="ci">🕊️</div><h4>Release</h4><p>What do you need to let go of?</p></div>
+                <div class="ctile" onclick="startReflection('future')"><div class="ci">✨</div><h4>Moving Forward</h4><p>What would they want for you now?</p></div>
+              </div>
+              <div id="reflection-area" style="display:none;margin-top:1.2rem">
+                <div style="background:var(--cream2);border-radius:var(--r2);padding:1.4rem;margin-bottom:.9rem"><p id="reflection-prompt" style="font-family:'Lora',serif;font-style:italic;font-size:.95rem;color:var(--text2);line-height:1.85"></p></div>
+                <textarea class="fin" id="reflection-text" rows="5" placeholder="Write freely, without judgment…" style="resize:vertical;line-height:1.8"></textarea>
+                <button class="bf" style="margin-top:.8rem;padding:.6rem 1.4rem;font-size:.8rem" onclick="processReflection()">Reflect with AI →</button>
+              </div>
+              <div id="reflection-response" style="display:none;margin-top:1rem;background:rgba(94,126,94,.06);border:1px solid rgba(94,126,94,.15);border-radius:var(--r2);padding:1.4rem"><div class="tw on" id="ref-tw" style="border:none;padding:0;margin-bottom:.8rem"><div class="td" style="background:var(--sage2)"></div><div class="td" style="background:var(--sage2)"></div><div class="td" style="background:var(--sage2)"></div><span class="tlbl" style="color:var(--sage)">Ananya is reflecting…</span></div><p id="ref-text" style="font-family:'Lora',serif;font-style:italic;font-size:.9rem;color:var(--text2);line-height:1.85"></p></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <!-- Emotions -->
+
+      <!-- Emotion Unlock -->
       <div class="dp" id="p-em">
         <div class="dh"><div><div class="dhtit">Emotion-State Unlock</div><div class="dhsub">The right memory for the right feeling</div></div></div>
-        <div style="padding:2rem 2.2rem"><p style="font-size:.84rem;color:var(--text3);line-height:1.85;margin-bottom:1.8rem;max-width:540px">Heiryn surfaces the exact memory your loved one recorded for this emotional moment.</p>
-        <div class="egrid">
-          <div class="ctile" onclick="emoU(this,'grief')"><div class="ci">😢</div><h4>Grief</h4><p>Missing someone deeply</p></div>
-          <div class="ctile" onclick="emoU(this,'anxiety')"><div class="ci">😰</div><h4>Anxiety</h4><p>Scared about the future</p></div>
-          <div class="ctile" onclick="emoU(this,'joy')"><div class="ci">🎉</div><h4>Celebration</h4><p>A milestone achieved</p></div>
-          <div class="ctile" onclick="emoU(this,'heartbreak')"><div class="ci">💔</div><h4>Heartbreak</h4><p>Feeling broken</p></div>
-          <div class="ctile" onclick="emoU(this,'confusion')"><div class="ci">🌀</div><h4>Confusion</h4><p>Lost and unsure</p></div>
-          <div class="ctile" onclick="emoU(this,'gratitude')"><div class="ci">🙏</div><h4>Gratitude</h4><p>Wanting to share joy</p></div>
-        </div>
-        <div id="emo-r" style="display:none;margin-top:1.5rem;background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.8rem"><div style="font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);margin-bottom:.7rem;font-weight:700">Memory Surfaced</div><h4 id="emo-t" style="font-family:'Lora',serif;font-size:1.05rem;color:var(--bark);margin-bottom:.4rem"></h4><p id="emo-d" style="font-size:.82rem;color:var(--text3);line-height:1.7"></p><button style="margin-top:1rem;background:var(--terra);border:none;color:#fff;padding:.55rem 1.3rem;border-radius:8px;font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer" onclick="swP('p-cv')">Speak to Tata →</button></div>
+        <div style="padding:2rem 2.2rem">
+          <p style="font-size:.82rem;color:var(--text3);line-height:1.85;margin-bottom:1.7rem;max-width:540px">Heiryn's NLP engine detects your emotional state in real-time. Select your feeling below to surface the exact memory your loved one recorded for this moment.</p>
+          <div class="egrid">
+            <div class="ctile" onclick="emoU(this,'grief')"><div class="ci">😢</div><h4>Grief</h4><p>Missing someone deeply</p></div>
+            <div class="ctile" onclick="emoU(this,'anxiety')"><div class="ci">😰</div><h4>Anxiety</h4><p>Scared about the future</p></div>
+            <div class="ctile" onclick="emoU(this,'joy')"><div class="ci">🎉</div><h4>Celebration</h4><p>A milestone achieved</p></div>
+            <div class="ctile" onclick="emoU(this,'heartbreak')"><div class="ci">💔</div><h4>Heartbreak</h4><p>Feeling broken</p></div>
+            <div class="ctile" onclick="emoU(this,'confusion')"><div class="ci">🌀</div><h4>Confusion</h4><p>Lost and unsure</p></div>
+            <div class="ctile" onclick="emoU(this,'gratitude')"><div class="ci">🙏</div><h4>Gratitude</h4><p>Wanting to share joy</p></div>
+          </div>
+          <div id="emo-r" style="display:none;margin-top:1.4rem;background:var(--warm);border:1px solid var(--bd);border-radius:var(--r2);padding:1.7rem">
+            <div style="font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);margin-bottom:.65rem;font-weight:700">Memory Surfaced by NLP Engine</div>
+            <h4 id="emo-t" style="font-family:'Lora',serif;font-size:1.02rem;color:var(--bark);margin-bottom:.38rem"></h4>
+            <p id="emo-d" style="font-size:.8rem;color:var(--text3);line-height:1.7"></p>
+            <div style="display:flex;gap:.7rem;margin-top:1rem;flex-wrap:wrap">
+              <button style="background:var(--terra);border:none;color:#fff;padding:.52rem 1.2rem;border-radius:8px;font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer" onclick="swP('p-cv')">Speak to Tata →</button>
+              <button style="background:var(--sage);border:none;color:#fff;padding:.52rem 1.2rem;border-radius:8px;font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer" onclick="swP('p-gr')">Talk to Counsellor →</button>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Sealed Messages -->
+      <div class="dp" id="p-sl">
+        <div class="dh"><div><div class="dhtit">Sealed Messages</div><div class="dhsub">Waiting for the right time</div></div></div>
+        <div style="padding:2rem 2.2rem">
+          <div class="vault-quote" style="margin-bottom:1.3rem"><p>Some messages were too precious to share while alive. They are sealed — in trust — until the time is right. When they open, they open completely.</p></div>
+          <div class="mlist">
+            <div class="mit"><span class="mic">🔒</span><div class="mib"><div class="mit1">A Message from Ramu Tata</div><div class="mit2">Dead Man's Switch · Dual Authentication required</div></div><span class="mlk ml-s">🔒 Sealed</span></div>
+            <div class="mit"><span class="mic">🎂</span><div class="mib"><div class="mit1">Financial Wisdom — Age 25</div><div class="mit2">Age Gate · Opens on your 25th birthday</div></div><span class="mlk ml-l">🎂 Waiting</span></div>
+            <div class="mit"><span class="mic">💛</span><div class="mib"><div class="mit1">For When You Become a Parent</div><div class="mit2">Life Event: First Child · Time-locked 5 years first</div></div><span class="mlk ml-l">📅 Waiting</span></div>
+            <div class="mit"><span class="mic">💫</span><div class="mib"><div class="mit1">A Message for Bereavement</div><div class="mit2">Emotion State trigger · NLP will surface this automatically</div></div><span class="mlk ml-l">💫 Emotion-Triggered</span></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -631,7 +971,7 @@ body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;f
   <div class="mbox">
     <button class="mc" onclick="closeFM()">×</button>
     <h3>Add Family Member</h3>
-    <p>Add someone who should receive your memories. They will need their own Recipient account to access them.</p>
+    <p class="msub">Add someone who should receive your memories. They will need their own Recipient account.</p>
     <div class="aalert" id="fm-alrt"></div>
     <div class="fg"><label class="fl">Name</label><input class="fin" id="fm-nm" placeholder="Family member's full name"></div>
     <div class="fg"><label class="fl">Relationship</label><input class="fin" id="fm-rl" placeholder="e.g. Daughter, Son, Brother"></div>
@@ -643,7 +983,7 @@ body{background:var(--cream);color:var(--text);font-family:'Nunito',sans-serif;f
 <div class="toast" id="toast-el"></div>
 
 <script>
-// ── STORAGE ──
+// ══ STORAGE ══
 const DB={
   accs:()=>{try{return JSON.parse(localStorage.getItem('hy_accs')||'{}')}catch{return{}}},
   saveAccs:(a)=>localStorage.setItem('hy_accs',JSON.stringify(a)),
@@ -652,44 +992,40 @@ const DB={
   clrSess:()=>localStorage.removeItem('hy_sess'),
   ud:(em)=>{try{return JSON.parse(localStorage.getItem('hy_d_'+em)||'null')}catch{return null}},
   saveUd:(em,d)=>localStorage.setItem('hy_d_'+em,JSON.stringify(d)),
-  defUd:(nm,role,lang)=>({nm,role,lang,recs:[],fam:[],convs:0,created:new Date().toISOString()})
+  defUd:(nm,role,lang)=>({nm,role,lang,recs:[],fam:[],convs:0,gcConvs:0,threads:{},csState:{trigger:'life_event',lifeEvents:['Land Dispute'],toggles:{timelock:false,timelockYrs:5,dual:true,reply:true,ledger:true,village:false}},created:new Date().toISOString()})
 };
 function hpw(pw){let h=0;for(let i=0;i<pw.length;i++){h=((h<<5)-h)+pw.charCodeAt(i);h|=0}return'h_'+Math.abs(h).toString(36)+pw.length}
-function vEmail(e){return/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
+function vEm(e){return/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
+
+// ══ PAGE ══
 function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
 function goAuth(t){showPage('pg-auth');swTab(t)}
 function goAuthRole(t,r){goAuth(t);pickRole(r)}
 
-// ── AUTH TAB ──
+// ══ AUTH ══
 let _role='recorder';
-function swTab(t){
-  document.getElementById('tab-in').classList.toggle('on',t==='in');
-  document.getElementById('tab-up').classList.toggle('on',t==='up');
-  document.getElementById('f-si').style.display=t==='in'?'':'none';
-  document.getElementById('f-su').style.display=t==='up'?'':'none';
-}
+function swTab(t){document.getElementById('tab-in').classList.toggle('on',t==='in');document.getElementById('tab-up').classList.toggle('on',t==='up');document.getElementById('f-si').style.display=t==='in'?'':'none';document.getElementById('f-su').style.display=t==='up'?'':'none'}
 function pickRole(r){_role=r;document.getElementById('ro-rec').classList.toggle('on',r==='recorder');document.getElementById('ro-rcp').classList.toggle('on',r==='recipient')}
 function chkPw(el){const v=el.value,bar=document.getElementById('pwbar');const s=v.length<6?0:v.length<8?1:v.length<12?2:3;bar.style.background=['#c0392b','#e67e22','#f1c40f','#27ae60'][s];bar.style.width=v.length?['20%','45%','70%','100%'][s]:'0'}
-function showAlrt(id,msg,t){const el=document.getElementById(id);el.className='aalert '+t+' on';el.textContent=msg}
-function clrAlrt(id){document.getElementById(id).classList.remove('on')}
+function showA(id,msg,t){const el=document.getElementById(id);el.className='aalert '+t+' on';el.textContent=msg}
+function clrA(id){document.getElementById(id).classList.remove('on')}
 function setLd(id,on){const b=document.getElementById(id);b.classList.toggle('ld',on);b.disabled=on}
 
 function doSignIn(){
   const em=document.getElementById('si-em').value.trim().toLowerCase();
   const pw=document.getElementById('si-pw').value;
   let ok=true;
-  if(!vEmail(em)){document.getElementById('si-em').classList.add('err');ok=false}else document.getElementById('si-em').classList.remove('err');
+  if(!vEm(em)){document.getElementById('si-em').classList.add('err');ok=false}else document.getElementById('si-em').classList.remove('err');
   if(!pw){document.getElementById('si-pw').classList.add('err');ok=false}else document.getElementById('si-pw').classList.remove('err');
   if(!ok)return;
   setLd('si-btn',true);
   setTimeout(()=>{
     const accs=DB.accs();const acc=accs[em];
-    if(!acc){showAlrt('si-alrt','No account found with this email. Please create an account first.','err');setLd('si-btn',false);return}
-    if(acc.pwh!==hpw(pw)){showAlrt('si-alrt','Incorrect password. Please try again.','err');setLd('si-btn',false);return}
+    if(!acc){showA('si-alrt','No account found with this email. Please create an account first.','err');setLd('si-btn',false);return}
+    if(acc.pwh!==hpw(pw)){showA('si-alrt','Incorrect password. Please try again.','err');setLd('si-btn',false);return}
     DB.saveSess({em,role:acc.role});setLd('si-btn',false);launch(em,acc.role);
   },700);
 }
-
 function doSignUp(){
   const nm=document.getElementById('su-nm').value.trim();
   const em=document.getElementById('su-em').value.trim().toLowerCase();
@@ -698,53 +1034,49 @@ function doSignUp(){
   const pw2=document.getElementById('su-pw2').value;
   let ok=true;
   if(!nm){document.getElementById('su-nm').classList.add('err');ok=false}else document.getElementById('su-nm').classList.remove('err');
-  if(!vEmail(em)){document.getElementById('su-em').classList.add('err');ok=false}else document.getElementById('su-em').classList.remove('err');
-  if(!lg){showAlrt('su-alrt','Please select your primary language.','err');ok=false}
+  if(!vEm(em)){document.getElementById('su-em').classList.add('err');ok=false}else document.getElementById('su-em').classList.remove('err');
+  if(!lg){showA('su-alrt','Please select your primary language.','err');ok=false}
   if(pw.length<8){document.getElementById('su-pw').classList.add('err');ok=false}else document.getElementById('su-pw').classList.remove('err');
   if(pw!==pw2){document.getElementById('su-pw2').classList.add('err');ok=false}else document.getElementById('su-pw2').classList.remove('err');
   if(!ok)return;
   setLd('su-btn',true);
   setTimeout(()=>{
     const accs=DB.accs();
-    if(accs[em]){showAlrt('su-alrt','An account with this email already exists. Please sign in instead.','err');setLd('su-btn',false);return}
+    if(accs[em]){showA('su-alrt','An account with this email already exists. Please sign in.','err');setLd('su-btn',false);return}
     accs[em]={nm,role:_role,lg,pwh:hpw(pw),created:new Date().toISOString()};
     DB.saveAccs(accs);DB.saveUd(em,DB.defUd(nm,_role,lg));DB.saveSess({em,role:_role});
-    setLd('su-btn',false);showAlrt('su-alrt','✓ Account created! Taking you to your dashboard…','ok');
+    setLd('su-btn',false);showA('su-alrt','✓ Account created! Taking you to your dashboard…','ok');
     setTimeout(()=>launch(em,_role),900);
   },800);
 }
-
 function launch(em,role){
   const data=DB.ud(em);if(!data)return;
   if(role==='recorder'){
     document.getElementById('rec-av').textContent=data.nm[0].toUpperCase();
     document.getElementById('rec-un').textContent=data.nm;
     document.getElementById('rec-ue').textContent=em;
-    showPage('pg-recorder');swR('r-hm');renderRec(em);
-  } else {
+    showPage('pg-recorder');swR('r-hm');loadCSState(em);
+  }else{
     document.getElementById('rcp-av').textContent=data.nm[0].toUpperCase();
     document.getElementById('rcp-un').textContent=data.nm;
     document.getElementById('rcp-ue').textContent=em;
-    showPage('pg-recipient');swP('p-hm');renderRcp(em);
+    showPage('pg-recipient');swP('p-hm');
   }
 }
 function doLogout(){DB.clrSess();showPage('pg-landing')}
-
-// Auto-login
 (function(){const s=DB.sess();if(s&&s.em){const a=DB.accs();if(a[s.em])launch(s.em,s.role)}})();
 
-// ── RECORDER PANELS ──
-const RP=['r-hm','r-rc','r-ml','r-in','r-lk','r-vt','r-ld','r-fm'];
+// ══ RECORDER PANELS ══
+const RP=['r-hm','r-rc','r-ml','r-in','r-cs','r-lk','r-vt','r-ld','r-fm','r-dc'];
 function swR(id){
   RP.forEach(p=>document.getElementById(p).classList.toggle('on',p===id));
   document.querySelectorAll('#pg-recorder .ni').forEach(n=>{n.classList.toggle('on',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+id+"'"))});
   const s=DB.sess();if(s)renderRec(s.em);
 }
-
 function renderRec(em){
   const d=DB.ud(em);if(!d)return;
   const recs=d.recs||[];const fam=d.fam||[];
-  const locked=recs.filter(r=>r.lock!=='Immediately Available').length;
+  const locked=recs.filter(r=>r.lock&&r.lock!=='Immediately Available').length;
   document.getElementById('st-rc').textContent=recs.length;
   document.getElementById('st-lk').textContent=locked;
   document.getElementById('st-fm').textContent=fam.length;
@@ -753,49 +1085,45 @@ function renderRec(em){
   const pct=Math.round((done/cats.length)*100);
   document.getElementById('st-pg').textContent=pct+'%';
   document.getElementById('prog-p').textContent=pct+'%';
-  document.getElementById('prog-c').setAttribute('stroke-dashoffset',188-(188*pct/100));
-  // Cat counts
+  document.getElementById('prog-c').setAttribute('stroke-dashoffset',176-(176*pct/100));
   cats.forEach(c=>{const el=document.getElementById('cc-'+c);if(el)el.textContent=recs.filter(r=>r.cat===c).length});
-  // Prog cats
   const pc=document.getElementById('prog-cats');
-  if(pc)pc.innerHTML=cats.map(c=>{const h=recs.some(r=>r.cat===c);return`<div style="padding:.3rem 0;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;font-size:.74rem"><span>${c}</span><span style="color:${h?'var(--sage)':'var(--dust2)'};font-weight:700">${h?'✓':'—'}</span></div>`}).join('');
-  // Home list
+  if(pc)pc.innerHTML=cats.map(c=>{const h=recs.some(r=>r.cat===c);return`<div style="padding:.28rem 0;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;font-size:.72rem"><span>${c}</span><span style="color:${h?'var(--sage)':'var(--dust2)'};font-weight:700">${h?'✓':'—'}</span></div>`}).join('');
   const hl=document.getElementById('r-hm-list');
-  if(hl){if(!recs.length){hl.innerHTML=`<div class="empty"><div class="ei">🎙️</div><div class="eh4">No recordings yet</div><p class="ep">Start with something simple — a memory, advice, or a recipe.</p><button class="ecta" onclick="swR('r-rc')">Make Your First Recording</button></div>`}else{hl.innerHTML=`<div class="mlist">${[...recs].reverse().slice(0,5).map(r=>mItem(r,em)).join('')}</div>`}}
-  // Mem list
+  if(hl){if(!recs.length){hl.innerHTML=`<div class="empty"><div class="ei">🎙️</div><div class="eh4">No recordings yet</div><p class="ep">Start with something simple.</p><button class="ecta" onclick="swR('r-rc')">Make First Recording</button></div>`}else{hl.innerHTML=`<div class="mlist">${[...recs].reverse().slice(0,5).map(r=>mIt(r,em)).join('')}</div>`}}
   const ml=document.getElementById('r-ml-list'),mc=document.getElementById('r-mc');
-  if(ml){if(mc)mc.textContent=recs.length+' recording'+(recs.length!==1?'s':'');if(!recs.length){ml.innerHTML=`<div class="empty"><div class="ei">📚</div><div class="eh4">No memories saved yet</div><p class="ep">Every memory you record appears here.</p><button class="ecta" onclick="swR('r-rc')">Record Now</button></div>`}else{ml.innerHTML=`<div class="mlist">${[...recs].reverse().map(r=>mItem(r,em)).join('')}</div>`}}
-  // Inheritance
-  const catLabels={['Life Wisdom']:'entr',['Recipes']:'recipe',['Love Messages']:'message',['Family History']:'entr',['Health History']:'entr',['Apology Vault']:'entr'};
+  if(ml){if(mc)mc.textContent=recs.length+' recording'+(recs.length!==1?'s':'');if(!recs.length){ml.innerHTML=`<div class="empty"><div class="ei">📚</div><div class="eh4">No memories saved yet</div><p class="ep">Every memory appears here.</p><button class="ecta" onclick="swR('r-rc')">Record Now</button></div>`}else{ml.innerHTML=`<div class="mlist">${[...recs].reverse().map(r=>mIt(r,em)).join('')}</div>`}}
   cats.forEach(c=>{const el=document.getElementById('in-'+c);if(el){const n=recs.filter(r=>r.cat===c).length;el.textContent=n+(c==='Recipes'?' recipe':' entr')+(n!==1?(c==='Recipes'?'s':'ies'):(c==='Recipes'?'':'y'))}});
-  // Locks TL
   const tl=document.getElementById('r-tl');
-  if(tl){if(!recs.length){tl.innerHTML=`<div class="empty" style="border:none"><div class="ei">🔒</div><div class="eh4">No recordings yet</div><p class="ep">Record your first memory to see the timeline.</p></div>`}else{const g={};recs.forEach(r=>{if(!g[r.lock])g[r.lock]=[];g[r.lock].push(r)});tl.innerHTML=Object.entries(g).map(([lk,it])=>`<div class="tlr"><div class="tldw"><div class="tld ${lk==='Immediately Available'?'fill':'dim'}"></div></div><div class="tlt" style="font-size:.65rem">${lk}</div><div class="tlb"><h4>${it.length} recording${it.length>1?'s':''}</h4><p>${it.map(i=>i.title).join(', ')}</p><span class="tltag ${lk==='Immediately Available'?'ok':'sl'}">${lk==='Immediately Available'?'✓ Open':'🔒 Locked'}</span></div></div>`).join('')}}
-  // Vault
+  if(tl){if(!recs.length){tl.innerHTML=`<div class="empty" style="border:none"><div class="ei">🔒</div><div class="eh4">No recordings yet</div></div>`}else{const g={};recs.forEach(r=>{const k=r.lock||'Immediately Available';if(!g[k])g[k]=[];g[k].push(r)});tl.innerHTML=Object.entries(g).map(([lk,it])=>`<div class="tlr"><div class="tldw"><div class="tld ${lk==='Immediately Available'?'fill':'dim'}"></div></div><div class="tlt" style="font-size:.64rem">${lk}</div><div class="tlb"><h4>${it.length} recording${it.length>1?'s':''}</h4><p>${it.map(i=>i.title).join(', ')}</p><span class="tltag ${lk==='Immediately Available'?'ok':'sl'}">${lk==='Immediately Available'?'✓ Open':'🔒 Locked'}</span></div></div>`).join('')}}
   const vl=document.getElementById('r-vt-list');
-  if(vl){const vr=recs.filter(r=>r.cat==='Apology Vault'||r.lock==='On Death Only');if(!vr.length){vl.innerHTML=`<div class="empty"><div class="ei">🗝️</div><div class="eh4">Vault is empty</div><p class="ep">Record under "Apology Vault" and set to "On Death Only" to seal it here.</p><button class="ecta" onclick="swR('r-rc')">Add Vault Entry</button></div>`}else{vl.innerHTML=`<div class="mlist">${vr.map(r=>`<div class="mit"><span class="mic">🔒</span><div class="mib"><div class="mit1">${r.title}</div><div class="mit2">Sealed · ${fmtDate(r.at)}</div></div><span class="mlk ml-s">🔒 Sealed</span></div>`).join('')}</div>`}}
-  // Ledger
+  if(vl){const vr=recs.filter(r=>r.cat==='Apology Vault'||r.lock==='Dead Man\'s Switch');if(!vr.length){vl.innerHTML=`<div class="empty"><div class="ei">🗝️</div><div class="eh4">Vault is empty</div><p class="ep">Record under "Apology Vault" to seal entries here.</p><button class="ecta" onclick="swR('r-rc')">Add Entry</button></div>`}else{vl.innerHTML=`<div class="mlist">${vr.map(r=>`<div class="mit"><span class="mic">🔒</span><div class="mib"><div class="mit1">${r.title}</div><div class="mit2">Sealed · ${fmtD(r.at)}</div></div><span class="mlk ml-s">🔒 Sealed</span></div>`).join('')}</div>`}}
   const lb=document.getElementById('r-lb');
-  if(lb){if(!recs.length){lb.innerHTML=`<div class="lem">No recordings yet. Every memory you save appears here with a tamper-proof timestamp.</div>`}else{lb.innerHTML=`<div class="lhdr">BLOCKCHAIN LEDGER · HEIRYN TAMPER EVIDENCE · CHAIN INTEGRITY: ✓ INTACT</div>${[...recs].reverse().map(r=>`<div class="lrow"><span class="lhsh">${r.hash}</span><span class="ltm">${r.at}</span><span class="lev">Recording: "${r.title}" — ${r.cat} — Lock: ${r.lock}</span><span class="lok">✓ Verified</span></div>`).join('')}<div style="text-align:center;margin-top:.8rem;color:rgba(255,255,255,.25);font-size:.6rem;letter-spacing:.15em">${recs.length} ENTRIES · LAST BLOCK: ${recs[recs.length-1].at.split('T')[0]}</div>`}}
-  // Family
+  if(lb){if(!recs.length){lb.innerHTML=`<div class="lem">No recordings yet. Every memory saved here appears with a tamper-proof timestamp.</div>`}else{lb.innerHTML=`<div class="lhdr">BLOCKCHAIN LEDGER · HEIRYN TAMPER EVIDENCE · CHAIN INTEGRITY: ✓ INTACT</div>${[...recs].reverse().map(r=>`<div class="lrow"><span class="lhsh">${r.hash}</span><span class="ltm">${r.at}</span><span class="lev">"${r.title}" — ${r.cat} — Lock: ${r.lock||'Open'}</span><span class="lok">✓ Verified</span></div>`).join('')}<div style="text-align:center;margin-top:.7rem;color:rgba(255,255,255,.22);font-size:.58rem;letter-spacing:.15em">${recs.length} ENTRIES</div>`}}
   const fl=document.getElementById('r-fm-list');
-  if(fl){if(!fam.length){fl.innerHTML=`<div class="empty"><div class="ei">👨‍👩‍👧</div><div class="eh4">No family members added</div><p class="ep">Add your family members so they can access your memories.</p><button class="ecta" onclick="openFM()">Add First Member</button></div>`}else{fl.innerHTML=fam.map(f=>`<div class="fitem"><div class="fav">${f.nm[0].toUpperCase()}</div><div style="flex:1;min-width:0"><div class="fbn">${f.nm}</div><div class="fbr">${f.rel} · ${f.em}</div></div><button class="fdel" onclick="delFam('${em}','${f.em}')">✕</button></div>`).join('')}}
+  if(fl){if(!fam.length){fl.innerHTML=`<div class="empty"><div class="ei">👨‍👩‍👧</div><div class="eh4">No family members added</div><p class="ep">Add family members so they can access your memories.</p><button class="ecta" onclick="openFM()">Add First Member</button></div>`}else{fl.innerHTML=fam.map(f=>`<div class="fitem"><div class="fav">${f.nm[0].toUpperCase()}</div><div style="flex:1;min-width:0"><div class="fbn">${f.nm}</div><div class="fbr">${f.rel} · ${f.em}</div></div><button class="fdel" onclick="delFam('${em}','${f.em}')">✕</button></div>`).join('')}}
+  // Dialogue threads badge
+  const threads=d.threads||{};const tCount=Object.values(threads).reduce((a,t)=>(a+(t.replies||[]).length),0);
+  const dcBdg=document.getElementById('r-dc-bdg');if(dcBdg){if(tCount>0){dcBdg.textContent=tCount;dcBdg.style.display=''}else{dcBdg.style.display='none'}}
+  // Rec dialogue view
+  const dcl=document.getElementById('r-dc-list');
+  if(dcl&&Object.keys(threads).length>0){dcl.innerHTML=Object.entries(threads).map(([tid,t])=>`<div class="thread-card"><div class="thread-hdr"><div style="font-size:1.1rem;flex-shrink:0">💬</div><div class="thread-title" style="margin-left:.9rem"><h4>${t.title}</h4><p>${(t.replies||[]).length} repl${(t.replies||[]).length!==1?'ies':'y'} received</p></div></div><div class="thread-msgs" style="max-height:180px;overflow-y:auto">${(t.replies||[]).map(r=>`<div class="tmsg reply"><div class="tmsg-ava" style="background:var(--cream3);color:var(--bark2);font-size:.72rem">R</div><div><div class="tmsg-bub">${r.text}</div><div class="tmsg-time">${fmtD(r.at)}</div></div></div>`).join('')}</div></div>`).join('')}
 }
 
-function mItem(r,em){
-  const lc=r.lock==='Immediately Available'?'ml-o':r.lock==='On Death Only'?'ml-s':'ml-l';
-  const ll=r.lock==='Immediately Available'?'🔓 Open':r.lock==='On Death Only'?'🔒 Sealed':'📅 '+r.lock;
+function mIt(r,em){
+  const lc=!r.lock||r.lock==='Immediately Available'?'ml-o':r.lock.includes('Death')||r.lock.includes('Vault')?'ml-s':'ml-l';
+  const ll=!r.lock||r.lock==='Immediately Available'?'🔓 Open':r.lock.includes('Death')?'🔒 Sealed':'📅 Locked';
   const ic={'Life Wisdom':'📖','Recipes':'🍛','Love Messages':'❤️','Family History':'🌾','Apology Vault':'🕊️','Health History':'💊'};
-  return`<div class="mit"><span class="mic">${ic[r.cat]||'📄'}</span><div class="mib"><div class="mit1">${r.title}</div><div class="mit2">${r.cat} · ${fmtDate(r.at)}</div></div><span class="mlk ${lc}">${ll}</span><button class="mdel" onclick="delRec('${em}','${r.id}')">✕</button></div>`;
+  const replyTag=r.allowReply?'<span class="mlk" style="background:rgba(94,126,94,.1);color:var(--sage);margin-left:.3rem">💬 Reply-enabled</span>':'';
+  return`<div class="mit"><span class="mic">${ic[r.cat]||'📄'}</span><div class="mib"><div class="mit1">${r.title}</div><div class="mit2">${r.cat} · ${fmtD(r.at)}${r.trigger?' · '+r.trigger:''}</div></div><span class="mlk ${lc}">${ll}</span>${replyTag}<button class="mdel" onclick="delRec('${em}','${r.id}')">✕</button></div>`;
 }
-function fmtDate(iso){try{const d=new Date(iso);return d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}catch{return iso}}
+function fmtD(iso){try{const d=new Date(iso);return d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}catch{return iso}}
 function delRec(em,id){const d=DB.ud(em);d.recs=d.recs.filter(r=>r.id!==id);DB.saveUd(em,d);renderRec(em);toast('Recording deleted')}
 function delFam(em,fem){const d=DB.ud(em);d.fam=d.fam.filter(f=>f.em!==fem);DB.saveUd(em,d);renderRec(em);toast('Family member removed')}
 
-// ── RECORDING ──
-let _ri,_rs=0,_ra=false,_sc='Life Wisdom',_sl='Immediately Available';
+// ══ RECORDING ══
+let _ri,_rs=0,_ra=false,_sc='Life Wisdom';
 function pickCat(el){document.querySelectorAll('.ctile').forEach(c=>c.classList.remove('on'));el.classList.add('on');_sc=el.dataset.cat;document.getElementById('rc-cl').textContent=_sc}
-function pickLock(el){document.querySelectorAll('.lcard').forEach(c=>c.classList.remove('on'));el.classList.add('on');_sl=el.querySelector('.lcn').textContent.replace(/^[^\s]+\s/,'')}
 function togRec(){
   _ra=!_ra;const btn=document.getElementById('rc-sb');
   if(_ra){btn.textContent='⏹ Stop Recording';btn.className='rbtn sp';document.querySelectorAll('.wb').forEach(b=>b.classList.add('lv'));_ri=setInterval(()=>{_rs++;const m=Math.floor(_rs/60),s=_rs%60;document.getElementById('rtmr').textContent=m+':'+(s<10?'0':'')+s},1000)}
@@ -803,7 +1131,7 @@ function togRec(){
 }
 function saveRec(){
   const title=document.getElementById('rc-ti').value.trim();
-  if(!title){toast('⚠ Please enter a title for your recording');return}
+  if(!title){toast('⚠ Please enter a title');return}
   const s=DB.sess();if(!s)return;
   clearInterval(_ri);_ra=false;_rs=0;
   document.getElementById('rtmr').textContent='0:00';
@@ -813,29 +1141,95 @@ function saveRec(){
   document.getElementById('rc-ti').value='';
   const d=DB.ud(s.em);const now=new Date().toISOString();const id='r'+Date.now();
   const hash='0x'+Math.abs(hpw(id+title)).toString(16).padStart(8,'0').slice(0,8)+'...'+id.slice(-4);
-  d.recs.push({id,title,cat:_sc,lock:_sl,at:now,hash});DB.saveUd(s.em,d);
+  // Pull consent state
+  const cs=d.csState||{};
+  const lock=cs.trigger==='life_event'?(cs.lifeEvents||[]).join('/')||'Life Event':cs.trigger==='age_gate'?'Age '+(cs.ageGate||25):cs.trigger==='dead_mans_switch'?"Dead Man's Switch":cs.trigger==='dual_auth'?'Dual Authentication':cs.trigger==='emotion_state'?'Emotion State':'Immediately Available';
+  const allowReply=!!(cs.toggles&&cs.toggles.reply);
+  d.recs.push({id,title,cat:_sc,lock,allowReply,trigger:cs.trigger,at:now,hash});
+  DB.saveUd(s.em,d);
   toast('✓ Memory saved: "'+title+'"');swR('r-ml');
 }
 
-// ── FAMILY MODAL ──
+// ══ CONSENT SETTINGS ══
+let _csState={trigger:'life_event',lifeEvents:['Land Dispute'],ageGate:25,timelockYrs:5,toggles:{timelock:false,dual:true,reply:true,ledger:true,village:false}};
+
+function loadCSState(em){
+  const d=DB.ud(em);if(!d)return;
+  if(d.csState)_csState={..._csState,...d.csState};
+  applyCSState();
+}
+function applyCSState(){
+  // Trigger radio
+  document.querySelectorAll('#cs-trigger-group .cs-radio').forEach(r=>{r.classList.toggle('selected',r.dataset.val===_csState.trigger)});
+  // Age input
+  const aw=document.getElementById('age-wrap');if(aw)aw.classList.toggle('show',_csState.trigger==='age_gate');
+  const ai=document.getElementById('cs-age');if(ai&&_csState.ageGate)ai.value=_csState.ageGate;
+  // Life event chips
+  const chips=document.querySelectorAll('#cs-chips .chip:not(.add)');chips.forEach(c=>{c.classList.toggle('on',(_csState.lifeEvents||[]).includes(c.dataset.ev))});
+  // Life event section visibility
+  const les=document.getElementById('cs-life-event-section');if(les)les.style.display=_csState.trigger==='life_event'?'':'none';
+  // Toggles
+  const togs={timelock:'tog-timelock',dual:'tog-dual',reply:'tog-reply',ledger:'tog-ledger',village:'tog-village'};
+  Object.entries(togs).forEach(([k,id])=>{const el=document.getElementById(id);if(el)el.classList.toggle('on',!!(_csState.toggles&&_csState.toggles[k]))});
+  const tlw=document.getElementById('timelock-wrap');if(tlw)tlw.classList.toggle('show',!!(_csState.toggles&&_csState.toggles.timelock));
+  const tly=document.getElementById('cs-timelock-yrs');if(tly&&_csState.timelockYrs)tly.value=_csState.timelockYrs;
+}
+function csPick(el,group){
+  const grp=document.getElementById('cs-'+group+'-group');
+  grp.querySelectorAll('.cs-radio').forEach(r=>r.classList.remove('selected'));
+  el.classList.add('selected');
+  _csState.trigger=el.dataset.val;
+  const aw=document.getElementById('age-wrap');if(aw)aw.classList.toggle('show',_csState.trigger==='age_gate');
+  const les=document.getElementById('cs-life-event-section');if(les)les.style.display=_csState.trigger==='life_event'?'':'none';
+  saveCSState();
+}
+function csChip(el){
+  const ev=el.dataset.ev;el.classList.toggle('on');
+  if(el.classList.contains('on')){if(!_csState.lifeEvents)_csState.lifeEvents=[];if(!_csState.lifeEvents.includes(ev))_csState.lifeEvents.push(ev)}
+  else{_csState.lifeEvents=(_csState.lifeEvents||[]).filter(e=>e!==ev)}
+  saveCSState();
+}
+function addCustomChip(){const w=document.getElementById('custom-chip-wrap');w.classList.toggle('show');if(w.classList.contains('show'))document.getElementById('custom-chip-in').focus()}
+function confirmCustomChip(){
+  const v=document.getElementById('custom-chip-in').value.trim();if(!v)return;
+  const row=document.getElementById('cs-chips');
+  const add=row.querySelector('.add');
+  const chip=document.createElement('div');chip.className='chip on';chip.dataset.ev=v;chip.textContent=v;chip.onclick=function(){csChip(this)};
+  row.insertBefore(chip,add);
+  if(!_csState.lifeEvents)_csState.lifeEvents=[];_csState.lifeEvents.push(v);
+  document.getElementById('custom-chip-in').value='';
+  document.getElementById('custom-chip-wrap').classList.remove('show');
+  saveCSState();toast('✓ Custom event added: '+v);
+}
+function togSwitch(el,key){
+  el.classList.toggle('on');_csState.toggles[key]=el.classList.contains('on');
+  if(key==='timelock'){const tlw=document.getElementById('timelock-wrap');if(tlw)tlw.classList.toggle('show',el.classList.contains('on'))}
+  saveCSState();
+}
+function saveCSState(){
+  const ai=document.getElementById('cs-age');if(ai&&ai.value)_csState.ageGate=parseInt(ai.value)||25;
+  const ty=document.getElementById('cs-timelock-yrs');if(ty&&ty.value)_csState.timelockYrs=parseInt(ty.value)||5;
+  const s=DB.sess();if(!s)return;const d=DB.ud(s.em);if(!d)return;d.csState={..._csState};DB.saveUd(s.em,d);
+}
+function saveCSFull(){saveCSState();toast('✓ Consent settings saved');swR('r-rc')}
+function openCS(){swR('r-cs')}
+
+// ══ FAMILY MODAL ══
 function openFM(){document.getElementById('fm-modal').classList.add('open')}
-function closeFM(){document.getElementById('fm-modal').classList.remove('open');clrAlrt('fm-alrt')}
-document.getElementById('fm-modal').addEventListener('click',function(e){if(e.target===this)closeFM()});
+function closeFM(){document.getElementById('fm-modal').classList.remove('open');clrA('fm-alrt')}
+document.getElementById('fm-modal').addEventListener('click',function(e){if(e.target===this)closeFM()})
 function addFam(){
-  const nm=document.getElementById('fm-nm').value.trim();
-  const rl=document.getElementById('fm-rl').value.trim();
-  const em=document.getElementById('fm-em').value.trim().toLowerCase();
-  if(!nm||!rl||!vEmail(em)){showAlrt('fm-alrt','Please fill all fields with a valid email.','err');return}
-  const s=DB.sess();if(!s)return;
-  const d=DB.ud(s.em);
-  if(d.fam.some(f=>f.em===em)){showAlrt('fm-alrt','This email is already added.','err');return}
+  const nm=document.getElementById('fm-nm').value.trim();const rl=document.getElementById('fm-rl').value.trim();const em=document.getElementById('fm-em').value.trim().toLowerCase();
+  if(!nm||!rl||!vEm(em)){showA('fm-alrt','Please fill all fields with a valid email.','err');return}
+  const s=DB.sess();if(!s)return;const d=DB.ud(s.em);
+  if(d.fam.some(f=>f.em===em)){showA('fm-alrt','This email is already added.','err');return}
   d.fam.push({nm,rel:rl,em,at:new Date().toISOString()});DB.saveUd(s.em,d);
   closeFM();document.getElementById('fm-nm').value='';document.getElementById('fm-rl').value='';document.getElementById('fm-em').value='';
   renderRec(s.em);toast('✓ '+nm+' added to your family');
 }
 
-// ── RECIPIENT ──
-const PP=['p-hm','p-cv','p-tl','p-in','p-sl','p-em'];
+// ══ RECIPIENT PANELS ══
+const PP=['p-hm','p-cv','p-dc','p-tl','p-in','p-gr','p-em','p-sl'];
 function swP(id){
   PP.forEach(p=>document.getElementById(p).classList.toggle('on',p===id));
   document.querySelectorAll('#pg-recipient .ni').forEach(n=>{n.classList.toggle('on',n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+id+"'"))});
@@ -847,48 +1241,181 @@ function renderRcp(em){
   document.getElementById('p-cc').textContent=d.convs||0;
 }
 
-// ── AI CONV ──
-const SYS=`You are Ramu Tata, a retired school teacher from Warangal, Telangana, India. Born 1942, taught primary school for 40 years, passed away 2021.
+// ══ NLP EMOTION DETECTION ══
+const NLP_PATTERNS={
+  grief:['miss','lost','gone','death','died','passed away','dead','grief','mourn','funeral','no longer','without them','they\'re gone'],
+  heartbreak:['heartbreak','heartbroken','broken','hurt','betrayed','left me','breakup','ending','over','pain','crying','tears'],
+  anxiety:['scared','afraid','fear','anxious','anxiety','worry','worried','nervous','uncertain','unsure','what if','don\'t know'],
+  joy:['happy','excited','wonderful','amazing','great news','got the job','married','wedding','pregnant','passed','achieved','proud'],
+  confusion:['confused','lost','don\'t understand','unsure','what should','which way','don\'t know what','overwhelmed','stuck'],
+  gratitude:['grateful','thankful','thank you','blessed','lucky','appreciate','means a lot','you changed','because of you']
+};
+let _nlpTimer=null;
+function nlpDetect(val){
+  clearTimeout(_nlpTimer);
+  if(!val||val.length<8){document.getElementById('nlp-bar').classList.remove('on');return}
+  _nlpTimer=setTimeout(()=>{
+    const v=val.toLowerCase();let best=null,bestScore=0;
+    Object.entries(NLP_PATTERNS).forEach(([emotion,patterns])=>{
+      let score=patterns.filter(p=>v.includes(p)).length;if(score>bestScore){bestScore=score;best=emotion}
+    });
+    const bar=document.getElementById('nlp-bar');
+    if(best&&bestScore>0){
+      const pill=document.getElementById('nlp-pill');
+      pill.className='nlp-pill '+best;
+      const labels={grief:'Grief / Loss',heartbreak:'Heartbreak',anxiety:'Anxiety / Fear',joy:'Joy / Celebration',confusion:'Confusion',gratitude:'Gratitude'};
+      pill.textContent=labels[best]||best;
+      document.getElementById('nlp-conf').textContent='('+bestScore+' signal'+(bestScore>1?'s':'')+' detected)';
+      const surf=document.getElementById('nlp-surf');surf.style.display='';surf.dataset.emotion=best;
+      bar.classList.add('on');
+    }else{bar.classList.remove('on')}
+  },600);
+}
+function surfaceMemory(){
+  const surf=document.getElementById('nlp-surf');
+  const emotion=surf.dataset.emotion;
+  if(emotion){swP('p-em');setTimeout(()=>{const tiles=document.querySelectorAll('#p-em .ctile');tiles.forEach(t=>{if(t.getAttribute('onclick')&&t.getAttribute('onclick').includes("'"+emotion+"'"))t.click()})},300)}
+}
 
-Speak exactly like a warm, wise Telugu grandfather — gentle, occasionally teasing, deeply caring. Weave in Telugu words naturally: "raa", "chinna ammayi", "chinna babu", "ayyo", "adenti", "cheskochu", "nanna". Answer through stories from your teaching years, your village, from nature. Never generic. Always personal.
+// ══ AI CONVERSATION (Ramu Tata) ══
+const TATA_SYS=`You are Ramu Tata, a retired school teacher from Warangal, Telangana, India. Born 1942, taught primary school 40 years, passed away 2021.
 
-Respond to THIS exact emotional moment. 3–5 sentences. Intimate and quiet. Never break character or mention being AI.`;
+Speak exactly like a warm, wise Telugu grandfather. Weave in Telugu words naturally: "raa", "chinna ammayi", "chinna babu", "ayyo", "adenti", "cheskochu", "nanna". Answer through stories from your teaching years, your village, from nature. Never generic. Always personal and specific.
+
+Respond to THIS exact emotional moment. 3-5 sentences. Intimate and quiet. Never break character or mention AI.`;
 let _ch=[];
 async function sendMsg(){
   const inp=document.getElementById('c-in'),snd=document.getElementById('c-snd');
   const msg=inp.value.trim();if(!msg)return;
-  addMsg('usr',msg);inp.value='';snd.disabled=true;
+  addMsg('ai','usr',msg,'c-msgs');inp.value='';snd.disabled=true;
   document.getElementById('c-tw').classList.add('on');
+  document.getElementById('nlp-bar').classList.remove('on');
   _ch.push({role:'user',content:msg});
-  const s=DB.sess();
-  if(s){const d=DB.ud(s.em);d.convs=(d.convs||0)+1;DB.saveUd(s.em,d);document.getElementById('p-cc').textContent=d.convs}
+  const s=DB.sess();if(s){const d=DB.ud(s.em);d.convs=(d.convs||0)+1;DB.saveUd(s.em,d);document.getElementById('p-cc').textContent=d.convs}
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYS,messages:_ch})});
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:TATA_SYS,messages:_ch})});
     const data=await res.json();
     const reply=data.content?.[0]?.text||"Raa chinna… come back. Tata is still here.";
     _ch.push({role:'assistant',content:reply});
-    document.getElementById('c-tw').classList.remove('on');addMsg('ai',reply);
-  }catch{document.getElementById('c-tw').classList.remove('on');addMsg('ai',"Ayyo… the connection felt far. Tell Tata again — what is on your heart?")}
+    document.getElementById('c-tw').classList.remove('on');addMsg('ai','ai',reply,'c-msgs');
+  }catch{document.getElementById('c-tw').classList.remove('on');addMsg('ai','ai',"Ayyo… the connection felt far for a moment. Tell Tata again — what is on your heart?",'c-msgs')}
   snd.disabled=false;
 }
-function addMsg(t,text){
-  const box=document.getElementById('c-msgs'),d=document.createElement('div');d.className='mr '+t;
-  const s=DB.sess();const init=t==='ai'?'ర':(s?DB.ud(s.em)?.nm[0]?.toUpperCase()||'Y':'Y');
+function addMsg(type,role,text,boxId){
+  const box=document.getElementById(boxId);const d=document.createElement('div');
+  d.className='mr '+(role==='ai'||role==='c'?'ai':'usr');
+  const s=DB.sess();const init=role==='ai'?'ర':(s?DB.ud(s.em)?.nm[0]?.toUpperCase()||'Y':'Y');
   d.innerHTML=`<div class="mrav">${init}</div><div class="mb">${text}</div>`;
   box.appendChild(d);box.scrollTop=box.scrollHeight;
 }
-function setCP(t){document.getElementById('c-in').value=t;document.getElementById('c-in').focus()}
+function setCP(t){document.getElementById('c-in').value=t;nlpDetect(t);document.getElementById('c-in').focus()}
 
-// ── EMO ──
-const EM={grief:{t:'Advice for Hard Times — Ramu Tata',d:'He recorded this for moments of loss. He talks about the monsoon returning after a dry year, and what that taught him about grief.'},anxiety:{t:'On Being Scared — Ramu Tata',d:'He remembered his fear when he got his first teaching post with no money and no certainty. How one conversation changed everything.'},joy:{t:'Celebration Message',d:'A message sealed for your moments of achievement. He always believed your joy was the point of everything he did.'},heartbreak:{t:'When the Heart Breaks — Ramu Tata',d:'He spoke about losing his closest friend. How some wounds become part of your strength, not your weakness.'},confusion:{t:'On Finding Your Way — Ramu Tata',d:'He talked about the years after independence when nothing was certain. How he found his compass through teaching.'},gratitude:{t:'Gratitude Message',d:'A message sealed for when life feels beautiful. He wanted to be there for the good moments too, not only the hard ones.'}};
-function emoU(el,k){document.querySelectorAll('#p-em .ctile').forEach(c=>c.classList.remove('on'));el.classList.add('on');const e=EM[k];document.getElementById('emo-t').textContent=e.t;document.getElementById('emo-d').textContent=e.d;document.getElementById('emo-r').style.display='block'}
+// ══ GRIEF COUNSELLOR ══
+const GRIEF_SYS=`You are Ananya, a compassionate grief counsellor specialising in bereavement and loss. You are trained in CBT (Cognitive Behavioural Therapy) and ACT (Acceptance and Commitment Therapy). You work with families in India who have lost loved ones.
 
-// ── TOAST ──
-function toast(msg){const t=document.getElementById('toast-el');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+Your approach:
+- Warm, slow, deeply empathetic — never clinical or hurried
+- You validate feelings without trying to fix them
+- You ask thoughtful, gentle follow-up questions
+- You draw on Indian cultural context around grief, ritual, and family
+- You never minimise grief with platitudes like "they're in a better place"
+- You know when to suggest professional help and do so gently
 
-// Scroll anims
+Respond in 3-5 sentences. Warm, grounded, present. Never mention being AI.`;
+let _gch=[];
+async function sendGriefMsg(){
+  const inp=document.getElementById('gc-in');const msg=inp.value.trim();if(!msg)return;
+  const box=document.getElementById('gc-msgs');
+  const ud=document.createElement('div');ud.className='gmr u';
+  const s=DB.sess();const init=s?DB.ud(s.em)?.nm[0]?.toUpperCase()||'Y':'Y';
+  ud.innerHTML=`<div class="gmrav" style="background:var(--cream3);color:var(--bark2);font-family:'Playfair Display',serif;font-weight:700">${init}</div><div class="gmb">${msg}</div>`;
+  box.appendChild(ud);box.scrollTop=box.scrollHeight;
+  inp.value='';document.getElementById('gc-tw').classList.add('on');
+  _gch.push({role:'user',content:msg});
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:GRIEF_SYS,messages:_gch})});
+    const data=await res.json();
+    const reply=data.content?.[0]?.text||"I'm here. Take your time.";
+    _gch.push({role:'assistant',content:reply});
+    document.getElementById('gc-tw').classList.remove('on');
+    const cd=document.createElement('div');cd.className='gmr c';
+    cd.innerHTML=`<div class="gmrav">🌿</div><div class="gmb">${reply}</div>`;
+    box.appendChild(cd);box.scrollTop=box.scrollHeight;
+  }catch{document.getElementById('gc-tw').classList.remove('on')}
+}
+
+// ══ GRIEF MODES ══
+function setGriefMode(mode){
+  document.getElementById('gm-ai').classList.toggle('on',mode==='ai');
+  document.getElementById('gm-pro').classList.toggle('on',mode==='professional');
+  document.getElementById('gm-mem').classList.toggle('on',mode==='memory');
+  document.getElementById('grief-ai-section').style.display=mode==='ai'?'':'none';
+  document.getElementById('grief-pro-section').style.display=mode==='professional'?'':'none';
+  document.getElementById('grief-mem-section').style.display=mode==='memory'?'':'none';
+}
+
+// ══ GRIEF REFLECTION ══
+const REFLECT_PROMPTS={
+  gratitude:'Take a moment. Think of one specific thing you miss about them — not what they meant to you in general, but one small, specific thing. The way they laughed, a smell, something they always said. Describe it here.',
+  letter:'Write to them as if they could hear you. Say what you never got to say. There are no rules here — no wrong words, no judgement. Begin whenever you\'re ready.',
+  memory:'Close your eyes for a moment. Let one memory come. Not the last one — a happy one. Where were you? What did they look like? What can you hear? Describe it in as much detail as you can.',
+  legacy:'They are still here — in you, in how you move through the world. What did they teach you that you carry every day? How are you different because you knew them?',
+  release:'Grief sometimes carries things we did not choose to carry — guilt, regret, unfinished conversations. Is there something you\'ve been holding that you\'d like to gently put down? Write it here, without judgment.',
+  future:'If they could speak to you right now, knowing everything, what do you think they would want for you? Not what you owe them — what they would genuinely wish for your life from here.'
+};
+const REFLECT_SYS=`You are Ananya, a compassionate grief counsellor. The person has shared a personal reflection as part of grief processing. Your role is to hold space for what they have written — to reflect it back with warmth, to notice what's significant, and to gently ask one follow-up question that invites them deeper. Keep your response to 4-6 sentences. Never analyse clinically. Always speak with care and warmth.`;
+let _curRef='';
+function startReflection(key){
+  _curRef=key;
+  document.querySelectorAll('#grief-mem-section .ctile').forEach(c=>c.classList.remove('on'));
+  document.querySelectorAll('#grief-mem-section .ctile').forEach(c=>{if(c.getAttribute('onclick')&&c.getAttribute('onclick').includes("'"+key+"'"))c.classList.add('on')});
+  document.getElementById('reflection-prompt').textContent=REFLECT_PROMPTS[key]||'';
+  document.getElementById('reflection-text').value='';
+  document.getElementById('reflection-area').style.display='block';
+  document.getElementById('reflection-response').style.display='none';
+  document.getElementById('reflection-text').focus();
+}
+async function processReflection(){
+  const text=document.getElementById('reflection-text').value.trim();
+  if(!text||text.length<20){toast('Please write a bit more before reflecting');return}
+  document.getElementById('reflection-response').style.display='block';
+  document.getElementById('ref-tw').style.display='flex';
+  document.getElementById('ref-text').textContent='';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,system:REFLECT_SYS,messages:[{role:'user',content:'Reflection type: '+_curRef+'\n\nThe person wrote:\n\n'+text}]})});
+    const data=await res.json();
+    const reply=data.content?.[0]?.text||"Thank you for sharing this with me.";
+    document.getElementById('ref-tw').style.display='none';
+    document.getElementById('ref-text').textContent=reply;
+  }catch{document.getElementById('ref-tw').style.display='none';document.getElementById('ref-text').textContent='Thank you for sharing this. It takes courage to write like this.'}
+}
+
+// ══ DIALOGUE THREADS ══
+function addThreadReply(threadId,inputId){
+  const inp=document.getElementById(inputId);const text=inp.value.trim();if(!text)return;
+  const box=document.getElementById(threadId);
+  const s=DB.sess();const nm=s?DB.ud(s.em)?.nm[0]?.toUpperCase()||'Y':'Y';
+  const d=document.createElement('div');d.className='tmsg reply';
+  d.innerHTML=`<div class="tmsg-ava" style="background:var(--cream3);color:var(--bark2)">${nm}</div><div><div class="tmsg-bub">${text}</div><div class="tmsg-time">You · Just now</div></div>`;
+  box.appendChild(d);inp.value='';box.scrollTop=box.scrollHeight;
+  // Save to DB
+  if(s){const ud=DB.ud(s.em);if(!ud.threads)ud.threads={};if(!ud.threads[threadId])ud.threads[threadId]={title:threadId,replies:[]};ud.threads[threadId].replies.push({text,at:new Date().toISOString()});DB.saveUd(s.em,ud)}
+  toast('✓ Reply added to dialogue thread');
+}
+
+// ══ EMOTION UNLOCK ══
+const EM={grief:{t:'Advice for Hard Times — Ramu Tata',d:'He recorded this specifically for moments of loss. He talks about the monsoon returning after a dry year, and what that taught him about grief. This memory was emotion-triggered — surfaced now because the NLP engine detected grief in your words.'},anxiety:{t:'On Being Scared — Ramu Tata',d:'He remembered his own fear when he got his first teaching post with no money and no certainty. How one conversation changed everything. Triggered by anxiety signals in your messages.'},joy:{t:'Celebration Message — Ramu Tata',d:'A message sealed for your moments of achievement. He always believed your joy was the point of everything he did. The NLP engine detected celebration in your messages.'},heartbreak:{t:'When the Heart Breaks — Ramu Tata',d:'He spoke about losing his closest friend. How some wounds become part of your strength. Surfaced by heartbreak signals detected in your conversation.'},confusion:{t:'On Finding Your Way — Ramu Tata',d:'He talked about the years after independence when nothing was certain. How he found his compass through teaching. Triggered by confusion signals detected by the NLP engine.'},gratitude:{t:'Gratitude Message',d:'A message sealed for when life feels beautiful. He wanted to be there for the good moments too. Triggered by gratitude signals in your messages.'}};
+function emoU(el,k){
+  document.querySelectorAll('#p-em .ctile').forEach(c=>c.classList.remove('on'));el.classList.add('on');
+  const e=EM[k];document.getElementById('emo-t').textContent=e.t;document.getElementById('emo-d').textContent=e.d;document.getElementById('emo-r').style.display='block';
+}
+
+// ══ TOAST ══
+function toast(msg){const t=document.getElementById('toast-el');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
+
+// scroll anims
 const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.transform='translateY(0)'}})},{threshold:.08});
-document.querySelectorAll('.fc,.rpick').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(14px)';el.style.transition='opacity .5s ease,transform .5s ease';obs.observe(el)});
+document.querySelectorAll('.fc,.rpick,.gmode').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(14px)';el.style.transition='opacity .5s ease,transform .5s ease';obs.observe(el)});
 </script>
 </body>
 </html>
