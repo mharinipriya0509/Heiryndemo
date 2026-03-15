@@ -117,7 +117,7 @@
 </head>
 <body>
 
-<div class="page active" id="pg-landing" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, var(--cream), var(--cream2));">
+<div class="page active" id="pg-landing" style="flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, var(--cream), var(--cream2));">
   <h1 style="font-size: 4rem; color: var(--terra); letter-spacing: 4px; margin-bottom: 1rem;">HEIRYN</h1>
   <p style="font-family: 'Lora', serif; font-style: italic; font-size: 1.4rem; color: var(--bark); max-width: 600px; margin-bottom: 3rem; line-height: 1.6;">
     "Because the most precious things should never be lost."
@@ -228,3 +228,345 @@
             <div style="color: var(--text3); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Total Memories</div>
           </div>
           <div style="background: white; padding: 2rem; border-radius: var(--r2); border: 1px solid var(--bd); text-align: center; box-shadow: var(--shadow);">
+            <div style="font-size: 2.5rem; color: var(--terra); font-family: 'Playfair Display'; margin-bottom: 0.5rem;" id="st-lk">0</div>
+            <div style="color: var(--text3); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Sealed / Locked</div>
+          </div>
+          <div style="background: white; padding: 2rem; border-radius: var(--r2); border: 1px solid var(--bd); text-align: center; box-shadow: var(--shadow);">
+            <div style="font-size: 2.5rem; color: var(--bark); font-family: 'Playfair Display'; margin-bottom: 0.5rem;" id="st-fm">0</div>
+            <div style="color: var(--text3); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Family Members</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dp" id="r-cs">
+        <div class="dhtit">Consent Architecture</div>
+        <div class="dhsub">You control exactly when and how memories unlock.</div>
+        <div class="info-box" style="margin-top: 2rem;">
+          <p>Heiryn is the only platform globally built on proactive consent[cite: 43]. Set triggers for your upcoming recordings below.</p>
+        </div>
+        
+        <div style="background: white; border: 1px solid var(--bd); border-radius: var(--r2); padding: 2rem; margin-bottom: 2rem;">
+          <h3 style="margin-bottom: 1rem; color: var(--bark);">Unlock Triggers</h3>
+          <div id="cs-trigger-group" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="bf cs-radio selected" style="background: var(--cream2); color: var(--text); border: 1px solid var(--bd);" data-val="life_event" onclick="csPick(this, 'trigger')">📅 Life Event</button>
+            <button class="bf cs-radio" style="background: var(--cream2); color: var(--text); border: 1px solid var(--bd);" data-val="emotion_state" onclick="csPick(this, 'trigger')">💫 Emotion State</button>
+            <button class="bf cs-radio" style="background: var(--cream2); color: var(--text); border: 1px solid var(--bd);" data-val="dead_mans_switch" onclick="csPick(this, 'trigger')">🔒 Dead Man's Switch</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dp" id="r-vw">
+        <div class="dh"><div><div class="dhtit">Values Will</div><div class="dhsub">The principles you want carried forward</div></div><div class="dhact"><button class="bf" style="padding:.42rem 1rem;font-size:.76rem;border-radius:8px" onclick="pickCatAndRecord('Life Wisdom')">+ Add Entry</button></div></div>
+        <div style="padding:1.8rem 2rem">
+          <div class="info-box"><p>Your Values Will captures the principles, beliefs, and life philosophy you want carried forward — not property, but <em>how to live</em>[cite: 66].</p></div>
+          <div class="sh">Suggested Topics</div>
+          <div class="egrid3" style="margin-bottom:1.4rem">
+            <div class="ctile" onclick="pickCatAndRecord('Life Wisdom')"><div class="ci">⚖️</div><h4>On Honesty</h4><p>What you believe about integrity</p></div>
+            <div class="ctile" onclick="pickCatAndRecord('Life Wisdom')"><div class="ci">❤️</div><h4>How We Love</h4><p>Your family's way of love</p></div>
+            <div class="ctile" onclick="pickCatAndRecord('Life Wisdom')"><div class="ci">🌦️</div><h4>Hard Times</h4><p>What difficulty taught you</p></div>
+          </div>
+          <div class="sh">Your Entries</div>
+          <div id="vw-list"><div style="text-align: center; padding: 2rem; color: var(--text3);">No entries yet.</div></div>
+        </div>
+      </div>
+
+      </div>
+  </div>
+</div>
+
+<div class="page" id="pg-recipient">
+  <div class="dsh">
+    <div class="sb sb-rcp">
+      <div class="sbt">HEIRYN</div>
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; padding: 1rem; background: var(--cream); border-radius: var(--r1); border: 1px solid var(--bd);">
+        <div id="rcp-av" style="width: 40px; height: 40px; border-radius: 50%; background: var(--terra); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem;">P</div>
+        <div>
+          <div id="rcp-un" style="font-weight: 700; color: var(--bark); font-size: 0.95rem;">Priya</div>
+          <div id="rcp-ue" style="font-size: 0.75rem; color: var(--text3);">Recipient Account</div>
+        </div>
+      </div>
+
+      <div class="sbnav">
+        <div class="sbsc">Memories</div>
+        <div class="ni on" onclick="swP('p-hm')"><span class="ic">🏠</span>My Inheritance</div>
+        <div class="ni" onclick="swP('p-cv')"><span class="ic">💬</span>Speak to Tata<span class="bdg">AI</span></div>
+        <div class="sbsc">Support</div>
+        <div class="ni" onclick="swP('p-gr')"><span class="ic">🫂</span>Grief Counsellor<span class="bdg" style="background:var(--sage)">Live</span></div>
+        <div class="ni" onclick="swP('p-em')"><span class="ic">💫</span>Emotion Unlock</div>
+      </div>
+      <div style="margin-top: auto;">
+        <button style="background: none; border: none; color: var(--terra); font-weight: 700; cursor: pointer; padding: 1rem;" onclick="doLogout()">← Sign Out</button>
+      </div>
+    </div>
+    
+    <div class="dmain">
+      <div class="dp on" id="p-hm">
+        <div class="dh"><div><div class="dhtit">Your Inheritance</div><div class="dhsub" id="p-hs">Memories left for you</div></div></div>
+        <div style="padding:2rem 3rem">
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem;">
+            <div style="background:linear-gradient(135deg,var(--bark),#3a1e08);border-radius:var(--r2);padding:2rem;color:#fff;cursor:pointer;box-shadow:var(--shadow);" onclick="swP('p-cv')">
+              <div style="font-size:1.8rem;margin-bottom:.8rem">💬</div>
+              <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:.5rem">Speak to Ramu Tata</h3>
+              <p style="font-size:0.9rem;opacity:.8;line-height:1.6;margin-bottom:1.5rem">He is here. Tell him anything.</p>
+              <button style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:0.6rem 1.2rem;border-radius:8px;font-weight:700;">Start Conversation →</button>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(94,126,94,.15),rgba(94,126,94,.05));border:1px solid var(--bd);border-radius:var(--r2);padding:2rem;cursor:pointer;box-shadow:var(--shadow);" onclick="swP('p-gr')">
+              <div style="font-size:1.8rem;margin-bottom:.8rem">🫂</div>
+              <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--bark);margin-bottom:.5rem">Grief Counsellor</h3>
+              <p style="font-size:0.9rem;color:var(--text2);line-height:1.6;margin-bottom:1.5rem">Speak with a compassionate AI counsellor or professional.</p>
+              <button style="background:var(--sage);border:none;color:#fff;padding:0.6rem 1.2rem;border-radius:8px;font-weight:700;">Open Support →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dp" id="p-cv">
+        <div class="dh"><div><div class="dhtit">Speak to Ramu Tata</div><div class="dhsub">AI Memory · NLP Emotion Detection Active</div></div></div>
+        <div style="padding:2rem 3rem">
+          <div class="cw">
+            <div class="ctop"><div class="cava">ర</div><div class="cinf"><h4>Ramu Tata</h4><p>Retired School Teacher · Warangal</p></div></div>
+            <div class="cmsgs" id="c-msgs">
+              <div class="mr ai"><div class="mrav">ర</div><div class="mb">Raa chinna ammayi… you look like you have something on your heart. Tata is here. Tell me.</div></div>
+            </div>
+            
+            <div class="nlp-bar" id="nlp-bar">
+              <span style="font-weight:700; color:var(--text2);">Emotion Detected:</span>
+              <span class="nlp-pill" id="nlp-pill">Neutral</span>
+              <span style="font-size:.75rem;color:var(--text3)" id="nlp-conf"></span>
+              <span style="margin-left:auto; color:var(--terra); font-weight:700; cursor:pointer;" id="nlp-surf" onclick="surfaceMemory()" style="display:none">Surface matching memory →</span>
+            </div>
+            
+            <div class="cir">
+              <div class="cin-row">
+                <input class="fin" id="c-in" placeholder="Tell Tata what's on your mind…" oninput="nlpDetect(this.value)" onkeydown="if(event.key==='Enter')sendMsg()">
+                <button class="csnd" id="c-snd" onclick="sendMsg()">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="dp" id="p-em">
+        <div class="dh"><div><div class="dhtit">Emotion-State Unlock</div><div class="dhsub">The right memory for the right feeling</div></div></div>
+        <div style="padding:2rem 3rem">
+          <p style="margin-bottom:2rem; color:var(--text2); font-size:1.1rem; line-height:1.6;">Heiryn's NLP engine detects your emotional state[cite: 78]. Select your feeling below to surface the exact message recorded for this moment[cite: 64].</p>
+          <div class="egrid3">
+            <div class="ctile" onclick="emoU(this,'grief')"><div class="ci">😢</div><h4>Grief</h4><p>Missing someone deeply</p></div>
+            <div class="ctile" onclick="emoU(this,'anxiety')"><div class="ci">😰</div><h4>Anxiety</h4><p>Scared about the future</p></div>
+            <div class="ctile" onclick="emoU(this,'heartbreak')"><div class="ci">💔</div><h4>Heartbreak</h4><p>Feeling broken</p></div>
+          </div>
+          <div id="emo-r" style="display:none;margin-top:2rem;background:white;border:1px solid var(--bd);border-radius:var(--r2);padding:2rem;box-shadow:var(--shadow);">
+            <div style="font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;color:var(--terra);margin-bottom:1rem;font-weight:700">Memory Surfaced by NLP Engine</div>
+            <h4 id="emo-t" style="font-size:1.5rem;color:var(--bark);margin-bottom:1rem;"></h4>
+            <p id="emo-d" style="font-size:1rem;color:var(--text2);line-height:1.7"></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast-el"></div>
+
+<script>
+// ══ API CONFIGURATION ══
+// IMPORTANT: For the prototype to process live LLM responses in the browser, insert your API key here.
+const ANTHROPIC_API_KEY = 'YOUR_API_KEY_HERE'; 
+
+// ══ STORAGE & STATE (MOCK DB) ══
+const DB={
+  accs:()=>{try{return JSON.parse(localStorage.getItem('hy_accs')||'{}')}catch{return{}}},
+  saveAccs:(a)=>localStorage.setItem('hy_accs',JSON.stringify(a)),
+  sess:()=>{try{return JSON.parse(localStorage.getItem('hy_sess')||'null')}catch{return null}},
+  saveSess:(s)=>localStorage.setItem('hy_sess',JSON.stringify(s)),
+  clrSess:()=>localStorage.removeItem('hy_sess'),
+  ud:(em)=>{try{return JSON.parse(localStorage.getItem('hy_d_'+em)||'null')}catch{return null}},
+  saveUd:(em,d)=>localStorage.setItem('hy_d_'+em,JSON.stringify(d))
+};
+
+// ══ NAVIGATION ══
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function goAuth(t){showPage('pg-auth');swTab(t);}
+function swTab(t){
+  document.getElementById('tab-in').classList.toggle('on',t==='in');
+  document.getElementById('tab-up').classList.toggle('on',t==='up');
+  document.getElementById('f-si').style.display=t==='in'?'':'none';
+  document.getElementById('f-su').style.display=t==='up'?'':'none';
+}
+let _role='recorder';
+function pickRole(r){
+  _role=r;
+  document.getElementById('ro-rec').classList.toggle('on',r==='recorder');
+  document.getElementById('ro-rcp').classList.toggle('on',r==='recipient');
+}
+
+// ══ AUTHENTICATION ══
+function doSignIn(){
+  const em=document.getElementById('si-em').value.trim().toLowerCase();
+  if(!em){alert("Enter email"); return;}
+  DB.saveSess({em, role:'recipient'}); // Mock login
+  launch(em, 'recipient');
+}
+function doSignUp(){
+  const nm=document.getElementById('su-nm').value.trim();
+  const em=document.getElementById('su-em').value.trim().toLowerCase();
+  if(!nm || !em){alert("Fill details"); return;}
+  
+  const accs=DB.accs();
+  accs[em]={nm, role:_role};
+  DB.saveAccs(accs);
+  DB.saveUd(em, {nm, role:_role, recs:[]});
+  DB.saveSess({em, role:_role});
+  launch(em, _role);
+}
+function launch(em, role){
+  if(role==='recorder'){ showPage('pg-recorder'); swR('r-hm'); }
+  else { showPage('pg-recipient'); swP('p-hm'); }
+}
+function doLogout(){ DB.clrSess(); showPage('pg-landing'); }
+
+// ══ TAB SWITCHING ══
+function swR(id){
+  document.querySelectorAll('#pg-recorder .dp').forEach(p=>p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.querySelectorAll('#pg-recorder .ni').forEach(n=>n.classList.remove('on'));
+  event.currentTarget.classList.add('on');
+}
+function swP(id){
+  document.querySelectorAll('#pg-recipient .dp').forEach(p=>p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.querySelectorAll('#pg-recipient .ni').forEach(n=>n.classList.remove('on'));
+  if(event && event.currentTarget) event.currentTarget.classList.add('on');
+}
+function csPick(el, group) {
+  document.querySelectorAll('.cs-radio').forEach(r=>r.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ══ NLP EMOTION DETECTION (Simulated Edge Processing) ══
+const NLP_PATTERNS = {
+  grief: ['miss', 'lost', 'gone', 'death', 'grief', 'without them'],
+  heartbreak: ['heartbroken', 'broken', 'hurt', 'pain', 'tears'],
+  anxiety: ['scared', 'afraid', 'anxious', 'worried', 'nervous', 'unsure']
+};
+
+function nlpDetect(val){
+  if(!val || val.length < 5) { document.getElementById('nlp-bar').classList.remove('on'); return; }
+  
+  const v = val.toLowerCase();
+  let best = null, bestScore = 0;
+  
+  Object.entries(NLP_PATTERNS).forEach(([emotion, patterns]) => {
+    let score = patterns.filter(p => v.includes(p)).length;
+    if(score > bestScore) { bestScore = score; best = emotion; }
+  });
+
+  const bar = document.getElementById('nlp-bar');
+  if(best && bestScore > 0){
+    const pill = document.getElementById('nlp-pill');
+    pill.className = 'nlp-pill ' + best;
+    pill.textContent = best.charAt(0).toUpperCase() + best.slice(1);
+    document.getElementById('nlp-surf').style.display = 'inline-block';
+    document.getElementById('nlp-surf').dataset.emotion = best;
+    bar.classList.add('on');
+  } else {
+    bar.classList.remove('on');
+  }
+}
+
+// ══ CLAUDE API INTEGRATION ══
+const TATA_SYS = `You are Ramu Tata, a retired school teacher from Warangal, India. Speak warmly like a Telugu grandfather. Weave in Telugu words naturally: "raa", "chinna ammayi". Respond to this exact emotional moment in 3-5 sentences. Never break character.`;
+let _ch = [];
+
+async function sendMsg(){
+  const inp = document.getElementById('c-in');
+  const msg = inp.value.trim();
+  if(!msg) return;
+  
+  addMsg('usr', msg);
+  inp.value = '';
+  document.getElementById('nlp-bar').classList.remove('on');
+  _ch.push({role: 'user', content: msg});
+  
+  if (ANTHROPIC_API_KEY === 'YOUR_API_KEY_HERE') {
+    setTimeout(() => addMsg('ai', "Raa chinna... Tata is here, but the API key needs to be configured in the code before I can truly listen."), 1000);
+    return;
+  }
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true' // Required for client-side demo
+      },
+      body: JSON.stringify({
+        model: 'claude-3-haiku-20240307', // Faster model for demo
+        max_tokens: 300,
+        system: TATA_SYS,
+        messages: _ch
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || "Tata is always listening.";
+    _ch.push({role: 'assistant', content: reply});
+    addMsg('ai', reply);
+  } catch(e) {
+    addMsg('ai', "Ayyo… the connection felt far for a moment. Tell Tata again.");
+  }
+}
+
+function addMsg(role, text){
+  const box = document.getElementById('c-msgs');
+  const d = document.createElement('div');
+  d.className = 'mr ' + role;
+  const init = role === 'ai' ? 'ర' : 'P';
+  d.innerHTML = `<div class="mrav">${init}</div><div class="mb">${text}</div>`;
+  box.appendChild(d);
+  box.scrollTop = box.scrollHeight;
+}
+
+// ══ EMOTION STATE UNLOCK ══
+const EM={
+  grief: {t:'Advice for Hard Times — Ramu Tata', d:'He recorded this specifically for moments of loss. He talks about the monsoon returning after a dry year, and what that taught him about grief.'},
+  anxiety: {t:'On Being Scared — Ramu Tata', d:'He remembered his own fear when he got his first teaching post with no money and no certainty.'},
+  heartbreak: {t:'When the Heart Breaks — Ramu Tata', d:'He spoke about losing his closest friend. How some wounds become part of your strength.'}
+};
+
+function emoU(el, k){
+  document.querySelectorAll('.ctile').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  const e = EM[k];
+  document.getElementById('emo-t').textContent = e.t;
+  document.getElementById('emo-d').textContent = e.d;
+  document.getElementById('emo-r').style.display = 'block';
+}
+
+function surfaceMemory(){
+  const emotion = document.getElementById('nlp-surf').dataset.emotion;
+  if(emotion){
+    swP('p-em');
+    setTimeout(() => {
+      document.querySelectorAll('.ctile').forEach(t => {
+        if(t.getAttribute('onclick').includes(emotion)) t.click();
+      });
+    }, 200);
+  }
+}
+
+// ══ INITIALIZATION ══
+// If there is an active mock session, jump straight to the dashboard.
+(function(){
+  const s = DB.sess();
+  if(s && s.em) launch(s.em, s.role);
+})();
+</script>
+</body>
+</html>
