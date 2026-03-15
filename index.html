@@ -503,7 +503,7 @@
     window.scrollTo(0,0);
   }
 
-  // Auth Flow
+// Auth Flow
   function showAuth(type) {
     showScreen('screen-auth');
     const card = document.getElementById('auth-card-inner');
@@ -531,11 +531,13 @@
         <p class="auth-card-sub">Choose your account type below.</p>
         
         <div class="grid-2 mb-16">
-          <div class="card" style="margin:0; padding:16px; cursor:pointer; border-color:var(--gold); background:rgba(156,111,46,0.05);" onclick="document.getElementById('signup-role').value='recorder'">
+          <div class="card" style="margin:0; padding:16px; cursor:pointer; border-color:var(--gold); background:rgba(156,111,46,0.05);" 
+               onclick="document.getElementById('signup-role').value='recorder'; this.style.borderColor='var(--gold)'; this.style.background='rgba(156,111,46,0.05)'; this.nextElementSibling.style.borderColor='rgba(156,111,46,0.18)'; this.nextElementSibling.style.background='#FFFDF8';">
             <div style="font-size:24px; text-align:center; margin-bottom:8px;">🎙️</div>
             <div style="font-size:13px; font-weight:600; text-align:center;">Recorder</div>
           </div>
-          <div class="card" style="margin:0; padding:16px; cursor:pointer;" onclick="document.getElementById('signup-role').value='recipient'; this.style.borderColor='var(--gold)'; this.previousElementSibling.style.borderColor='rgba(156,111,46,0.18)'; this.previousElementSibling.style.background='#FFFDF8'; this.style.background='rgba(156,111,46,0.05)';">
+          <div class="card" style="margin:0; padding:16px; cursor:pointer; border-color:rgba(156,111,46,0.18); background:#FFFDF8;" 
+               onclick="document.getElementById('signup-role').value='recipient'; this.style.borderColor='var(--gold)'; this.style.background='rgba(156,111,46,0.05)'; this.previousElementSibling.style.borderColor='rgba(156,111,46,0.18)'; this.previousElementSibling.style.background='#FFFDF8';">
             <div style="font-size:24px; text-align:center; margin-bottom:8px;">💌</div>
             <div style="font-size:13px; font-weight:600; text-align:center;">Recipient</div>
           </div>
