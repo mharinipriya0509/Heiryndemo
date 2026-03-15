@@ -1,572 +1,618 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Heiryn | Proactive Legacy Platform</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
-  <style>
-    /* ══ AESTHETIC DESIGN SYSTEM ══ */
-    :root {
-      --sage: #5e7e5e; --sage2: #a3b8a3;
-      --terra: #b85c36; --terra2: #e07a4d; --terra3: #8a2e10;
-      --bark: #3a1e08; --bark2: #5c3616;
-      --cream: #f9f6f0; --cream2: #f2ebd9; --cream3: #e8dece;
-      --warm: #fffdfa; 
-      --text: #2c2c2c; --text2: #4a4a4a; --text3: #6b6b6b;
-      --bd: rgba(94, 126, 94, 0.22);
-      --r1: 8px; --r2: 12px;
-      --shadow: 0 4px 20px rgba(58, 30, 8, 0.06);
-    }
-    
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
-    h1, h2, h3, .dhtit { font-family: 'Playfair Display', serif; color: var(--bark); }
-    
-    /* Pages & Layout */
-    .page { display: none; min-height: 100vh; }
-    .page.active { display: block; animation: fadeIn 0.4s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    
-    .dsh { display: flex; height: 100vh; overflow: hidden; }
-    .sb { width: 280px; background: var(--cream2); padding: 2rem 1.5rem; border-right: 1px solid var(--bd); display: flex; flex-direction: column; overflow-y: auto; }
-    .dmain { flex: 1; background: var(--warm); overflow-y: auto; position: relative; }
-    .dp { display: none; padding-bottom: 4rem; }
-    .dp.on { display: block; animation: fadeIn 0.4s ease; }
-    
-    /* Typography & Headers */
-    .dh { padding: 2.5rem 3rem 1.5rem; border-bottom: 1px solid var(--bd); display: flex; justify-content: space-between; align-items: flex-end; }
-    .dhtit { font-size: 2.2rem; margin-bottom: 0.2rem; }
-    .dhsub { font-size: 0.95rem; color: var(--text3); font-family: 'Lora', serif; font-style: italic; }
-    .sh { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--bark); margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--bd); }
-    
-    /* Buttons & Inputs */
-    button { cursor: pointer; transition: all 0.2s ease; outline: none; }
-    .bf { background: var(--sage); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: var(--r1); font-weight: 700; font-family: 'Nunito'; }
-    .bf:hover { background: #4a664a; transform: translateY(-1px); }
-    .fin { width: 100%; padding: 0.9rem; border: 1px solid var(--bd); border-radius: var(--r1); background: var(--warm); font-family: 'Nunito'; font-size: 0.95rem; }
-    .fin:focus { border-color: var(--sage); box-shadow: 0 0 0 3px rgba(94,126,94,0.1); }
-    
-    /* Sidebar Items */
-    .sbt { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--terra); letter-spacing: 2px; margin-bottom: 2rem; }
-    .sbsc { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3); font-weight: 700; margin: 1.5rem 0 0.5rem 0.5rem; }
-    .ni { padding: 0.8rem 1rem; border-radius: var(--r1); margin-bottom: 0.3rem; font-weight: 600; color: var(--text2); display: flex; align-items: center; gap: 0.8rem; }
-    .ni:hover { background: rgba(94, 126, 94, 0.08); }
-    .ni.on { background: var(--sage); color: white; }
-    .ni .ic { font-size: 1.1rem; }
-    .bdg { background: var(--terra); color: white; font-size: 0.65rem; padding: 0.1rem 0.4rem; border-radius: 12px; margin-left: auto; text-transform: uppercase; letter-spacing: 0.5px; }
-    
-    /* Cards & Grids */
-    .egrid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
-    .ctile { background: var(--cream2); border: 1px solid var(--bd); border-radius: var(--r2); padding: 1.5rem; cursor: pointer; transition: 0.3s; text-align: center; }
-    .ctile:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--sage); }
-    .ctile.on { background: rgba(94, 126, 94, 0.1); border-color: var(--sage); box-shadow: inset 0 0 0 1px var(--sage); }
-    .ci { font-size: 2rem; margin-bottom: 1rem; }
-    
-    /* Memory Lists */
-    .mlist { display: flex; flex-direction: column; gap: 0.8rem; }
-    .mit { background: white; border: 1px solid var(--bd); padding: 1.2rem; border-radius: var(--r1); display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow); }
-    .mit:hover { border-color: var(--sage2); }
-    .mic { font-size: 1.5rem; background: var(--cream2); width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; border-radius: 50%; }
-    .mib { flex: 1; }
-    .mit1 { font-weight: 700; color: var(--bark); font-size: 1.05rem; margin-bottom: 0.2rem; }
-    .mit2 { font-size: 0.85rem; color: var(--text3); }
-    .mlk { font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .ml-o { background: rgba(94, 126, 94, 0.15); color: var(--sage); }
-    .ml-s { background: rgba(184, 92, 54, 0.15); color: var(--terra); }
-    
-    /* Chat/NLP Interfaces */
-    .cw { background: white; border: 1px solid var(--bd); border-radius: var(--r2); height: 600px; display: flex; flex-direction: column; box-shadow: var(--shadow); overflow: hidden; }
-    .ctop { padding: 1.2rem 1.5rem; background: var(--cream2); border-bottom: 1px solid var(--bd); display: flex; align-items: center; gap: 1rem; }
-    .cava { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--terra), var(--terra3)); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display'; font-size: 1.2rem; }
-    .cinf h4 { margin: 0; font-size: 1.1rem; }
-    .cinf p { margin: 0; font-size: 0.8rem; color: var(--text3); }
-    .cmsgs { flex: 1; padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1.2rem; background: var(--warm); }
-    .mr { display: flex; gap: 1rem; max-width: 85%; }
-    .mr.usr { align-self: flex-end; flex-direction: row-reverse; }
-    .mrav { width: 35px; height: 35px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display'; color: white; font-size: 1rem; }
-    .mr.ai .mrav { background: linear-gradient(135deg, var(--terra), var(--terra3)); }
-    .mr.usr .mrav { background: var(--sage); }
-    .mb { padding: 1rem 1.2rem; border-radius: 18px; font-size: 0.95rem; line-height: 1.6; }
-    .mr.ai .mb { background: var(--cream2); color: var(--bark); border-top-left-radius: 4px; border: 1px solid var(--bd); }
-    .mr.usr .mb { background: var(--sage); color: white; border-top-right-radius: 4px; }
-    
-    .cir { padding: 1.2rem 1.5rem; background: white; border-top: 1px solid var(--bd); }
-    .cin-row { display: flex; gap: 0.8rem; }
-    .csnd { background: var(--terra); color: white; border: none; padding: 0 1.5rem; border-radius: var(--r1); font-weight: 700; }
-    
-    .nlp-bar { background: var(--cream3); padding: 0.6rem 1.5rem; border-top: 1px solid var(--bd); display: none; align-items: center; gap: 1rem; font-size: 0.8rem; }
-    .nlp-bar.on { display: flex; }
-    .nlp-pill { padding: 0.2rem 0.8rem; border-radius: 12px; font-weight: 700; color: white; }
-    .nlp-pill.grief { background: #5c7285; }
-    .nlp-pill.anxiety { background: #b08d57; }
-    .nlp-pill.heartbreak { background: var(--terra); }
-    
-    .toast { position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%); background: var(--bark); color: white; padding: 0.8rem 1.5rem; border-radius: 30px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1000; }
-    .toast.show { bottom: 30px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Heiryn — Your Living Digital Will</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #2C2416;
+    --navy-mid: #EAE0CE;
+    --navy-light: #F0E8D8;
+    --gold: #9C6F2E;
+    --gold-light: #C49A4A;
+    --gold-pale: #F7EDD8;
+    --off-white: #2C2416;
+    --muted: #8C7B65;
+    --white: #2C2416;
+    --danger: #A0391F;
+    --success: #4A7C59;
+    --beige-deep: #D4C5AE;
+    --beige-mid: #EAE0CE;
+    --beige-light: #F5EFE4;
+    --beige-pale: #FAF7F2;
+    --brown-dark: #2C2416;
+    --brown-mid: #5C4A32;
+    --brown-soft: #8C7B65;
+  }
 
-    /* Info Box */
-    .info-box { background: rgba(94, 126, 94, 0.08); border-left: 4px solid var(--sage); padding: 1.2rem; border-radius: 0 var(--r1) var(--r1) 0; margin-bottom: 2rem; color: var(--text2); line-height: 1.6; }
-    
-    /* Landing & Auth Specific */
-    .auth-wrap { max-width: 400px; margin: 4rem auto; background: white; padding: 2.5rem; border-radius: var(--r2); box-shadow: var(--shadow); border: 1px solid var(--bd); }
-    .auth-tabs { display: flex; margin-bottom: 2rem; border-bottom: 2px solid var(--cream3); }
-    .atab { flex: 1; text-align: center; padding: 1rem; cursor: pointer; font-weight: 700; color: var(--text3); transition: 0.2s; }
-    .atab.on { color: var(--terra); border-bottom: 2px solid var(--terra); margin-bottom: -2px; }
-  </style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: #F5EFE4;
+    color: #2C2416;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── SCREEN SYSTEM ── */
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: flex; flex-direction: column; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── NAV ── */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 24px;
+    background: rgba(245,239,228,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(156,111,46,0.25);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); font-weight: 600; letter-spacing: 1px; }
+  .nav-steps { display: flex; gap: 6px; }
+  .step-dot { width: 8px; height: 8px; border-radius: 50%; background: #D4C5AE; transition: all 0.3s; }
+  .step-dot.active { background: var(--gold); transform: scale(1.3); }
+  .step-dot.done { background: var(--gold-light); opacity: 0.6; }
+  .nav-back { background: none; border: none; color: var(--muted); cursor: pointer; font-family: 'Jost', sans-serif; font-size: 13px; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .nav-back:hover { color: var(--gold); }
+
+  /* ── CONTAINERS ── */
+  .container { max-width: 680px; margin: 0 auto; padding: 32px 20px; flex: 1; }
+  .container-wide { max-width: 960px; margin: 0 auto; padding: 32px 20px; flex: 1; }
+
+  /* ── TYPOGRAPHY ── */
+  .display { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px,6vw,52px); line-height: 1.1; color: var(--brown-dark); font-weight: 300; }
+  .display em { color: var(--gold); font-style: italic; }
+  .subtitle { font-size: 15px; color: var(--muted); line-height: 1.6; margin-top: 12px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); margin-bottom: 6px; font-weight: 600; }
+  .label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 500; }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    background: var(--gold); color: var(--navy); border: none;
+    padding: 14px 28px; border-radius: 6px; font-family: 'Jost', sans-serif;
+    font-size: 14px; font-weight: 600; cursor: pointer; width: 100%;
+    transition: all 0.2s; letter-spacing: 0.5px;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(156,111,46,0.3); }
+  .btn-secondary {
+    background: transparent; color: #2C2416; border: 1px solid rgba(244,241,236,0.2);
+    padding: 13px 28px; border-radius: 6px; font-family: 'Jost', sans-serif;
+    font-size: 14px; cursor: pointer; width: 100%; transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-sm {
+    background: var(--gold); color: var(--navy); border: none;
+    padding: 8px 18px; border-radius: 4px; font-family: 'Jost', sans-serif;
+    font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-sm:hover { background: var(--gold-light); }
+  .btn-ghost { background: rgba(201,151,58,0.1); color: var(--gold); border: 1px solid rgba(156,111,46,0.3); padding: 8px 16px; border-radius: 4px; font-size: 12px; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; }
+  .btn-ghost:hover { background: rgba(201,151,58,0.2); }
+
+  /* ── CARDS ── */
+  .card {
+    background: #FFFDF8; border: 1px solid rgba(156,111,46,0.18);
+    border-radius: 12px; padding: 20px; margin-bottom: 14px;
+    transition: all 0.2s;
+  }
+  .card:hover { border-color: rgba(156,111,46,0.35); }
+  .card-gold { border-left: 3px solid var(--gold); }
+
+  /* ── INPUTS ── */
+  .input-group { margin-bottom: 18px; }
+  .input-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; display: block; letter-spacing: 0.5px; }
+  .input-field {
+    width: 100%; background: #FFFDF8; border: 1px solid rgba(156,111,46,0.25);
+    border-radius: 8px; padding: 12px 16px; color: #2C2416;
+    font-family: 'Jost', sans-serif; font-size: 14px; transition: border 0.2s;
+  }
+  .input-field:focus { outline: none; border-color: var(--gold); }
+  .input-field::placeholder { color: var(--muted); }
+  select.input-field { cursor: pointer; }
+  textarea.input-field { resize: vertical; min-height: 80px; }
+
+  /* ── TOGGLE ── */
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .toggle-row:last-child { border-bottom: none; }
+  .toggle-info h4 { font-size: 14px; color: #2C2416; margin-bottom: 3px; }
+  .toggle-info p { font-size: 12px; color: var(--muted); }
+  .toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider {
+    position: absolute; inset: 0; background: #D4C5AE; border-radius: 24px;
+    cursor: pointer; transition: 0.3s;
+  }
+  .toggle-slider::before {
+    content: ''; position: absolute; width: 18px; height: 18px;
+    left: 3px; top: 3px; background: #8C7B65; border-radius: 50%; transition: 0.3s;
+  }
+  .toggle input:checked + .toggle-slider { background: var(--gold); }
+  .toggle input:checked + .toggle-slider::before { transform: translateX(20px); background: #F5EFE4; }
+
+  /* ── TAGS ── */
+  .tag { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+  .tag-gold { background: rgba(156,111,46,0.12); color: var(--gold); border: 1px solid rgba(156,111,46,0.3); }
+  .tag-green { background: rgba(74,124,89,0.12); color: #2ECC71; border: 1px solid rgba(39,174,96,0.3); }
+  .tag-blue { background: rgba(74,100,156,0.12); color: #5DADE2; border: 1px solid rgba(52,152,219,0.3); }
+  .tag-red { background: rgba(160,57,31,0.12); color: #E74C3C; border: 1px solid rgba(192,57,43,0.3); }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: rgba(255,255,255,0.07); margin: 24px 0; }
+  .gold-bar { height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin-bottom: 24px; border-radius: 2px; }
+
+  /* ── PROGRESS ── */
+  .progress-bar { background: #D4C5AE; border-radius: 4px; height: 4px; margin-bottom: 28px; }
+  .progress-fill { height: 4px; background: var(--gold); border-radius: 4px; transition: width 0.5s ease; }
+
+  /* ── BADGE ── */
+  .badge { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .badge-gold { background: rgba(156,111,46,0.12); }
+  .badge-navy { background: #EAE0CE; }
+
+  /* ── UNLOCK CARD ── */
+  .unlock-card {
+    background: linear-gradient(135deg, #EAE0CE, #F5EFE4);
+    border: 1px solid rgba(156,111,46,0.2); border-radius: 16px; padding: 24px;
+    margin-bottom: 16px; position: relative; overflow: hidden;
+  }
+  .unlock-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .lock-icon { font-size: 32px; margin-bottom: 12px; }
+  .unlock-card.locked { opacity: 0.7; }
+  .unlock-card.unlocked { border-color: rgba(39,174,96,0.4); }
+  .unlock-card.unlocked::before { background: linear-gradient(90deg, #27AE60, transparent); }
+
+  /* ── EMOTION METER ── */
+  .emotion-bar { display: flex; gap: 8px; margin: 12px 0; }
+  .emotion-pill {
+    flex: 1; padding: 8px 6px; border-radius: 8px; text-align: center;
+    font-size: 11px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
+    transition: all 0.2s; background: #EAE0CE;
+  }
+  .emotion-pill.active { background: rgba(201,151,58,0.2); border-color: var(--gold); color: var(--gold); }
+  .emotion-pill span { display: block; font-size: 18px; margin-bottom: 4px; }
+
+  /* ── TIMELINE ── */
+  .timeline-item { display: flex; gap: 16px; margin-bottom: 20px; }
+  .timeline-line { display: flex; flex-direction: column; align-items: center; }
+  .timeline-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 4px; }
+  .timeline-connector { width: 2px; flex: 1; background: rgba(201,151,58,0.2); margin-top: 4px; }
+
+  /* ── AVATAR ── */
+  .avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; background: var(--navy-light); border: 2px solid rgba(156,111,46,0.3); flex-shrink: 0; }
+
+  /* ── RECORD BTN ── */
+  .record-btn {
+    width: 72px; height: 72px; border-radius: 50%; background: var(--gold);
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin: 0 auto; transition: all 0.2s; box-shadow: 0 0 0 0 rgba(156,111,46,0.4);
+  }
+  .record-btn:hover { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(156,111,46,0.12); }
+  .record-btn.recording { animation: pulse 1.5s infinite; background: var(--danger); }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.4); } 50% { box-shadow: 0 0 0 16px rgba(192,57,43,0); } }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* ── MODAL OVERLAY ── */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.show { display: flex; animation: fadeIn 0.2s ease; }
+  .modal { background: #FAF7F2; border: 1px solid rgba(156,111,46,0.3); border-radius: 16px; padding: 28px; max-width: 480px; width: 100%; }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .modal-close { background: none; border: none; color: #8C7B65; cursor: pointer; font-size: 20px; }
+
+  /* ── TOAST ── */
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #EAE0CE; border: 1px solid rgba(156,111,46,0.4); color: #2C2416; padding: 12px 24px; border-radius: 8px; font-size: 13px; z-index: 300; display: none; white-space: nowrap; }
+  .toast.show { display: block; animation: toastIn 0.3s ease; }
+  @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+  /* ── WAVEFORM ── */
+  .waveform { display: flex; align-items: center; gap: 3px; height: 40px; justify-content: center; }
+  .wave-bar { width: 3px; background: var(--gold); border-radius: 2px; animation: wave 1.2s ease-in-out infinite; }
+  .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+  .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+  .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+  .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+  .wave-bar:nth-child(6) { animation-delay: 0.3s; }
+  .wave-bar:nth-child(7) { animation-delay: 0.2s; }
+  .wave-bar:nth-child(8) { animation-delay: 0.1s; }
+  @keyframes wave { 0%, 100% { height: 8px; } 50% { height: 32px; } }
+  .waveform.idle .wave-bar { height: 4px; animation: none; }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    display: flex; background: #EAE0CE; border-top: 1px solid rgba(156,111,46,0.2);
+    padding: 10px 0 20px; position: sticky; bottom: 0;
+  }
+  .bottom-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 6px; transition: all 0.2s; }
+  .bottom-nav-item span:first-child { font-size: 20px; }
+  .bottom-nav-item span:last-child { font-size: 10px; color: var(--muted); }
+  .bottom-nav-item.active span:last-child { color: var(--gold); }
+  .bottom-nav-item.active span:first-child { filter: drop-shadow(0 0 4px rgba(156,111,46,0.6)); }
+
+  /* ── RELATION TILES ── */
+  .relation-tile {
+    background: #F0E8D8; border: 1px solid rgba(156,111,46,0.2);
+    color: var(--muted); border-radius: 20px; padding: 6px 14px;
+    font-size: 12px; font-family: 'Jost', sans-serif; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .relation-tile:hover { border-color: var(--gold); color: var(--gold); background: rgba(156,111,46,0.08); }
+  .relation-tile.selected { background: rgba(156,111,46,0.15); border-color: var(--gold); color: var(--gold); font-weight: 600; }
+
+  /* ── RECIPIENT GREETING BANNER ── */
+  .recipient-banner {
+    background: linear-gradient(135deg, rgba(156,111,46,0.1), rgba(156,111,46,0.04));
+    border: 1px solid rgba(156,111,46,0.25); border-radius: 14px;
+    padding: 18px 20px; margin-bottom: 20px; border-left: 3px solid var(--gold);
+  }
+
+  /* ── AGE PRESET BUTTONS ── */
+  .age-preset-btn {
+    background: #F0E8D8; border: 1px solid rgba(156,111,46,0.25);
+    color: var(--muted); border-radius: 20px; padding: 5px 14px;
+    font-size: 12px; font-family: 'Jost', sans-serif; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .age-preset-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .age-preset-btn.selected { background: rgba(156,111,46,0.15); border-color: var(--gold); color: var(--gold); font-weight: 700; }
+
+  .spacer { height: 24px; }
+  .mt-8 { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-24 { margin-top: 24px; }
+  .mb-8 { margin-bottom: 8px; }
+  .mb-16 { margin-bottom: 16px; }
+  .flex { display: flex; }
+  .flex-center { display: flex; align-items: center; }
+  .gap-8 { gap: 8px; }
+  .gap-12 { gap: 12px; }
+  .gap-16 { gap: 16px; }
+  .justify-between { justify-content: space-between; }
+  .flex-1 { flex: 1; }
+  .text-gold { color: var(--gold); }
+  .text-muted { color: var(--muted); font-size: 13px; }
+  .text-small { font-size: 12px; }
+  .bold { font-weight: 600; }
+  .italic { font-style: italic; font-family: 'Cormorant Garamond', serif; }
+
+  /* ── AUTH SCREENS ── */
+  .auth-screen { display:none; min-height:100vh; flex-direction:column; background:#F5EFE4; }
+  .auth-screen.active { display:flex; animation:fadeIn 0.5s ease; }
+  .landing-wrap { display:flex; flex-direction:column; min-height:100vh; }
+  .landing-top-bar { display:flex; justify-content:space-between; align-items:center; padding:20px 28px; }
+  .landing-top-bar .logo-text { font-family:'Cormorant Garamond',serif; font-size:24px; color:var(--gold); font-weight:600; letter-spacing:1.5px; }
+  .landing-top-bar .auth-links { display:flex; gap:10px; }
+  .auth-link-btn { font-family:'Jost',sans-serif; font-size:13px; font-weight:500; padding:9px 22px; border-radius:6px; cursor:pointer; transition:all 0.2s; letter-spacing:0.3px; }
+  .auth-link-ghost { background:transparent; border:1px solid rgba(156,111,46,0.4); color:var(--gold); }
+  .auth-link-ghost:hover { background:rgba(156,111,46,0.08); border-color:var(--gold); }
+  .auth-link-fill { background:var(--gold); border:1px solid var(--gold); color:#FAF7F2; }
+  .auth-link-fill:hover { background:var(--gold-light); transform:translateY(-1px); box-shadow:0 6px 20px rgba(156,111,46,0.28); }
+  .hero-section { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:48px 24px 32px; text-align:center; max-width:600px; margin:0 auto; width:100%; }
+  .hero-logo-wrap { position:relative; width:92px; margin:0 auto 42px; display:flex; flex-direction:column; align-items:center; padding-bottom:14px; }
+  .hero-logo-shadow { width:60px; height:12px; background:radial-gradient(ellipse,rgba(156,111,46,0.35) 0%,transparent 75%); border-radius:50%; position:absolute; bottom:-14px; left:50%; transform:translateX(-50%); animation:shadowPulse 4s ease-in-out infinite; flex-shrink:0; z-index:0; }
+  @keyframes shadowPulse { 0%,100%{transform:translateX(-50%) scaleX(1);opacity:0.7;} 50%{transform:translateX(-50%) scaleX(0.7);opacity:0.35;} }
+  .hero-logo-mark { width:92px; height:92px; border-radius:24px; background:linear-gradient(135deg,#EAE0CE,#F5EFE4); border:1.5px solid rgba(156,111,46,0.35); display:flex; align-items:center; justify-content:center; position:relative; box-shadow:none; animation:logoFloat 4s ease-in-out infinite; z-index:1; }
+  .hero-logo-mark::before { content:''; position:absolute; inset:-4px; border-radius:28px; border:1px solid rgba(156,111,46,0.13); }
+  .hero-logo-mark::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; border-radius:24px 24px 0 0; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+  @keyframes logoFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+  .logo-icon-inner { font-size:40px; line-height:1; }
+  .hero-tagline { font-family:'Cormorant Garamond',serif; font-size:clamp(34px,7vw,54px); line-height:1.1; color:var(--brown-dark); font-weight:300; margin-bottom:16px; }
+  .hero-tagline em { color:var(--gold); font-style:italic; }
+  .hero-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; color:var(--muted); line-height:1.75; margin-bottom:10px; max-width:440px; }
+  .hero-desc { font-size:13px; color:var(--brown-soft); line-height:1.65; max-width:420px; margin-bottom:36px; }
+  .hero-cta-group { display:flex; flex-direction:column; gap:10px; width:100%; max-width:360px; }
+  .feature-strip { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; padding:20px 20px 36px; }
+  .feature-pill { display:flex; align-items:center; gap:6px; background:#FFFDF8; border:1px solid rgba(156,111,46,0.2); border-radius:20px; padding:7px 14px; font-size:12px; color:var(--muted); }
+  .feature-pill-icon { font-size:14px; }
+  .auth-form-wrap { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 24px 48px; }
+  .auth-card { background:#FFFDF8; border:1px solid rgba(156,111,46,0.22); border-radius:16px; padding:36px 32px; width:100%; max-width:420px; box-shadow:0 4px 32px rgba(44,36,22,0.07); position:relative; overflow:hidden; }
+  .auth-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--gold),transparent); }
+  .auth-card-logo { font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--gold); font-weight:600; letter-spacing:1px; text-align:center; margin-bottom:6px; }
+  .auth-card-title { font-family:'Cormorant Garamond',serif; font-size:26px; color:var(--brown-dark); text-align:center; margin-bottom:6px; font-weight:400; }
+  .auth-card-sub { font-size:13px; color:var(--muted); text-align:center; margin-bottom:28px; line-height:1.5; }
+  .auth-divider { height:1px; background:rgba(156,111,46,0.15); margin:20px 0; position:relative; }
+  .auth-divider span { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:#FFFDF8; padding:0 12px; font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+  .auth-switch { text-align:center; margin-top:20px; font-size:13px; color:var(--muted); }
+  .auth-switch-link { color:var(--gold); cursor:pointer; font-weight:600; text-decoration:underline; transition: color 0.2s; }
+  .auth-switch-link:hover { color:var(--gold-light); }
+</style>
 </head>
 <body>
 
-<div class="page active" id="pg-landing" style="flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, var(--cream), var(--cream2));">
-  <h1 style="font-size: 4rem; color: var(--terra); letter-spacing: 4px; margin-bottom: 1rem;">HEIRYN</h1>
-  <p style="font-family: 'Lora', serif; font-style: italic; font-size: 1.4rem; color: var(--bark); max-width: 600px; margin-bottom: 3rem; line-height: 1.6;">
-    "Because the most precious things should never be lost."
-  </p>
-  <button class="bf" style="font-size: 1.1rem; padding: 1rem 3rem;" onclick="goAuth('in')">Enter Prototype</button>
-</div>
-
-<div class="page" id="pg-auth">
-  <div style="padding: 2rem; text-align: center;">
-    <h2 style="color: var(--terra); cursor: pointer;" onclick="showPage('pg-landing')">HEIRYN</h2>
-  </div>
-  <div class="auth-wrap">
-    <div class="auth-tabs">
-      <div class="atab on" id="tab-in" onclick="swTab('in')">Sign In</div>
-      <div class="atab" id="tab-up" onclick="swTab('up')">Create Account</div>
+<div class="screen auth-screen active" id="screen-landing">
+  <div class="landing-wrap">
+    <div class="landing-top-bar">
+      <div class="logo-text">Heiryn.</div>
+      <div class="auth-links">
+        <button class="auth-link-btn auth-link-ghost" onclick="showAuth('login')">Sign In</button>
+        <button class="auth-link-btn auth-link-fill" onclick="showAuth('signup')">Create Legacy</button>
+      </div>
     </div>
-    
-    <div id="f-si">
-      <div style="margin-bottom: 1.5rem;">
-        <label style="display:block; margin-bottom:0.5rem; font-weight:600; font-size:0.9rem;">Email Address</label>
-        <input type="email" class="fin" id="si-em" placeholder="your@email.com">
+    <div class="hero-section">
+      <div class="hero-logo-wrap">
+        <div class="hero-logo-mark"><span class="logo-icon-inner">🏛️</span></div>
+        <div class="hero-logo-shadow"></div>
       </div>
-      <div style="margin-bottom: 2rem;">
-        <label style="display:block; margin-bottom:0.5rem; font-weight:600; font-size:0.9rem;">Password</label>
-        <input type="password" class="fin" id="si-pw" placeholder="••••••••">
-      </div>
-      <div id="si-alrt" style="color: var(--terra); font-size: 0.85rem; margin-bottom: 1rem; display: none;"></div>
-      <button class="bf" style="width: 100%;" id="si-btn" onclick="doSignIn()">Sign In</button>
-    </div>
-
-    <div id="f-su" style="display: none;">
-      <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
-        <div style="flex: 1; text-align: center; padding: 1rem; border: 1px solid var(--bd); border-radius: var(--r1); cursor: pointer;" id="ro-rec" class="on" onclick="pickRole('recorder')">
-          <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎙️</div>
-          <div style="font-weight: 700; font-size: 0.9rem;">Recorder</div>
-          <div style="font-size: 0.7rem; color: var(--text3);">I want to leave memories</div>
-        </div>
-        <div style="flex: 1; text-align: center; padding: 1rem; border: 1px solid var(--bd); border-radius: var(--r1); cursor: pointer;" id="ro-rcp" onclick="pickRole('recipient')">
-          <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💌</div>
-          <div style="font-weight: 700; font-size: 0.9rem;">Recipient</div>
-          <div style="font-size: 0.7rem; color: var(--text3);">I am receiving memories</div>
-        </div>
-      </div>
-      <div style="margin-bottom: 1.2rem;">
-        <input type="text" class="fin" id="su-nm" placeholder="Full Name">
-      </div>
-      <div style="margin-bottom: 1.2rem;">
-        <input type="email" class="fin" id="su-em" placeholder="Email Address">
-      </div>
-      <div style="margin-bottom: 1.2rem;">
-        <select class="fin" id="su-lg">
-          <option value="" disabled selected>Primary Language</option>
-          <option value="English">English</option>
-          <option value="Telugu">Telugu</option>
-          <option value="Hindi">Hindi</option>
-        </select>
-      </div>
-      <div style="margin-bottom: 1.2rem;">
-        <input type="password" class="fin" id="su-pw" placeholder="Create Password">
-      </div>
-      <div style="margin-bottom: 2rem;">
-        <input type="password" class="fin" id="su-pw2" placeholder="Confirm Password">
-      </div>
-      <div id="su-alrt" style="color: var(--terra); font-size: 0.85rem; margin-bottom: 1rem; display: none;"></div>
-      <button class="bf" style="width: 100%;" id="su-btn" onclick="doSignUp()">Create Account</button>
-    </div>
-  </div>
-</div>
-
-<div class="page" id="pg-recorder">
-  <div class="dsh">
-    <div class="sb sb-rec">
-      <div class="sbt">HEIRYN</div>
+      <h1 class="hero-tagline">Preserve your <em>presence</em>, not just your past.</h1>
+      <p class="hero-quote">"Because the most precious things you inherit from the people you love are worth infinitely more than property."</p>
+      <p class="hero-desc">The world's first proactive, dignity-first legacy platform. Control exactly how and when your memories, values, and voice reach the people you love.</p>
       
-      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; padding: 1rem; background: var(--cream); border-radius: var(--r1); border: 1px solid var(--bd);">
-        <div id="rec-av" style="width: 40px; height: 40px; border-radius: 50%; background: var(--sage); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem;">R</div>
-        <div>
-          <div id="rec-un" style="font-weight: 700; color: var(--bark); font-size: 0.95rem;">Ramu Tata</div>
-          <div id="rec-ue" style="font-size: 0.75rem; color: var(--text3);">Recorder Account</div>
-        </div>
-      </div>
-
-      <div class="sbnav">
-        <div class="sbsc">Creation</div>
-        <div class="ni on" onclick="swR('r-hm')"><span class="ic">🏠</span>Dashboard</div>
-        <div class="ni" onclick="swR('r-vw')"><span class="ic">📜</span>Values Will</div>
-        <div class="ni" onclick="swR('r-ra')"><span class="ic">🍛</span>Recipe Archive</div>
-        <div class="ni" onclick="swR('r-lm')"><span class="ic">🗺️</span>Land Memory</div>
-        <div class="ni" onclick="swR('r-fa')"><span class="ic">✨</span>Future Address</div>
-        
-        <div class="sbsc">Settings</div>
-        <div class="ni" onclick="swR('r-cs')"><span class="ic">🔐</span>Consent Layers</div>
-        <div class="ni" onclick="swR('r-fm')"><span class="ic">👨‍👩‍👧</span>Family Access</div>
-      </div>
-      <div style="margin-top: auto;">
-        <button style="background: none; border: none; color: var(--terra); font-weight: 700; cursor: pointer; padding: 1rem;" onclick="doLogout()">← Sign Out</button>
+      <div class="hero-cta-group">
+        <button class="btn-primary" style="padding: 16px 24px; font-size: 16px;" onclick="showAuth('signup')">Begin Your Archive</button>
       </div>
     </div>
-    
-    <div class="dmain" style="padding: 3rem 4rem;">
-      <div class="dp on" id="r-hm">
-        <div class="dhtit">Recorder Dashboard</div>
-        <div class="dhsub">Build your living memory profile</div>
-        
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem;">
-          <div style="background: white; padding: 2rem; border-radius: var(--r2); border: 1px solid var(--bd); text-align: center; box-shadow: var(--shadow);">
-            <div style="font-size: 2.5rem; color: var(--sage); font-family: 'Playfair Display'; margin-bottom: 0.5rem;" id="st-rc">0</div>
-            <div style="color: var(--text3); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Total Memories</div>
-          </div>
-          <div style="background: white; padding: 2rem; border-radius: var(--r2); border: 1px solid var(--bd); text-align: center; box-shadow: var(--shadow);">
-            <div style="font-size: 2.5rem; color: var(--terra); font-family: 'Playfair Display'; margin-bottom: 0.5rem;" id="st-lk">0</div>
-            <div style="color: var(--text3); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Sealed / Locked</div>
-          </div>
-          <div style="background: white; padding: 2rem; border-radius: var(--r2); border: 1px solid var(--bd); text-align: center; box-shadow: var(--shadow);">
-            <div style="font-size: 2.5rem; color: var(--bark); font-family: 'Playfair Display'; margin-bottom: 0.5rem;" id="st-fm">0</div>
-            <div style="color: var(--text3); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Family Members</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dp" id="r-cs">
-        <div class="dhtit">Consent Architecture</div>
-        <div class="dhsub">You control exactly when and how memories unlock.</div>
-        <div class="info-box" style="margin-top: 2rem;">
-          <p>Heiryn is the only platform globally built on proactive consent[cite: 43]. Set triggers for your upcoming recordings below.</p>
-        </div>
-        
-        <div style="background: white; border: 1px solid var(--bd); border-radius: var(--r2); padding: 2rem; margin-bottom: 2rem;">
-          <h3 style="margin-bottom: 1rem; color: var(--bark);">Unlock Triggers</h3>
-          <div id="cs-trigger-group" style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <button class="bf cs-radio selected" style="background: var(--cream2); color: var(--text); border: 1px solid var(--bd);" data-val="life_event" onclick="csPick(this, 'trigger')">📅 Life Event</button>
-            <button class="bf cs-radio" style="background: var(--cream2); color: var(--text); border: 1px solid var(--bd);" data-val="emotion_state" onclick="csPick(this, 'trigger')">💫 Emotion State</button>
-            <button class="bf cs-radio" style="background: var(--cream2); color: var(--text); border: 1px solid var(--bd);" data-val="dead_mans_switch" onclick="csPick(this, 'trigger')">🔒 Dead Man's Switch</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="dp" id="r-vw">
-        <div class="dh"><div><div class="dhtit">Values Will</div><div class="dhsub">The principles you want carried forward</div></div><div class="dhact"><button class="bf" style="padding:.42rem 1rem;font-size:.76rem;border-radius:8px" onclick="pickCatAndRecord('Life Wisdom')">+ Add Entry</button></div></div>
-        <div style="padding:1.8rem 2rem">
-          <div class="info-box"><p>Your Values Will captures the principles, beliefs, and life philosophy you want carried forward — not property, but <em>how to live</em>[cite: 66].</p></div>
-          <div class="sh">Suggested Topics</div>
-          <div class="egrid3" style="margin-bottom:1.4rem">
-            <div class="ctile" onclick="pickCatAndRecord('Life Wisdom')"><div class="ci">⚖️</div><h4>On Honesty</h4><p>What you believe about integrity</p></div>
-            <div class="ctile" onclick="pickCatAndRecord('Life Wisdom')"><div class="ci">❤️</div><h4>How We Love</h4><p>Your family's way of love</p></div>
-            <div class="ctile" onclick="pickCatAndRecord('Life Wisdom')"><div class="ci">🌦️</div><h4>Hard Times</h4><p>What difficulty taught you</p></div>
-          </div>
-          <div class="sh">Your Entries</div>
-          <div id="vw-list"><div style="text-align: center; padding: 2rem; color: var(--text3);">No entries yet.</div></div>
-        </div>
-      </div>
-
-      </div>
-  </div>
-</div>
-
-<div class="page" id="pg-recipient">
-  <div class="dsh">
-    <div class="sb sb-rcp">
-      <div class="sbt">HEIRYN</div>
-      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; padding: 1rem; background: var(--cream); border-radius: var(--r1); border: 1px solid var(--bd);">
-        <div id="rcp-av" style="width: 40px; height: 40px; border-radius: 50%; background: var(--terra); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem;">P</div>
-        <div>
-          <div id="rcp-un" style="font-weight: 700; color: var(--bark); font-size: 0.95rem;">Priya</div>
-          <div id="rcp-ue" style="font-size: 0.75rem; color: var(--text3);">Recipient Account</div>
-        </div>
-      </div>
-
-      <div class="sbnav">
-        <div class="sbsc">Memories</div>
-        <div class="ni on" onclick="swP('p-hm')"><span class="ic">🏠</span>My Inheritance</div>
-        <div class="ni" onclick="swP('p-cv')"><span class="ic">💬</span>Speak to Tata<span class="bdg">AI</span></div>
-        <div class="sbsc">Support</div>
-        <div class="ni" onclick="swP('p-gr')"><span class="ic">🫂</span>Grief Counsellor<span class="bdg" style="background:var(--sage)">Live</span></div>
-        <div class="ni" onclick="swP('p-em')"><span class="ic">💫</span>Emotion Unlock</div>
-      </div>
-      <div style="margin-top: auto;">
-        <button style="background: none; border: none; color: var(--terra); font-weight: 700; cursor: pointer; padding: 1rem;" onclick="doLogout()">← Sign Out</button>
-      </div>
-    </div>
-    
-    <div class="dmain">
-      <div class="dp on" id="p-hm">
-        <div class="dh"><div><div class="dhtit">Your Inheritance</div><div class="dhsub" id="p-hs">Memories left for you</div></div></div>
-        <div style="padding:2rem 3rem">
-          
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem;">
-            <div style="background:linear-gradient(135deg,var(--bark),#3a1e08);border-radius:var(--r2);padding:2rem;color:#fff;cursor:pointer;box-shadow:var(--shadow);" onclick="swP('p-cv')">
-              <div style="font-size:1.8rem;margin-bottom:.8rem">💬</div>
-              <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:.5rem">Speak to Ramu Tata</h3>
-              <p style="font-size:0.9rem;opacity:.8;line-height:1.6;margin-bottom:1.5rem">He is here. Tell him anything.</p>
-              <button style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:0.6rem 1.2rem;border-radius:8px;font-weight:700;">Start Conversation →</button>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(94,126,94,.15),rgba(94,126,94,.05));border:1px solid var(--bd);border-radius:var(--r2);padding:2rem;cursor:pointer;box-shadow:var(--shadow);" onclick="swP('p-gr')">
-              <div style="font-size:1.8rem;margin-bottom:.8rem">🫂</div>
-              <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--bark);margin-bottom:.5rem">Grief Counsellor</h3>
-              <p style="font-size:0.9rem;color:var(--text2);line-height:1.6;margin-bottom:1.5rem">Speak with a compassionate AI counsellor or professional.</p>
-              <button style="background:var(--sage);border:none;color:#fff;padding:0.6rem 1.2rem;border-radius:8px;font-weight:700;">Open Support →</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dp" id="p-cv">
-        <div class="dh"><div><div class="dhtit">Speak to Ramu Tata</div><div class="dhsub">AI Memory · NLP Emotion Detection Active</div></div></div>
-        <div style="padding:2rem 3rem">
-          <div class="cw">
-            <div class="ctop"><div class="cava">ర</div><div class="cinf"><h4>Ramu Tata</h4><p>Retired School Teacher · Warangal</p></div></div>
-            <div class="cmsgs" id="c-msgs">
-              <div class="mr ai"><div class="mrav">ర</div><div class="mb">Raa chinna ammayi… you look like you have something on your heart. Tata is here. Tell me.</div></div>
-            </div>
-            
-            <div class="nlp-bar" id="nlp-bar">
-              <span style="font-weight:700; color:var(--text2);">Emotion Detected:</span>
-              <span class="nlp-pill" id="nlp-pill">Neutral</span>
-              <span style="font-size:.75rem;color:var(--text3)" id="nlp-conf"></span>
-              <span style="margin-left:auto; color:var(--terra); font-weight:700; cursor:pointer;" id="nlp-surf" onclick="surfaceMemory()" style="display:none">Surface matching memory →</span>
-            </div>
-            
-            <div class="cir">
-              <div class="cin-row">
-                <input class="fin" id="c-in" placeholder="Tell Tata what's on your mind…" oninput="nlpDetect(this.value)" onkeydown="if(event.key==='Enter')sendMsg()">
-                <button class="csnd" id="c-snd" onclick="sendMsg()">Send</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="dp" id="p-em">
-        <div class="dh"><div><div class="dhtit">Emotion-State Unlock</div><div class="dhsub">The right memory for the right feeling</div></div></div>
-        <div style="padding:2rem 3rem">
-          <p style="margin-bottom:2rem; color:var(--text2); font-size:1.1rem; line-height:1.6;">Heiryn's NLP engine detects your emotional state[cite: 78]. Select your feeling below to surface the exact message recorded for this moment[cite: 64].</p>
-          <div class="egrid3">
-            <div class="ctile" onclick="emoU(this,'grief')"><div class="ci">😢</div><h4>Grief</h4><p>Missing someone deeply</p></div>
-            <div class="ctile" onclick="emoU(this,'anxiety')"><div class="ci">😰</div><h4>Anxiety</h4><p>Scared about the future</p></div>
-            <div class="ctile" onclick="emoU(this,'heartbreak')"><div class="ci">💔</div><h4>Heartbreak</h4><p>Feeling broken</p></div>
-          </div>
-          <div id="emo-r" style="display:none;margin-top:2rem;background:white;border:1px solid var(--bd);border-radius:var(--r2);padding:2rem;box-shadow:var(--shadow);">
-            <div style="font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;color:var(--terra);margin-bottom:1rem;font-weight:700">Memory Surfaced by NLP Engine</div>
-            <h4 id="emo-t" style="font-size:1.5rem;color:var(--bark);margin-bottom:1rem;"></h4>
-            <p id="emo-d" style="font-size:1rem;color:var(--text2);line-height:1.7"></p>
-          </div>
-        </div>
-      </div>
-
+    <div class="feature-strip">
+      <div class="feature-pill"><span class="feature-pill-icon">🔒</span> Bank-Grade Encryption</div>
+      <div class="feature-pill"><span class="feature-pill-icon">⚖️</span> DPDPA 2025 Compliant</div>
+      <div class="feature-pill"><span class="feature-pill-icon">🕰️</span> Time-Locked Consent</div>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast-el"></div>
+<div class="screen auth-screen" id="screen-auth">
+  <div class="landing-top-bar">
+    <div class="logo-text" style="cursor:pointer;" onclick="showScreen('screen-landing')">Heiryn.</div>
+  </div>
+  <div class="auth-form-wrap">
+    <div class="auth-card" id="auth-card-inner">
+      </div>
+  </div>
+</div>
+
+<div class="screen" id="screen-recorder">
+  <div class="nav">
+    <div class="nav-logo">Heiryn.</div>
+    <div class="nav-steps">
+      <div class="avatar" style="width: 32px; height: 32px; font-size: 14px;">R</div>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="flex flex-center justify-between mb-24">
+      <div>
+        <div class="label">Recorder Archive</div>
+        <h1 class="display" style="font-size: 32px;">Ramu Tata</h1>
+      </div>
+      <button class="btn-ghost" onclick="logout()">Sign Out</button>
+    </div>
+
+    <div class="progress-bar"><div class="progress-fill" style="width: 35%;"></div></div>
+    <p class="subtitle mt-8 mb-24" style="margin-top: -16px; font-size: 13px;">Archive is 35% complete. 12 memories secured.</p>
+
+    <div class="card card-gold">
+      <div class="flex justify-between flex-center mb-8">
+        <h3 class="section-title" style="margin: 0; font-size: 18px;">Values Will</h3>
+        <span class="tag tag-gold">3 Entries</span>
+      </div>
+      <p class="subtitle" style="margin-top: 0; margin-bottom: 16px;">The principles, beliefs, and life philosophy you want carried forward.</p>
+      <button class="btn-secondary">Add Life Wisdom</button>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="badge badge-navy mb-12">🍛</div>
+        <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--brown-dark);">Recipe Archive</h4>
+        <p class="subtitle" style="font-size: 12px;">Preserved in your voice.</p>
+      </div>
+      <div class="card">
+        <div class="badge badge-navy mb-12">🗺️</div>
+        <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--brown-dark);">Land Memory</h4>
+        <p class="subtitle" style="font-size: 12px;">Boundaries & agreements.</p>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    
+    <div style="text-align: center; margin: 32px 0;">
+      <p class="label mb-16">Quick Record</p>
+      <button class="record-btn" id="main-record-btn" onclick="toggleRecord()">🎙️</button>
+      <div class="waveform idle mt-16" id="record-wave">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="bottom-nav-item active"><span>🏠</span><span>Home</span></div>
+    <div class="bottom-nav-item"><span>🔐</span><span>Vaults</span></div>
+    <div class="bottom-nav-item"><span>👨‍👩‍👧</span><span>Family</span></div>
+  </div>
+</div>
+
+<div class="screen" id="screen-recipient">
+  <div class="nav">
+    <div class="nav-logo">Heiryn.</div>
+    <button class="nav-back" onclick="logout()">← Sign Out</button>
+  </div>
+
+  <div class="container">
+    <div class="recipient-banner">
+      <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--brown-dark);">Welcome, Priya.</h2>
+      <p class="subtitle" style="margin-top: 4px; color: var(--brown-mid);">You have 4 memories available, and 3 waiting for the right moment.</p>
+    </div>
+
+    <div class="flex justify-between flex-center mb-16 mt-24">
+      <h3 class="section-title">Emotion-State Unlock</h3>
+    </div>
+    <p class="subtitle" style="margin-top: 0; margin-bottom: 12px;">Select what you are feeling to surface the right memory.</p>
+    <div class="emotion-bar mb-24">
+      <div class="emotion-pill" onclick="triggerEmotion(this)"><span>😢</span>Grief</div>
+      <div class="emotion-pill" onclick="triggerEmotion(this)"><span>😰</span>Anxiety</div>
+      <div class="emotion-pill" onclick="triggerEmotion(this)"><span>💔</span>Loss</div>
+      <div class="emotion-pill" onclick="triggerEmotion(this)"><span>✨</span>Joy</div>
+    </div>
+
+    <h3 class="section-title mt-24">Your Inheritance</h3>
+    
+    <div class="unlock-card unlocked">
+      <div class="flex justify-between">
+        <div>
+          <div class="label mb-8 text-gold">Immediately Available</div>
+          <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--brown-dark);">Live Conversation</h4>
+          <p class="subtitle" style="font-size: 13px;">Speak to Ramu Tata's active memory.</p>
+        </div>
+        <div class="lock-icon">💬</div>
+      </div>
+      <button class="btn-primary mt-16">Start Dialogue</button>
+    </div>
+
+    <div class="unlock-card locked">
+      <div class="flex justify-between">
+        <div>
+          <div class="label mb-8" style="color: var(--muted);">Time-Locked: 25th Birthday</div>
+          <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--muted);">Financial Wisdom</h4>
+          <p class="subtitle" style="font-size: 13px;">Unlocks in 2 years, 4 months.</p>
+        </div>
+        <div class="lock-icon" style="filter: grayscale(1); opacity: 0.5;">🔒</div>
+      </div>
+    </div>
+
+    <div class="unlock-card locked">
+      <div class="flex justify-between">
+        <div>
+          <div class="label mb-8" style="color: var(--muted);">Event-Locked: First Child</div>
+          <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--muted);">On Parenthood</h4>
+          <p class="subtitle" style="font-size: 13px;">Awaiting life event trigger.</p>
+        </div>
+        <div class="lock-icon" style="filter: grayscale(1); opacity: 0.5;">📅</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-// ══ API CONFIGURATION ══
-// IMPORTANT: For the prototype to process live LLM responses in the browser, insert your API key here.
-const ANTHROPIC_API_KEY = 'YOUR_API_KEY_HERE'; 
-
-// ══ STORAGE & STATE (MOCK DB) ══
-const DB={
-  accs:()=>{try{return JSON.parse(localStorage.getItem('hy_accs')||'{}')}catch{return{}}},
-  saveAccs:(a)=>localStorage.setItem('hy_accs',JSON.stringify(a)),
-  sess:()=>{try{return JSON.parse(localStorage.getItem('hy_sess')||'null')}catch{return null}},
-  saveSess:(s)=>localStorage.setItem('hy_sess',JSON.stringify(s)),
-  clrSess:()=>localStorage.removeItem('hy_sess'),
-  ud:(em)=>{try{return JSON.parse(localStorage.getItem('hy_d_'+em)||'null')}catch{return null}},
-  saveUd:(em,d)=>localStorage.setItem('hy_d_'+em,JSON.stringify(d))
-};
-
-// ══ NAVIGATION ══
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-function goAuth(t){showPage('pg-auth');swTab(t);}
-function swTab(t){
-  document.getElementById('tab-in').classList.toggle('on',t==='in');
-  document.getElementById('tab-up').classList.toggle('on',t==='up');
-  document.getElementById('f-si').style.display=t==='in'?'':'none';
-  document.getElementById('f-su').style.display=t==='up'?'':'none';
-}
-let _role='recorder';
-function pickRole(r){
-  _role=r;
-  document.getElementById('ro-rec').classList.toggle('on',r==='recorder');
-  document.getElementById('ro-rcp').classList.toggle('on',r==='recipient');
-}
-
-// ══ AUTHENTICATION ══
-function doSignIn(){
-  const em=document.getElementById('si-em').value.trim().toLowerCase();
-  if(!em){alert("Enter email"); return;}
-  DB.saveSess({em, role:'recipient'}); // Mock login
-  launch(em, 'recipient');
-}
-function doSignUp(){
-  const nm=document.getElementById('su-nm').value.trim();
-  const em=document.getElementById('su-em').value.trim().toLowerCase();
-  if(!nm || !em){alert("Fill details"); return;}
-  
-  const accs=DB.accs();
-  accs[em]={nm, role:_role};
-  DB.saveAccs(accs);
-  DB.saveUd(em, {nm, role:_role, recs:[]});
-  DB.saveSess({em, role:_role});
-  launch(em, _role);
-}
-function launch(em, role){
-  if(role==='recorder'){ showPage('pg-recorder'); swR('r-hm'); }
-  else { showPage('pg-recipient'); swP('p-hm'); }
-}
-function doLogout(){ DB.clrSess(); showPage('pg-landing'); }
-
-// ══ TAB SWITCHING ══
-function swR(id){
-  document.querySelectorAll('#pg-recorder .dp').forEach(p=>p.classList.remove('on'));
-  document.getElementById(id).classList.add('on');
-  document.querySelectorAll('#pg-recorder .ni').forEach(n=>n.classList.remove('on'));
-  event.currentTarget.classList.add('on');
-}
-function swP(id){
-  document.querySelectorAll('#pg-recipient .dp').forEach(p=>p.classList.remove('on'));
-  document.getElementById(id).classList.add('on');
-  document.querySelectorAll('#pg-recipient .ni').forEach(n=>n.classList.remove('on'));
-  if(event && event.currentTarget) event.currentTarget.classList.add('on');
-}
-function csPick(el, group) {
-  document.querySelectorAll('.cs-radio').forEach(r=>r.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-// ══ NLP EMOTION DETECTION (Simulated Edge Processing) ══
-const NLP_PATTERNS = {
-  grief: ['miss', 'lost', 'gone', 'death', 'grief', 'without them'],
-  heartbreak: ['heartbroken', 'broken', 'hurt', 'pain', 'tears'],
-  anxiety: ['scared', 'afraid', 'anxious', 'worried', 'nervous', 'unsure']
-};
-
-function nlpDetect(val){
-  if(!val || val.length < 5) { document.getElementById('nlp-bar').classList.remove('on'); return; }
-  
-  const v = val.toLowerCase();
-  let best = null, bestScore = 0;
-  
-  Object.entries(NLP_PATTERNS).forEach(([emotion, patterns]) => {
-    let score = patterns.filter(p => v.includes(p)).length;
-    if(score > bestScore) { bestScore = score; best = emotion; }
-  });
-
-  const bar = document.getElementById('nlp-bar');
-  if(best && bestScore > 0){
-    const pill = document.getElementById('nlp-pill');
-    pill.className = 'nlp-pill ' + best;
-    pill.textContent = best.charAt(0).toUpperCase() + best.slice(1);
-    document.getElementById('nlp-surf').style.display = 'inline-block';
-    document.getElementById('nlp-surf').dataset.emotion = best;
-    bar.classList.add('on');
-  } else {
-    bar.classList.remove('on');
-  }
-}
-
-// ══ CLAUDE API INTEGRATION ══
-const TATA_SYS = `You are Ramu Tata, a retired school teacher from Warangal, India. Speak warmly like a Telugu grandfather. Weave in Telugu words naturally: "raa", "chinna ammayi". Respond to this exact emotional moment in 3-5 sentences. Never break character.`;
-let _ch = [];
-
-async function sendMsg(){
-  const inp = document.getElementById('c-in');
-  const msg = inp.value.trim();
-  if(!msg) return;
-  
-  addMsg('usr', msg);
-  inp.value = '';
-  document.getElementById('nlp-bar').classList.remove('on');
-  _ch.push({role: 'user', content: msg});
-  
-  if (ANTHROPIC_API_KEY === 'YOUR_API_KEY_HERE') {
-    setTimeout(() => addMsg('ai', "Raa chinna... Tata is here, but the API key needs to be configured in the code before I can truly listen."), 1000);
-    return;
+  // Navigation State
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
   }
 
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true' // Required for client-side demo
-      },
-      body: JSON.stringify({
-        model: 'claude-3-haiku-20240307', // Faster model for demo
-        max_tokens: 300,
-        system: TATA_SYS,
-        messages: _ch
-      })
-    });
-    const data = await res.json();
-    const reply = data.content?.[0]?.text || "Tata is always listening.";
-    _ch.push({role: 'assistant', content: reply});
-    addMsg('ai', reply);
-  } catch(e) {
-    addMsg('ai', "Ayyo… the connection felt far for a moment. Tell Tata again.");
+  // Auth Flow
+  function showAuth(type) {
+    showScreen('screen-auth');
+    const card = document.getElementById('auth-card-inner');
+    
+    if (type === 'login') {
+      card.innerHTML = `
+        <div class="auth-card-logo">Heiryn.</div>
+        <h2 class="auth-card-title">Welcome Back</h2>
+        <p class="auth-card-sub">Access your legacy or inheritance.</p>
+        <div class="input-group">
+          <label class="input-label">Email Address</label>
+          <input type="email" class="input-field" placeholder="your@email.com" id="login-email">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Password</label>
+          <input type="password" class="input-field" placeholder="••••••••">
+        </div>
+        <button class="btn-primary mt-8" onclick="doLogin()">Sign In</button>
+        <div class="auth-switch">Don't have an archive? <span class="auth-switch-link" onclick="showAuth('signup')">Create one</span></div>
+      `;
+    } else {
+      card.innerHTML = `
+        <div class="auth-card-logo">Heiryn.</div>
+        <h2 class="auth-card-title">Begin Your Legacy</h2>
+        <p class="auth-card-sub">Choose your account type below.</p>
+        
+        <div class="grid-2 mb-16">
+          <div class="card" style="margin:0; padding:16px; cursor:pointer; border-color:var(--gold); background:rgba(156,111,46,0.05);" onclick="document.getElementById('signup-role').value='recorder'">
+            <div style="font-size:24px; text-align:center; margin-bottom:8px;">🎙️</div>
+            <div style="font-size:13px; font-weight:600; text-align:center;">Recorder</div>
+          </div>
+          <div class="card" style="margin:0; padding:16px; cursor:pointer;" onclick="document.getElementById('signup-role').value='recipient'; this.style.borderColor='var(--gold)'; this.previousElementSibling.style.borderColor='rgba(156,111,46,0.18)'; this.previousElementSibling.style.background='#FFFDF8'; this.style.background='rgba(156,111,46,0.05)';">
+            <div style="font-size:24px; text-align:center; margin-bottom:8px;">💌</div>
+            <div style="font-size:13px; font-weight:600; text-align:center;">Recipient</div>
+          </div>
+        </div>
+        <input type="hidden" id="signup-role" value="recorder">
+
+        <div class="input-group">
+          <input type="text" class="input-field" placeholder="Full Name">
+        </div>
+        <div class="input-group">
+          <input type="email" class="input-field" placeholder="Email Address">
+        </div>
+        <div class="input-group">
+          <input type="password" class="input-field" placeholder="Create Password">
+        </div>
+        <button class="btn-primary mt-8" onclick="doSignup()">Create Account</button>
+        <div class="auth-switch">Already have an account? <span class="auth-switch-link" onclick="showAuth('login')">Sign In</span></div>
+      `;
+    }
   }
-}
 
-function addMsg(role, text){
-  const box = document.getElementById('c-msgs');
-  const d = document.createElement('div');
-  d.className = 'mr ' + role;
-  const init = role === 'ai' ? 'ర' : 'P';
-  d.innerHTML = `<div class="mrav">${init}</div><div class="mb">${text}</div>`;
-  box.appendChild(d);
-  box.scrollTop = box.scrollHeight;
-}
+  function doLogin() {
+    const email = document.getElementById('login-email').value.toLowerCase();
+    // Simple mock logic for presentation
+    if(email.includes('priya') || email.includes('recipient')) {
+      showScreen('screen-recipient');
+    } else {
+      showScreen('screen-recorder');
+    }
+  }
 
-// ══ EMOTION STATE UNLOCK ══
-const EM={
-  grief: {t:'Advice for Hard Times — Ramu Tata', d:'He recorded this specifically for moments of loss. He talks about the monsoon returning after a dry year, and what that taught him about grief.'},
-  anxiety: {t:'On Being Scared — Ramu Tata', d:'He remembered his own fear when he got his first teaching post with no money and no certainty.'},
-  heartbreak: {t:'When the Heart Breaks — Ramu Tata', d:'He spoke about losing his closest friend. How some wounds become part of your strength.'}
-};
-
-function emoU(el, k){
-  document.querySelectorAll('.ctile').forEach(c=>c.classList.remove('on'));
-  el.classList.add('on');
-  const e = EM[k];
-  document.getElementById('emo-t').textContent = e.t;
-  document.getElementById('emo-d').textContent = e.d;
-  document.getElementById('emo-r').style.display = 'block';
-}
-
-function surfaceMemory(){
-  const emotion = document.getElementById('nlp-surf').dataset.emotion;
-  if(emotion){
-    swP('p-em');
+  function doSignup() {
+    const role = document.getElementById('signup-role').value;
+    showToast("Account created securely.");
     setTimeout(() => {
-      document.querySelectorAll('.ctile').forEach(t => {
-        if(t.getAttribute('onclick').includes(emotion)) t.click();
-      });
-    }, 200);
+      showScreen(role === 'recorder' ? 'screen-recorder' : 'screen-recipient');
+    }, 800);
   }
-}
 
-// ══ INITIALIZATION ══
-// If there is an active mock session, jump straight to the dashboard.
-(function(){
-  const s = DB.sess();
-  if(s && s.em) launch(s.em, s.role);
-})();
+  function logout() {
+    showScreen('screen-landing');
+  }
+
+  // Recorder Logic
+  let isRecording = false;
+  function toggleRecord() {
+    const btn = document.getElementById('main-record-btn');
+    const wave = document.getElementById('record-wave');
+    isRecording = !isRecording;
+    
+    if (isRecording) {
+      btn.classList.add('recording');
+      btn.innerHTML = '⏹️';
+      wave.classList.remove('idle');
+      showToast("Recording started. Speak freely.");
+    } else {
+      btn.classList.remove('recording');
+      btn.innerHTML = '🎙️';
+      wave.classList.add('idle');
+      showToast("Memory saved to secure vault.");
+    }
+  }
+
+  // Recipient Logic
+  function triggerEmotion(element) {
+    document.querySelectorAll('.emotion-pill').forEach(p => p.classList.remove('active'));
+    element.classList.add('active');
+    showToast("Surfacing memory linked to this emotion...");
+  }
+
+  // UI Utilities
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
 </script>
 </body>
 </html>
