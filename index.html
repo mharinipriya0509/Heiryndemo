@@ -1,0 +1,3046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<!-- Heiryn v6 - fix recipient audio playback -->
+<title>Heiryn — Your Living Digital Will</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #2C2416;
+    --navy-mid: #EAE0CE;
+    --navy-light: #F0E8D8;
+    --gold: #9C6F2E;
+    --gold-light: #C49A4A;
+    --gold-pale: #F7EDD8;
+    --off-white: #2C2416;
+    --muted: #8C7B65;
+    --white: #2C2416;
+    --danger: #A0391F;
+    --success: #4A7C59;
+    --beige-deep: #D4C5AE;
+    --beige-mid: #EAE0CE;
+    --beige-light: #F5EFE4;
+    --beige-pale: #FAF7F2;
+    --brown-dark: #2C2416;
+    --brown-mid: #5C4A32;
+    --brown-soft: #8C7B65;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: #F5EFE4;
+    color: #2C2416;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── SCREEN SYSTEM ── */
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: flex; flex-direction: column; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── NAV ── */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 24px;
+    background: rgba(245,239,228,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(156,111,46,0.25);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); font-weight: 600; letter-spacing: 1px; }
+  .nav-steps { display: flex; gap: 6px; }
+  .step-dot { width: 8px; height: 8px; border-radius: 50%; background: #D4C5AE; transition: all 0.3s; }
+  .step-dot.active { background: var(--gold); transform: scale(1.3); }
+  .step-dot.done { background: var(--gold-light); opacity: 0.6; }
+  .nav-back { background: none; border: none; color: var(--muted); cursor: pointer; font-family: 'Jost', sans-serif; font-size: 13px; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .nav-back:hover { color: var(--gold); }
+
+  /* ── CONTAINERS ── */
+  .container { max-width: 680px; margin: 0 auto; padding: 32px 20px; flex: 1; }
+  .container-wide { max-width: 960px; margin: 0 auto; padding: 32px 20px; flex: 1; }
+
+  /* ── TYPOGRAPHY ── */
+  .display { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px,6vw,52px); line-height: 1.1; color: var(--brown-dark); font-weight: 300; }
+  .display em { color: var(--gold); font-style: italic; }
+  .subtitle { font-size: 15px; color: var(--muted); line-height: 1.6; margin-top: 12px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold); margin-bottom: 6px; font-weight: 600; }
+  .label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 500; }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    background: var(--gold); color: var(--navy); border: none;
+    padding: 14px 28px; border-radius: 6px; font-family: 'Jost', sans-serif;
+    font-size: 14px; font-weight: 600; cursor: pointer; width: 100%;
+    transition: all 0.2s; letter-spacing: 0.5px;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(156,111,46,0.3); }
+  .btn-secondary {
+    background: transparent; color: #2C2416; border: 1px solid rgba(244,241,236,0.2);
+    padding: 13px 28px; border-radius: 6px; font-family: 'Jost', sans-serif;
+    font-size: 14px; cursor: pointer; width: 100%; transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-sm {
+    background: var(--gold); color: var(--navy); border: none;
+    padding: 8px 18px; border-radius: 4px; font-family: 'Jost', sans-serif;
+    font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-sm:hover { background: var(--gold-light); }
+  .btn-ghost { background: rgba(201,151,58,0.1); color: var(--gold); border: 1px solid rgba(156,111,46,0.3); padding: 8px 16px; border-radius: 4px; font-size: 12px; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; }
+  .btn-ghost:hover { background: rgba(201,151,58,0.2); }
+
+  /* ── CARDS ── */
+  .card {
+    background: #FFFDF8; border: 1px solid rgba(156,111,46,0.18);
+    border-radius: 12px; padding: 20px; margin-bottom: 14px;
+    transition: all 0.2s;
+  }
+  .card:hover { border-color: rgba(156,111,46,0.35); }
+  .card-gold { border-left: 3px solid var(--gold); }
+
+  /* ── INPUTS ── */
+  .input-group { margin-bottom: 18px; }
+  .input-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; display: block; letter-spacing: 0.5px; }
+  .input-field {
+    width: 100%; background: #FFFDF8; border: 1px solid rgba(156,111,46,0.25);
+    border-radius: 8px; padding: 12px 16px; color: #2C2416;
+    font-family: 'Jost', sans-serif; font-size: 14px; transition: border 0.2s;
+  }
+  .input-field:focus { outline: none; border-color: var(--gold); }
+  .input-field::placeholder { color: var(--muted); }
+  select.input-field { cursor: pointer; }
+  textarea.input-field { resize: vertical; min-height: 80px; }
+
+  /* ── TOGGLE ── */
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .toggle-row:last-child { border-bottom: none; }
+  .toggle-info h4 { font-size: 14px; color: #2C2416; margin-bottom: 3px; }
+  .toggle-info p { font-size: 12px; color: var(--muted); }
+  .toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider {
+    position: absolute; inset: 0; background: #D4C5AE; border-radius: 24px;
+    cursor: pointer; transition: 0.3s;
+  }
+  .toggle-slider::before {
+    content: ''; position: absolute; width: 18px; height: 18px;
+    left: 3px; top: 3px; background: #8C7B65; border-radius: 50%; transition: 0.3s;
+  }
+  .toggle input:checked + .toggle-slider { background: var(--gold); }
+  .toggle input:checked + .toggle-slider::before { transform: translateX(20px); background: #F5EFE4; }
+
+  /* ── TAGS ── */
+  .tag { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+  .tag-gold { background: rgba(156,111,46,0.12); color: var(--gold); border: 1px solid rgba(156,111,46,0.3); }
+  .tag-green { background: rgba(74,124,89,0.12); color: #2ECC71; border: 1px solid rgba(39,174,96,0.3); }
+  .tag-blue { background: rgba(74,100,156,0.12); color: #5DADE2; border: 1px solid rgba(52,152,219,0.3); }
+  .tag-red { background: rgba(160,57,31,0.12); color: #E74C3C; border: 1px solid rgba(192,57,43,0.3); }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: rgba(255,255,255,0.07); margin: 24px 0; }
+  .gold-bar { height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin-bottom: 24px; border-radius: 2px; }
+
+  /* ── PROGRESS ── */
+  .progress-bar { background: #D4C5AE; border-radius: 4px; height: 4px; margin-bottom: 28px; }
+  .progress-fill { height: 4px; background: var(--gold); border-radius: 4px; transition: width 0.5s ease; }
+
+  /* ── BADGE ── */
+  .badge { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .badge-gold { background: rgba(156,111,46,0.12); }
+  .badge-navy { background: #EAE0CE; }
+
+  /* ── UNLOCK CARD ── */
+  .unlock-card {
+    background: linear-gradient(135deg, #EAE0CE, #F5EFE4);
+    border: 1px solid rgba(156,111,46,0.2); border-radius: 16px; padding: 24px;
+    margin-bottom: 16px; position: relative; overflow: hidden;
+  }
+  .unlock-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .lock-icon { font-size: 32px; margin-bottom: 12px; }
+  .unlock-card.locked { opacity: 0.7; }
+  .unlock-card.unlocked { border-color: rgba(39,174,96,0.4); }
+  .unlock-card.unlocked::before { background: linear-gradient(90deg, #27AE60, transparent); }
+
+  /* ── EMOTION METER ── */
+  .emotion-bar { display: flex; gap: 8px; margin: 12px 0; }
+  .emotion-pill {
+    flex: 1; padding: 8px 6px; border-radius: 8px; text-align: center;
+    font-size: 11px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
+    transition: all 0.2s; background: #EAE0CE;
+  }
+  .emotion-pill.active { background: rgba(201,151,58,0.2); border-color: var(--gold); color: var(--gold); }
+  .emotion-pill span { display: block; font-size: 18px; margin-bottom: 4px; }
+
+  /* ── TIMELINE ── */
+  .timeline-item { display: flex; gap: 16px; margin-bottom: 20px; }
+  .timeline-line { display: flex; flex-direction: column; align-items: center; }
+  .timeline-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 4px; }
+  .timeline-connector { width: 2px; flex: 1; background: rgba(201,151,58,0.2); margin-top: 4px; }
+
+  /* ── AVATAR ── */
+  .avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; background: var(--navy-light); border: 2px solid rgba(156,111,46,0.3); flex-shrink: 0; }
+
+  /* ── RECORD BTN ── */
+  .record-btn {
+    width: 72px; height: 72px; border-radius: 50%; background: var(--gold);
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin: 0 auto; transition: all 0.2s; box-shadow: 0 0 0 0 rgba(156,111,46,0.4);
+  }
+  .record-btn:hover { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(156,111,46,0.12); }
+  .record-btn.recording { animation: pulse 1.5s infinite; background: var(--danger); }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.4); } 50% { box-shadow: 0 0 0 16px rgba(192,57,43,0); } }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* ── MODAL OVERLAY ── */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.show { display: flex; animation: fadeIn 0.2s ease; }
+  .modal { background: #FAF7F2; border: 1px solid rgba(156,111,46,0.3); border-radius: 16px; padding: 28px; max-width: 480px; width: 100%; }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .modal-close { background: none; border: none; color: #8C7B65; cursor: pointer; font-size: 20px; }
+
+  /* ── TOAST ── */
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #EAE0CE; border: 1px solid rgba(156,111,46,0.4); color: #2C2416; padding: 12px 24px; border-radius: 8px; font-size: 13px; z-index: 300; display: none; white-space: nowrap; }
+  .toast.show { display: block; animation: toastIn 0.3s ease; }
+  @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+  /* ── WAVEFORM ── */
+  .waveform { display: flex; align-items: center; gap: 3px; height: 40px; justify-content: center; }
+  .wave-bar { width: 3px; background: var(--gold); border-radius: 2px; animation: wave 1.2s ease-in-out infinite; }
+  .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+  .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+  .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+  .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+  .wave-bar:nth-child(6) { animation-delay: 0.3s; }
+  .wave-bar:nth-child(7) { animation-delay: 0.2s; }
+  .wave-bar:nth-child(8) { animation-delay: 0.1s; }
+  @keyframes wave { 0%, 100% { height: 8px; } 50% { height: 32px; } }
+  .waveform.idle .wave-bar { height: 4px; animation: none; }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    display: flex; background: #EAE0CE; border-top: 1px solid rgba(156,111,46,0.2);
+    padding: 10px 0 20px; position: sticky; bottom: 0;
+  }
+  .bottom-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 6px; transition: all 0.2s; }
+  .bottom-nav-item span:first-child { font-size: 20px; }
+  .bottom-nav-item span:last-child { font-size: 10px; color: var(--muted); }
+  .bottom-nav-item.active span:last-child { color: var(--gold); }
+  .bottom-nav-item.active span:first-child { filter: drop-shadow(0 0 4px rgba(156,111,46,0.6)); }
+
+  /* ── RELATION TILES ── */
+  .relation-tile {
+    background: #F0E8D8; border: 1px solid rgba(156,111,46,0.2);
+    color: var(--muted); border-radius: 20px; padding: 6px 14px;
+    font-size: 12px; font-family: 'Jost', sans-serif; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .relation-tile:hover { border-color: var(--gold); color: var(--gold); background: rgba(156,111,46,0.08); }
+  .relation-tile.selected { background: rgba(156,111,46,0.15); border-color: var(--gold); color: var(--gold); font-weight: 600; }
+
+  /* ── RECIPIENT GREETING BANNER ── */
+  .recipient-banner {
+    background: linear-gradient(135deg, rgba(156,111,46,0.1), rgba(156,111,46,0.04));
+    border: 1px solid rgba(156,111,46,0.25); border-radius: 14px;
+    padding: 18px 20px; margin-bottom: 20px; border-left: 3px solid var(--gold);
+  }
+
+  /* ── AGE PRESET BUTTONS ── */
+  .age-preset-btn {
+    background: #F0E8D8; border: 1px solid rgba(156,111,46,0.25);
+    color: var(--muted); border-radius: 20px; padding: 5px 14px;
+    font-size: 12px; font-family: 'Jost', sans-serif; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .age-preset-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .age-preset-btn.selected { background: rgba(156,111,46,0.15); border-color: var(--gold); color: var(--gold); font-weight: 700; }
+
+  .spacer { height: 24px; }
+  .mt-8 { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-24 { margin-top: 24px; }
+  .mb-8 { margin-bottom: 8px; }
+  .mb-16 { margin-bottom: 16px; }
+  .flex { display: flex; }
+  .flex-center { display: flex; align-items: center; }
+  .gap-8 { gap: 8px; }
+  .gap-12 { gap: 12px; }
+  .gap-16 { gap: 16px; }
+  .justify-between { justify-content: space-between; }
+  .flex-1 { flex: 1; }
+  .text-gold { color: var(--gold); }
+  .text-muted { color: var(--muted); font-size: 13px; }
+  .text-small { font-size: 12px; }
+  .bold { font-weight: 600; }
+  .italic { font-style: italic; font-family: 'Cormorant Garamond', serif; }
+
+  /* ── AUTH SCREENS ── */
+  .auth-screen { display:none; min-height:100vh; flex-direction:column; background:#F5EFE4; }
+  .auth-screen.active { display:flex; animation:fadeIn 0.5s ease; }
+  .landing-wrap { display:flex; flex-direction:column; min-height:100vh; }
+  .landing-top-bar { display:flex; justify-content:space-between; align-items:center; padding:20px 28px; }
+  .landing-top-bar .logo-text { font-family:'Cormorant Garamond',serif; font-size:24px; color:var(--gold); font-weight:600; letter-spacing:1.5px; }
+  .landing-top-bar .auth-links { display:flex; gap:10px; }
+  .auth-link-btn { font-family:'Jost',sans-serif; font-size:13px; font-weight:500; padding:9px 22px; border-radius:6px; cursor:pointer; transition:all 0.2s; letter-spacing:0.3px; }
+  .auth-link-ghost { background:transparent; border:1px solid rgba(156,111,46,0.4); color:var(--gold); }
+  .auth-link-ghost:hover { background:rgba(156,111,46,0.08); border-color:var(--gold); }
+  .auth-link-fill { background:var(--gold); border:1px solid var(--gold); color:#FAF7F2; }
+  .auth-link-fill:hover { background:var(--gold-light); transform:translateY(-1px); box-shadow:0 6px 20px rgba(156,111,46,0.28); }
+  .hero-section { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:48px 24px 32px; text-align:center; max-width:600px; margin:0 auto; width:100%; }
+  .hero-logo-wrap { position:relative; width:92px; margin:0 auto 42px; display:flex; flex-direction:column; align-items:center; padding-bottom:14px; }
+  .hero-logo-shadow { width:60px; height:12px; background:radial-gradient(ellipse,rgba(156,111,46,0.35) 0%,transparent 75%); border-radius:50%; position:absolute; bottom:-14px; left:50%; transform:translateX(-50%); animation:shadowPulse 4s ease-in-out infinite; flex-shrink:0; z-index:0; }
+  @keyframes shadowPulse { 0%,100%{transform:translateX(-50%) scaleX(1);opacity:0.7;} 50%{transform:translateX(-50%) scaleX(0.7);opacity:0.35;} }
+  .hero-logo-mark { width:92px; height:92px; border-radius:24px; background:linear-gradient(135deg,#EAE0CE,#F5EFE4); border:1.5px solid rgba(156,111,46,0.35); display:flex; align-items:center; justify-content:center; position:relative; box-shadow:none; animation:logoFloat 4s ease-in-out infinite; z-index:1; }
+  .hero-logo-mark::before { content:''; position:absolute; inset:-4px; border-radius:28px; border:1px solid rgba(156,111,46,0.13); }
+  .hero-logo-mark::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; border-radius:24px 24px 0 0; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+  @keyframes logoFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+  .logo-icon-inner { font-size:40px; line-height:1; }
+  .hero-tagline { font-family:'Cormorant Garamond',serif; font-size:clamp(34px,7vw,54px); line-height:1.1; color:var(--brown-dark); font-weight:300; margin-bottom:16px; }
+  .hero-tagline em { color:var(--gold); font-style:italic; }
+  .hero-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; color:var(--muted); line-height:1.75; margin-bottom:10px; max-width:440px; }
+  .hero-desc { font-size:13px; color:var(--brown-soft); line-height:1.65; max-width:420px; margin-bottom:36px; }
+  .hero-cta-group { display:flex; flex-direction:column; gap:10px; width:100%; max-width:360px; }
+  .feature-strip { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; padding:20px 20px 36px; }
+  .feature-pill { display:flex; align-items:center; gap:6px; background:#FFFDF8; border:1px solid rgba(156,111,46,0.2); border-radius:20px; padding:7px 14px; font-size:12px; color:var(--muted); }
+  .feature-pill-icon { font-size:14px; }
+  .auth-form-wrap { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 24px 48px; }
+  .auth-card { background:#FFFDF8; border:1px solid rgba(156,111,46,0.22); border-radius:16px; padding:36px 32px; width:100%; max-width:420px; box-shadow:0 4px 32px rgba(44,36,22,0.07); position:relative; overflow:hidden; }
+  .auth-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--gold),transparent); }
+  .auth-card-logo { font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--gold); font-weight:600; letter-spacing:1px; text-align:center; margin-bottom:6px; }
+  .auth-card-title { font-family:'Cormorant Garamond',serif; font-size:26px; color:var(--brown-dark); text-align:center; margin-bottom:6px; font-weight:400; }
+  .auth-card-sub { font-size:13px; color:var(--muted); text-align:center; margin-bottom:28px; line-height:1.5; }
+  .auth-divider { height:1px; background:rgba(156,111,46,0.15); margin:20px 0; position:relative; }
+  .auth-divider span { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:#FFFDF8; padding:0 12px; font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+  .auth-switch { text-align:center; margin-top:20px; font-size:13px; color:var(--muted); }
+  .auth-switch-link { color:var(--gold); cursor:pointer; font-weight:500; transition:opacity 0.2s; }
+  .auth-switch-link:hover { opacity:0.75; }
+  .auth-back-bar { display:flex; align-items:center; padding:16px 24px; }
+  .auth-pass-wrap { position:relative; }
+  .auth-pass-wrap .input-field { padding-right:56px; }
+  .auth-eye-btn { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--muted); cursor:pointer; font-family:'Jost',sans-serif; font-size:11px; font-weight:500; letter-spacing:0.3px; padding:0; transition:color 0.2s; }
+  .auth-eye-btn:hover { color:var(--gold); }
+  .auth-terms { font-size:11px; color:var(--muted); line-height:1.6; text-align:center; margin-top:16px; }
+  .strength-bar { display:flex; gap:4px; margin-top:6px; }
+  .strength-seg { flex:1; height:3px; border-radius:2px; background:#D4C5AE; transition:background 0.3s; }
+  @media(max-width:480px){
+    .landing-top-bar{padding:16px 18px;}
+    .landing-top-bar .logo-text{font-size:20px;}
+    .auth-link-btn{padding:8px 14px;font-size:12px;}
+    .auth-card{padding:28px 18px;}
+    .hero-section{padding:28px 18px 20px;}
+  }
+  @media(min-width:768px){
+    .hero-cta-group{flex-direction:row;justify-content:center;}
+    .hero-cta-group .btn-primary,.hero-cta-group .btn-secondary{width:auto;min-width:164px;}
+  }
+
+  /* ── SEVEN LAYERS ── */
+  .layers-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .layer-card {
+    background:#FFFDF8; border:1px solid rgba(156,111,46,0.18); border-radius:14px;
+    padding:22px 20px; transition:all 0.25s; position:relative; overflow:hidden;
+  }
+  .layer-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:linear-gradient(180deg,var(--gold),transparent); border-radius:14px 0 0 14px; }
+  .layer-card:hover { border-color:rgba(156,111,46,0.38); transform:translateY(-2px); box-shadow:0 8px 28px rgba(156,111,46,0.12); }
+  .layer-card-wide { grid-column:1/-1; display:flex; align-items:center; gap:20px; }
+  .layer-card-wide .layer-desc { margin-top:0; }
+  .layer-icon { font-size:28px; margin-bottom:12px; line-height:1; }
+  .layer-card-wide .layer-icon { margin-bottom:0; flex-shrink:0; }
+  .layer-title { font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:600; color:var(--brown-dark); margin-bottom:8px; line-height:1.25; }
+  .layer-desc { font-size:12.5px; color:var(--muted); line-height:1.65; margin-top:0; }
+  @media(max-width:480px) {
+    .layers-grid { grid-template-columns:1fr; }
+    .layer-card-wide { flex-direction:column; align-items:flex-start; gap:10px; }
+    .layer-card-wide .layer-icon { margin-bottom:0; }
+  }
+  @media(min-width:640px) { .layers-grid { gap:20px; } }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 1 — WELCOME
+═══════════════════════════════════════ -->
+<!-- ═══════════════════════════
+     AUTH LANDING
+═══════════════════════════ -->
+<div class="auth-screen active" id="screen-landing">
+  <div class="landing-wrap">
+    <div class="landing-top-bar">
+      <div class="logo-text">Heiryn</div>
+      <div class="auth-links">
+        <button class="auth-link-btn auth-link-ghost" onclick="goAuth('screen-signin-role')">Sign In</button>
+        <button class="auth-link-btn auth-link-fill" onclick="goAuth('screen-create-role')">Create Account</button>
+      </div>
+    </div>
+    <div class="hero-section">
+      <div class="hero-logo-wrap">
+        <div class="hero-logo-mark"><div class="logo-icon-inner">&#x1F54A;&#xFE0F;</div></div>
+        <div class="hero-logo-shadow"></div>
+      </div>
+      <div class="hero-tagline">Leave more than<br><em>silence.</em></div>
+      <div class="hero-quote">&ldquo;What you leave behind is not what is engraved in stone,<br>but what is woven into the lives of others.&rdquo;</div>
+      <p class="hero-desc">Heiryn is your living digital will &mdash; record your voice, wisdom, and love while you&rsquo;re alive, and deliver it to the people you cherish at exactly the right moment.</p>
+      <div class="hero-cta-group">
+        <button class="btn-primary" onclick="goAuth('screen-create-role')">Begin Your Legacy &rarr;</button>
+        <button class="btn-secondary" onclick="goAuth('screen-signin-role')">Sign In</button>
+      </div>
+    </div>
+    <div class="feature-strip">
+      <div class="feature-pill"><span class="feature-pill-icon">&#x1F510;</span> You control every unlock</div>
+      <div class="feature-pill"><span class="feature-pill-icon">&#x1F3A4;</span> Voice &amp; text messages</div>
+      <div class="feature-pill"><span class="feature-pill-icon">&#x1F9EC;</span> Preserve language &amp; memory</div>
+      <div class="feature-pill"><span class="feature-pill-icon">&#x1F499;</span> AI-timed delivery</div>
+      <div class="feature-pill"><span class="feature-pill-icon">&#x1F33F;</span> Private &amp; encrypted</div>
+    </div>
+  </div>
+
+    <!-- Seven Layers Section -->
+    <div id="layers-section" style="padding:0 24px 60px; max-width:700px; margin:0 auto; width:100%;">
+      <div style="text-align:center; margin-bottom:40px;">
+        <div class="label" style="margin-bottom:12px;">WHAT HEIRYN CARRIES</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:clamp(28px,5.5vw,42px); line-height:1.15; color:var(--brown-dark); font-weight:300;">
+          Seven layers of <em style="color:var(--gold); font-style:italic;">emotional inheritance</em>
+        </div>
+      </div>
+      <div class="layers-grid">
+        <div class="layer-card"><div class="layer-icon">&#x23F0;</div><div class="layer-title">Temporal Consent Layers</div><div class="layer-desc">Messages unlock at life events. Graduation, wedding, first child &mdash; or a dead man&rsquo;s switch.</div></div>
+        <div class="layer-card"><div class="layer-icon">&#x1F31F;</div><div class="layer-title">NLP Emotion Detection</div><div class="layer-desc">Real-time sentiment analysis surfaces the right memory for your exact emotional moment.</div></div>
+        <div class="layer-card"><div class="layer-icon">&#x1F333;</div><div class="layer-title">Inheritance Engine</div><div class="layer-desc">Values Wills, Recipe Archives, Family Constitutions. Things worth more than property.</div></div>
+        <div class="layer-card"><div class="layer-icon">&#x1F512;</div><div class="layer-title">Apology Vault + Dead Man&rsquo;s Switch</div><div class="layer-desc">Private messages with dual-authentication, releasing only when the time is right.</div></div>
+        <div class="layer-card"><div class="layer-icon">&#x1F4AC;</div><div class="layer-title">Cross-Generational Dialogue</div><div class="layer-desc">Recipients reply to memories. A living thread of family wisdom grows across time.</div></div>
+        <div class="layer-card"><div class="layer-icon">&#x1F91D;</div><div class="layer-title">Grief Counsellor</div><div class="layer-desc">AI-powered therapeutic support, plus connection to real grief professionals when needed.</div></div>
+        <div class="layer-card layer-card-wide"><div class="layer-icon">&#x1F30D;</div><div style="flex:1;"><div class="layer-title">Language &amp; Cultural Archive</div><div class="layer-desc">Preserve dying dialects, oral histories, and ancestral rituals &mdash; before they are lost forever.</div></div></div>
+      </div>
+      <div style="text-align:center; margin-top:44px;"><button class="btn-primary" style="max-width:320px; margin:0 auto; display:block;" onclick="goAuth('screen-create-role')">Begin Your Legacy &rarr;</button></div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════
+     AUTH SIGN IN
+═══════════════════════════ -->
+<!-- ===============================
+     ROLE CHOOSER - CREATE ACCOUNT
+=============================== -->
+<div class="auth-screen" id="screen-create-role">
+  <div class="auth-back-bar">
+    <button class="nav-back" onclick="goAuth('screen-landing')">&larr; Back</button>
+  </div>
+  <div class="auth-form-wrap">
+    <div class="auth-card">
+      <div class="auth-card-logo">Heiryn</div>
+      <div class="auth-card-title">Who are you?</div>
+      <div class="auth-card-sub">Choose your role to get started</div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:8px;">
+        <button onclick="goAuth('screen-create')" style="display:flex;align-items:center;gap:16px;background:#FFFDF8;border:1.5px solid rgba(156,111,46,0.3);border-radius:12px;padding:18px 20px;cursor:pointer;transition:all 0.2s;text-align:left;width:100%;" onmouseover="this.style.borderColor='var(--gold)';this.style.background='rgba(156,111,46,0.04)'" onmouseout="this.style.borderColor='rgba(156,111,46,0.3)';this.style.background='#FFFDF8'">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(156,111,46,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">&#x1F54A;&#xFE0F;</div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--brown-dark);font-weight:600;margin-bottom:3px;">Begin My Legacy</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.5;">I want to record voice &amp; video messages for my loved ones</div>
+          </div>
+        </button>
+        <button onclick="goAuth('screen-create-recipient')" style="display:flex;align-items:center;gap:16px;background:#FFFDF8;border:1.5px solid rgba(156,111,46,0.3);border-radius:12px;padding:18px 20px;cursor:pointer;transition:all 0.2s;text-align:left;width:100%;" onmouseover="this.style.borderColor='var(--gold)';this.style.background='rgba(156,111,46,0.04)'" onmouseout="this.style.borderColor='rgba(156,111,46,0.3)';this.style.background='#FFFDF8'">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(156,111,46,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">&#x1F48C;</div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--brown-dark);font-weight:600;margin-bottom:3px;">I&rsquo;m a Recipient</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.5;">Someone has left a legacy message for me</div>
+          </div>
+        </button>
+      </div>
+      <div class="auth-switch" style="margin-top:16px;">Already have an account? <span class="auth-switch-link" onclick="goAuth('screen-signin-role')">Sign in</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===============================
+     ROLE CHOOSER - SIGN IN
+=============================== -->
+<div class="auth-screen" id="screen-signin-role">
+  <div class="auth-back-bar">
+    <button class="nav-back" onclick="goAuth('screen-landing')">&larr; Back</button>
+  </div>
+  <div class="auth-form-wrap">
+    <div class="auth-card">
+      <div class="auth-card-logo">Heiryn</div>
+      <div class="auth-card-title">Welcome back</div>
+      <div class="auth-card-sub">Who are you signing in as?</div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:8px;">
+        <button onclick="goAuth('screen-signin')" style="display:flex;align-items:center;gap:16px;background:#FFFDF8;border:1.5px solid rgba(156,111,46,0.3);border-radius:12px;padding:18px 20px;cursor:pointer;transition:all 0.2s;text-align:left;width:100%;" onmouseover="this.style.borderColor='var(--gold)';this.style.background='rgba(156,111,46,0.04)'" onmouseout="this.style.borderColor='rgba(156,111,46,0.3)';this.style.background='#FFFDF8'">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(156,111,46,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">&#x1F54A;&#xFE0F;</div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--brown-dark);font-weight:600;margin-bottom:3px;">Legacy Creator</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.5;">Sign in to manage and record my legacy vault</div>
+          </div>
+        </button>
+        <button onclick="goAuth('screen-signin-recipient')" style="display:flex;align-items:center;gap:16px;background:#FFFDF8;border:1.5px solid rgba(156,111,46,0.3);border-radius:12px;padding:18px 20px;cursor:pointer;transition:all 0.2s;text-align:left;width:100%;" onmouseover="this.style.borderColor='var(--gold)';this.style.background='rgba(156,111,46,0.04)'" onmouseout="this.style.borderColor='rgba(156,111,46,0.3)';this.style.background='#FFFDF8'">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(156,111,46,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">&#x1F48C;</div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--brown-dark);font-weight:600;margin-bottom:3px;">Recipient</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.5;">Sign in to view messages left for me</div>
+          </div>
+        </button>
+      </div>
+      <div class="auth-switch" style="margin-top:16px;">New to Heiryn? <span class="auth-switch-link" onclick="goAuth('screen-create-role')">Create an account</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===============================
+     RECIPIENT CREATE ACCOUNT (auth level)
+=============================== -->
+<div class="auth-screen" id="screen-create-recipient">
+  <div class="auth-back-bar">
+    <button class="nav-back" onclick="goAuth('screen-create-role')">&larr; Back</button>
+  </div>
+  <div class="auth-form-wrap">
+    <div class="auth-card" style="max-width:480px;">
+      <div class="auth-card-logo">Heiryn</div>
+      <div class="auth-card-title">Create Recipient Account</div>
+      <div class="auth-card-sub">Someone has left a legacy for you</div>
+      <div class="card card-gold" style="margin-bottom:16px;padding:16px;">
+        <div style="font-size:11px;color:var(--gold);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Legacy Left By</div>
+        <div class="input-group" style="margin-bottom:0;">
+          <label class="input-label">Full name of the person who left this legacy</label>
+          <input class="input-field" id="cr-creator-name" type="text" placeholder="e.g. Vikram Sharma">
+        </div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Your Full Name</label>
+        <input class="input-field" id="cr-name" type="text" placeholder="e.g. Arjun Sharma" autocomplete="name">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Your Age</label>
+        <input class="input-field" id="cr-age" type="number" placeholder="e.g. 32" min="1" max="120">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Your Area / City</label>
+        <input class="input-field" id="cr-area" type="text" placeholder="e.g. Lucknow, Uttar Pradesh">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Email Address</label>
+        <input class="input-field" id="cr-email" type="email" placeholder="you@email.com" autocomplete="email">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Your Relationship to the Legacy Creator</label>
+        <select class="input-field" id="cr-relation">
+          <option value="" disabled selected>Select relationship&hellip;</option>
+          <option>Son</option><option>Daughter</option><option>Grandson</option>
+          <option>Granddaughter</option><option>Spouse / Partner</option>
+          <option>Sibling</option><option>Niece / Nephew</option>
+          <option>Close Friend</option><option>Community Member</option><option>Other</option>
+        </select>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;" id="cr-relation-tiles">
+          <button type="button" class="relation-tile" onclick="setCRTile(this,'Son')">&#x1F466; Son</button>
+          <button type="button" class="relation-tile" onclick="setCRTile(this,'Daughter')">&#x1F467; Daughter</button>
+          <button type="button" class="relation-tile" onclick="setCRTile(this,'Grandson')">&#x1F9D2; Grandson</button>
+          <button type="button" class="relation-tile" onclick="setCRTile(this,'Granddaughter')">&#x1F476; Granddaughter</button>
+          <button type="button" class="relation-tile" onclick="setCRTile(this,'Spouse / Partner')">&#x1F491; Spouse</button>
+          <button type="button" class="relation-tile" onclick="setCRTile(this,'Sibling')">&#x1F91D; Sibling</button>
+          <button type="button" class="relation-tile" onclick="setCRTile(this,'Close Friend')">&#x1F49B; Close Friend</button>
+          <button type="button" class="relation-tile" onclick="setCRTile(this,'Community Member')">&#x1F33E; Community</button>
+        </div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Password</label>
+        <div class="auth-pass-wrap">
+          <input class="input-field" type="password" id="cr-pass" placeholder="Create a password" oninput="checkCRStrength(this.value)" autocomplete="new-password">
+          <button class="auth-eye-btn" onclick="togglePass('cr-pass',this)">Show</button>
+        </div>
+        <div class="strength-bar"><div class="strength-seg" id="crs1"></div><div class="strength-seg" id="crs2"></div><div class="strength-seg" id="crs3"></div><div class="strength-seg" id="crs4"></div></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px;">Min. 8 characters &nbsp;&middot;&nbsp; One uppercase &nbsp;&middot;&nbsp; One number</div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Confirm Password</label>
+        <div class="auth-pass-wrap">
+          <input class="input-field" type="password" id="cr-confirm" placeholder="Re-enter your password" autocomplete="new-password">
+          <button class="auth-eye-btn" onclick="togglePass('cr-confirm',this)">Show</button>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="handleCreateRecipient()">Create Account &amp; Enter Vault &rarr;</button>
+      <div class="auth-switch" style="margin-top:16px;">Already have an account? <span class="auth-switch-link" onclick="goAuth('screen-signin-recipient')">Sign in</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===============================
+     RECIPIENT SIGN IN (auth level)
+=============================== -->
+<div class="auth-screen" id="screen-signin-recipient">
+  <div class="auth-back-bar">
+    <button class="nav-back" onclick="goAuth('screen-signin-role')">&larr; Back</button>
+  </div>
+  <div class="auth-form-wrap">
+    <div class="auth-card">
+      <div class="auth-card-logo">Heiryn</div>
+      <div class="auth-card-title">Recipient Sign In</div>
+      <div class="auth-card-sub">View the messages left for you</div>
+      <div class="input-group">
+        <label class="input-label">Email Address</label>
+        <input class="input-field" type="email" id="rsi2-email" placeholder="you@email.com" autocomplete="email">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Password</label>
+        <div class="auth-pass-wrap">
+          <input class="input-field" type="password" id="rsi2-pass" placeholder="Enter your password" autocomplete="current-password">
+          <button class="auth-eye-btn" onclick="togglePass('rsi2-pass',this)">Show</button>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="handleRecipientSignIn()">Sign In &amp; View My Messages &rarr;</button>
+      <div class="auth-switch" style="margin-top:16px;">No account yet? <span class="auth-switch-link" onclick="goAuth('screen-create-recipient')">Create one</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="auth-screen" id="screen-signin">
+  <div class="auth-back-bar">
+    <button class="nav-back" onclick="goAuth('screen-signin-role')">&larr; Back</button>
+  </div>
+  <div class="auth-form-wrap">
+    <div class="auth-card">
+      <div class="auth-card-logo">Heiryn</div>
+      <div class="auth-card-title">Welcome back</div>
+      <div class="auth-card-sub">Sign in to continue to your legacy vault</div>
+      <div class="input-group">
+        <label class="input-label">Email Address</label>
+        <input class="input-field" type="email" id="signin-email" placeholder="you@email.com" autocomplete="email">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Password</label>
+        <div class="auth-pass-wrap">
+          <input class="input-field" type="password" id="signin-pass" placeholder="Enter your password" autocomplete="current-password">
+          <button class="auth-eye-btn" onclick="togglePass('signin-pass',this)">Show</button>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;">Min. 8 characters &nbsp;·&nbsp; One uppercase letter &nbsp;·&nbsp; One number</div>
+      </div>
+      <div style="text-align:right;margin-top:-10px;margin-bottom:18px;">
+        <span class="auth-switch-link" onclick="showToast('Password reset email sent!')">Forgot password?</span>
+      </div>
+      <button class="btn-primary" onclick="handleSignIn()">Sign In &rarr;</button>
+      <div class="auth-divider"><span>or</span></div>
+      <div class="auth-switch">Don&rsquo;t have an account? <span class="auth-switch-link" onclick="goAuth('screen-create-role')">Create one</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     AUTH CREATE ACCOUNT
+═══════════════════════════ -->
+<div class="auth-screen" id="screen-create">
+  <div class="auth-back-bar">
+    <button class="nav-back" onclick="goAuth('screen-create-role')">&larr; Back</button>
+  </div>
+  <div class="auth-form-wrap">
+    <div class="auth-card">
+      <div class="auth-card-logo">Heiryn</div>
+      <div class="auth-card-title">Create your account</div>
+      <div class="auth-card-sub">Start preserving what matters most</div>
+      <div class="input-group">
+        <label class="input-label">Full Name</label>
+        <input class="input-field" type="text" id="ca-name" placeholder="e.g. Vikram Sharma" autocomplete="name">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Email Address</label>
+        <input class="input-field" type="email" id="ca-email" placeholder="you@email.com" autocomplete="email">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Password</label>
+        <div class="auth-pass-wrap">
+          <input class="input-field" type="password" id="ca-pass" placeholder="Create a strong password" oninput="checkStrength(this.value)" autocomplete="new-password">
+          <button class="auth-eye-btn" onclick="togglePass('ca-pass',this)">Show</button>
+        </div>
+        <div class="strength-bar"><div class="strength-seg" id="s1"></div><div class="strength-seg" id="s2"></div><div class="strength-seg" id="s3"></div><div class="strength-seg" id="s4"></div></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;">Min. 8 characters &nbsp;·&nbsp; One uppercase letter &nbsp;·&nbsp; One number</div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Confirm Password</label>
+        <div class="auth-pass-wrap">
+          <input class="input-field" type="password" id="ca-confirm" placeholder="Re-enter your password" autocomplete="new-password">
+          <button class="auth-eye-btn" onclick="togglePass('ca-confirm',this)">Show</button>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="handleCreateAccount()">Create Account &amp; Begin Legacy &rarr;</button>
+      <div class="auth-terms">By creating an account you agree to Heiryn&rsquo;s Terms of Service and Privacy Policy. Your messages are encrypted and private.</div>
+      <div class="auth-switch" style="margin-top:16px;">Already have an account? <span class="auth-switch-link" onclick="goAuth('screen-signin-role')">Sign in</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="screen-welcome">
+  <div style="padding:16px 24px;">
+    <button class="nav-back" onclick="goAuth(window._authOrigin==='create'?'screen-create':'screen-signin')">&larr; Back</button>
+  </div>
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding: 8px 24px 40px; max-width:480px; margin:0 auto; width:100%;">
+    <div class="label mb-8">YOUR LIVING DIGITAL WILL</div>
+    <div class="display" style="margin-bottom:16px;">
+      Leave more than<br><em>silence.</em>
+    </div>
+    <p class="subtitle">Heiryn lets you record your voice, wisdom, values, and love — while you're alive — and deliver it to the people you love at exactly the right moment.</p>
+
+    <div class="divider"></div>
+
+    <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:32px;">
+      <div class="flex-center gap-12">
+        <div style="width:32px;height:32px;border-radius:8px;background:rgba(156,111,46,0.12);display:flex;align-items:center;justify-content:center;font-size:16px;">🔐</div>
+        <span style="font-size:13px;color:var(--muted);">You control every unlock, every recipient, every moment</span>
+      </div>
+      <div class="flex-center gap-12">
+        <div style="width:32px;height:32px;border-radius:8px;background:rgba(156,111,46,0.12);display:flex;align-items:center;justify-content:center;font-size:16px;">🧬</div>
+        <span style="font-size:13px;color:var(--muted);">Preserve values, rituals, land memory & dying languages</span>
+      </div>
+      <div class="flex-center gap-12">
+        <div style="width:32px;height:32px;border-radius:8px;background:rgba(156,111,46,0.12);display:flex;align-items:center;justify-content:center;font-size:16px;">💙</div>
+        <span style="font-size:13px;color:var(--muted);">AI delivers your message at the right feeling, not just time</span>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="goTo('screen-onboard-1')">Begin Your Legacy →</button>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 2 — ONBOARDING STEP 1
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-onboard-1">
+  <nav class="nav">
+    <button class="nav-back" onclick="goTo('screen-welcome')">← Back</button>
+    <div class="nav-logo">Heiryn</div>
+    <div class="nav-steps">
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="progress-bar"><div class="progress-fill" style="width:33%"></div></div>
+    <div class="label mb-8">STEP 1 OF 3</div>
+    <div class="section-title">Tell us about yourself</div>
+    <p class="subtitle mb-16" style="margin-bottom:20px;">This helps us personalise your legacy experience.</p>
+
+    <div class="input-group">
+      <label class="input-label">Your full name</label>
+      <input class="input-field" type="text" placeholder="Vikram Sharma" value="Vikram Sharma">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Your age</label>
+      <input class="input-field" type="number" placeholder="78" value="78">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Your email address</label>
+      <input class="input-field" id="legacy-email" type="email" placeholder="e.g. vikram@email.com">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Your native language / dialect</label>
+      <input class="input-field" type="text" placeholder="Hindi (Awadhi dialect)" value="Hindi (Awadhi dialect)">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Your situation</label>
+      <select class="input-field">
+        <option>Village elder / community keeper</option>
+        <option>Terminal illness patient</option>
+        <option>Elderly — planning ahead</option>
+        <option>Soldier / away from family</option>
+        <option>Planning ahead (healthy)</option>
+      </select>
+    </div>
+
+    <div class="spacer"></div>
+    <button class="btn-primary" onclick="goTo('screen-onboard-2')">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 3 — ONBOARDING STEP 2: ADD RECIPIENTS
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-onboard-2">
+  <nav class="nav">
+    <button class="nav-back" onclick="goTo('screen-onboard-1')">← Back</button>
+    <div class="nav-logo">Heiryn</div>
+    <div class="nav-steps">
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="progress-bar"><div class="progress-fill" style="width:66%"></div></div>
+    <div class="label mb-8">STEP 2 OF 3</div>
+    <div class="section-title">Who are you leaving this for?</div>
+    <p class="subtitle" style="margin-bottom:20px;">Add the people who will receive your wisdom.</p>
+
+    <div id="ob2-recipient-list"></div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <div style="font-size:11px;color:var(--gold);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Add a Recipient</div>
+      <div class="input-group">
+        <label class="input-label">Full Name</label>
+        <input class="input-field" id="ob2-rname" type="text" placeholder="e.g. Arjun Sharma">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Relationship</label>
+        <select class="input-field" id="ob2-rrelation">
+          <option value="" disabled selected>Select relationship&hellip;</option>
+          <option>Son</option><option>Daughter</option><option>Grandson</option>
+          <option>Granddaughter</option><option>Spouse / Partner</option>
+          <option>Sibling</option><option>Niece / Nephew</option>
+          <option>Close Friend</option><option>Community Member</option><option>Other</option>
+        </select>
+      </div>
+      <div class="input-group" style="margin-bottom:0;">
+        <label class="input-label">Age</label>
+        <input class="input-field" id="ob2-rage" type="number" placeholder="e.g. 32" min="1" max="120">
+      </div>
+    </div>
+    <button class="btn-ghost" onclick="ob2AddRecipient()" style="margin-bottom:16px;">+ Add Recipient</button>
+    <div class="divider"></div>
+    <button class="btn-primary" onclick="ob2Continue()">Continue &rarr;</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 4 — ONBOARDING STEP 3: FIRST RECORDING
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-onboard-3">
+  <nav class="nav">
+    <button class="nav-back" onclick="goTo('screen-onboard-2')">← Back</button>
+    <div class="nav-logo">Heiryn</div>
+    <div class="nav-steps">
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    <div class="label mb-8">STEP 3 OF 3 — YOUR FIRST LEGACY</div>
+    <div class="section-title">What would you like to preserve?</div>
+    <p class="subtitle" style="margin-bottom:20px;">Choose a category then record or type your message.</p>
+
+    <!-- Category pills -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
+      <button class="tag tag-gold" style="cursor:pointer;padding:8px 14px;font-size:12px;" onclick="selectFirstCategory(this)">🌳 Land Memory</button>
+      <button class="tag" style="cursor:pointer;padding:8px 14px;font-size:12px;background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);" onclick="selectFirstCategory(this)">⚖️ Values Will</button>
+      <button class="tag" style="cursor:pointer;padding:8px 14px;font-size:12px;background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);" onclick="selectFirstCategory(this)">🍛 Recipe &amp; Ritual</button>
+      <button class="tag" style="cursor:pointer;padding:8px 14px;font-size:12px;background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);" onclick="selectFirstCategory(this)">💌 Apology Vault</button>
+      <button class="tag" style="cursor:pointer;padding:8px 14px;font-size:12px;background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);" onclick="selectFirstCategory(this)">🗣️ Language Archive</button>
+      <button class="tag" style="cursor:pointer;padding:8px 14px;font-size:12px;background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);" onclick="selectFirstCategory(this)">💛 Love Language</button>
+    </div>
+
+    <!-- Media type toggle -->
+    <div style="display:flex;gap:0;margin-bottom:16px;border:1px solid rgba(156,111,46,0.25);border-radius:8px;overflow:hidden;">
+      <button id="rec1-type-voice" onclick="setRec1Type('voice')" style="flex:1;padding:10px;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--gold);color:#FAF7F2;transition:all 0.2s;">🎙️ Voice Note</button>
+      <button id="rec1-type-video" onclick="setRec1Type('video')" style="flex:1;padding:10px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border:none;background:#F5EFE4;color:var(--muted);transition:all 0.2s;">🎥 Video Message</button>
+    </div>
+
+    <!-- Recording area -->
+    <div class="card" style="text-align:center;padding:28px;" id="rec1-card">
+      <div id="rec-status" style="font-size:13px;color:var(--muted);margin-bottom:16px;">Tap to start recording</div>
+      <div class="waveform idle" id="waveform">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <video id="rec1-video-preview" style="display:none;width:100%;max-height:200px;border-radius:8px;background:#000;margin-bottom:8px;" autoplay muted playsinline></video>
+      <div style="height:16px;"></div>
+      <button class="record-btn" id="recBtn" onclick="toggleRecord()">🎙️</button>
+      <div style="height:12px;"></div>
+      <div id="rec-timer" style="font-size:12px;color:var(--muted);">0:00</div>
+
+      <!-- Post-recording controls — hidden until recording exists -->
+      <div id="rec1-controls" style="display:none;margin-top:16px;">
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button onclick="playRecording1()" id="playBtn1" style="display:inline-flex;align-items:center;gap:6px;background:rgba(156,111,46,0.12);color:var(--gold);border:1px solid rgba(156,111,46,0.35);padding:9px 18px;border-radius:6px;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">▶ Play Back</button>
+          <button onclick="reRecord()" style="display:inline-flex;align-items:center;gap:6px;background:rgba(160,57,31,0.08);color:var(--danger);border:1px solid rgba(160,57,31,0.3);padding:9px 18px;border-radius:6px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">🔄 Re-record</button>
+        </div>
+        <audio id="audio-player-1" style="display:none;"></audio>
+        <video id="video-player-1" style="display:none;width:100%;max-height:200px;border-radius:8px;margin-top:10px;" controls></video>
+      </div>
+    </div>
+
+    <div class="input-group mt-16">
+      <label class="input-label">Message title</label>
+      <input class="input-field" type="text" id="first-msg-title" placeholder="e.g. Wedding, Kids, Values…">
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">For recipient (relationship)</label>
+      <select class="input-field" id="first-msg-recipient">
+        <option value="">Select recipient…</option>
+        <option value="Son">Son</option>
+        <option value="Daughter">Daughter</option>
+        <option value="Grandson">Grandson</option>
+        <option value="Granddaughter">Granddaughter</option>
+        <option value="Spouse / Partner">Spouse / Partner</option>
+        <option value="Sibling">Sibling</option>
+        <option value="Niece / Nephew">Niece / Nephew</option>
+        <option value="Close Friend">Close Friend</option>
+        <option value="Community Member">Community Member</option>
+        <option value="All">Everyone</option>
+      </select>
+    </div>
+
+    <!-- Unlock timing -->
+    <div class="card" style="margin-bottom:18px;">
+      <div style="font-size:12px;color:var(--gold);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;">🔓 When should this unlock?</div>
+      <div style="display:flex;flex-direction:column;gap:10px;" id="first-unlock-options">
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:12px;border-radius:8px;border:1px solid rgba(156,111,46,0.2);transition:all 0.2s;" id="first-unlock-opt-always">
+          <input type="radio" name="first-unlock-type" value="always" checked style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" onchange="onFirstUnlockTypeChange()">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--brown-dark);">🟢 Always unlocked</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:3px;">Recipient can play this message at any age, any time.</div>
+          </div>
+        </label>
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:12px;border-radius:8px;border:1px solid rgba(156,111,46,0.2);transition:all 0.2s;" id="first-unlock-opt-age">
+          <input type="radio" name="first-unlock-type" value="age" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" onchange="onFirstUnlockTypeChange()">
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:600;color:var(--brown-dark);">🔒 Unlock when recipient turns a certain age</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:3px;">Sealed until they reach the age you set. Perfect for life milestone messages.</div>
+            <div id="first-age-input-row" style="display:none;margin-top:12px;">
+              <label style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Unlock at age</label>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+                <button type="button" class="age-preset-btn" onclick="setFirstAgePreset(13)">13</button>
+                <button type="button" class="age-preset-btn" onclick="setFirstAgePreset(16)">16</button>
+                <button type="button" class="age-preset-btn" onclick="setFirstAgePreset(18)">18 ✦</button>
+                <button type="button" class="age-preset-btn" onclick="setFirstAgePreset(21)">21</button>
+                <button type="button" class="age-preset-btn" onclick="setFirstAgePreset(25)">25</button>
+                <button type="button" class="age-preset-btn" onclick="setFirstAgePreset(30)">30</button>
+              </div>
+              <input class="input-field" id="first-msg-minage" type="number" placeholder="Or type a custom age…" min="1" max="100" style="margin-bottom:0;">
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Notes (optional)</label>
+      <textarea class="input-field" id="first-msg-text" placeholder="Add context for this message..."></textarea>
+    </div>
+
+    <button class="btn-primary" onclick="saveFirstMessage()">Save &amp; Enter My Vault →</button>
+    <div style="height:12px;"></div>
+    <button class="btn-secondary" onclick="goTo('screen-onboard-2')">← Back</button>
+    <div style="height:24px;"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 5 — DASHBOARD
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-dashboard">
+  <nav class="nav">
+    <button class="nav-back" onclick="goTo('screen-welcome')">← Back</button>
+    <div class="nav-logo">Heiryn</div>
+    <button onclick="openSettings('creator')" style="background:none;border:none;font-size:22px;cursor:pointer;padding:4px;line-height:1;transition:transform 0.2s;" onmouseover="this.style.transform='rotate(30deg)'" onmouseout="this.style.transform='rotate(0deg)'" title="Settings">&#x2699;&#xFE0F;</button>
+  </nav>
+  <div class="container-wide">
+
+    <!-- Greeting -->
+    <div style="margin-bottom:24px;">
+      <div class="label mb-8">GOOD MORNING</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--brown-dark);">Your Legacy Vault</div>
+      <p style="font-size:13px;color:var(--muted);margin-top:4px;" id="dash-summary">0 messages saved</p>
+    </div>
+
+    <div class="gold-bar"></div>
+
+    <!-- Stats row -->
+    <div class="grid-2" style="margin-bottom:20px;">
+      <div class="card" style="text-align:center;padding:20px;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--gold);" id="dash-count">0</div>
+        <div style="font-size:12px;color:var(--muted);">Messages Recorded</div>
+      </div>
+      <div class="card" style="text-align:center;padding:20px;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--gold);" id="dash-recipients">0</div>
+        <div style="font-size:12px;color:var(--muted);">Unique Recipients</div>
+      </div>
+    </div>
+
+    <!-- Quick actions -->
+    <div class="section-title mb-8">Quick Actions</div>
+    <div class="grid-2" style="margin-bottom:24px;">
+      <button class="card" style="text-align:left;border:1px solid rgba(201,151,58,0.2);cursor:pointer;" onclick="goTo('screen-record')">
+        <div style="font-size:24px;margin-bottom:8px;">🎙️</div>
+        <div style="font-size:13px;font-weight:500;">Record Message</div>
+        <div style="font-size:11px;color:var(--muted);">Add to your vault</div>
+      </button>
+      <button class="card" style="text-align:left;border:1px solid rgba(201,151,58,0.2);cursor:pointer;" onclick="goTo('screen-welcome')">
+        <div style="font-size:24px;margin-bottom:8px;">👤</div>
+        <div style="font-size:13px;font-weight:500;">Recipient Login</div>
+        <div style="font-size:11px;color:var(--muted);">View as recipient</div>
+      </button>
+    </div>
+
+    <!-- Recorded messages list -->
+    <div class="flex-center justify-between mb-8">
+      <div class="section-title" style="margin-bottom:0;">Your Vault</div>
+      <span id="vault-count-badge" style="display:none;background:rgba(156,111,46,0.15);color:var(--gold);border:1px solid rgba(156,111,46,0.3);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;"></span>
+    </div>
+    <div id="dash-messages">
+      <div style="text-align:center;padding:32px 20px;color:var(--muted);">
+        <div style="font-size:36px;margin-bottom:10px;">🎙️</div>
+        <div style="font-size:14px;font-weight:500;margin-bottom:6px;">Your vault is empty</div>
+        <div style="font-size:12px;">Tap <strong>Record Message</strong> to save your first legacy.</div>
+      </div>
+    </div>
+
+  </div>
+  <nav class="bottom-nav">
+    <div class="bottom-nav-item active" id="nav-home" onclick="setNav('nav-home');goTo('screen-dashboard')"><span>🏠</span><span>Home</span></div>
+    <div class="bottom-nav-item" id="nav-record" onclick="setNav('nav-record');goTo('screen-record')"><span>🎙️</span><span>Record</span></div>
+    <div class="bottom-nav-item" id="nav-consent" onclick="setNav('nav-consent');goTo('screen-consent')"><span>🔐</span><span>Consent</span></div>
+    <div class="bottom-nav-item" id="nav-family" onclick="setNav('nav-family');goTo('screen-family')"><span>👥</span><span>Family</span></div>
+  </nav>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 6 — RECORD NEW MESSAGE
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-record">
+  <nav class="nav">
+    <button class="nav-back" onclick="goTo('screen-dashboard')">← Back</button>
+    <div class="nav-logo">Record Legacy</div>
+    <div></div>
+  </nav>
+  <div class="container">
+    <div class="section-title mb-8">What would you like to preserve?</div>
+    <p class="subtitle" style="margin-bottom:20px;">Choose a category then record or type your message.</p>
+
+    <!-- Category pills -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
+      <button class="tag tag-gold" style="cursor:pointer;padding:8px 14px;font-size:12px;" onclick="selectCategory(this)">🌳 Land Memory</button>
+      <button class="tag" style="cursor:pointer;padding:8px 14px;font-size:12px;background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);" onclick="selectCategory(this)">⚖️ Values Will</button>
+      <button class="tag" style="cursor:pointer;padding:8px 14px;font-size:12px;background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);" onclick="selectCategory(this)">🍛 Recipe & Ritual</button>
+      <button class="tag" style="cursor:pointer;padding:8px 14px;font-size:12px;background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);" onclick="selectCategory(this)">💌 Apology Vault</button>
+      <button class="tag" style="cursor:pointer;padding:8px 14px;font-size:12px;background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);" onclick="selectCategory(this)">🗣️ Language Archive</button>
+      <button class="tag" style="cursor:pointer;padding:8px 14px;font-size:12px;background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);" onclick="selectCategory(this)">💛 Love Language</button>
+    </div>
+
+    <!-- Media type toggle -->
+    <div style="display:flex;gap:0;margin-bottom:16px;border:1px solid rgba(156,111,46,0.25);border-radius:8px;overflow:hidden;">
+      <button id="rec2-type-voice" onclick="setRec2Type('voice')" style="flex:1;padding:10px;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--gold);color:#FAF7F2;transition:all 0.2s;">🎙️ Voice Note</button>
+      <button id="rec2-type-video" onclick="setRec2Type('video')" style="flex:1;padding:10px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border:none;background:#F5EFE4;color:var(--muted);transition:all 0.2s;">🎥 Video Message</button>
+    </div>
+
+    <!-- Recording area -->
+    <div class="card" style="text-align:center;padding:28px;" id="rec2-card">
+      <div id="rec2-status" style="font-size:13px;color:var(--muted);margin-bottom:16px;">Tap to start recording</div>
+      <!-- Voice waveform -->
+      <div class="waveform idle" id="waveform2">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <!-- Video preview -->
+      <video id="rec2-video-preview" style="display:none;width:100%;max-height:200px;border-radius:8px;background:#000;margin-bottom:8px;" autoplay muted playsinline></video>
+      <div style="height:16px;"></div>
+      <button class="record-btn" id="recBtn2" onclick="toggleRecord2()">🎙️</button>
+      <div style="height:12px;"></div>
+      <div id="rec2-timer" style="font-size:12px;color:var(--muted);">0:00</div>
+
+      <!-- Post-recording controls — hidden until recording exists -->
+      <div id="rec2-controls" style="display:none;margin-top:16px;">
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button onclick="playRecording2()" id="playBtn2" style="display:inline-flex;align-items:center;gap:6px;background:rgba(156,111,46,0.12);color:var(--gold);border:1px solid rgba(156,111,46,0.35);padding:9px 18px;border-radius:6px;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">▶ Play Back</button>
+          <button onclick="reRecord2()" style="display:inline-flex;align-items:center;gap:6px;background:rgba(160,57,31,0.08);color:var(--danger);border:1px solid rgba(160,57,31,0.3);padding:9px 18px;border-radius:6px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">🔄 Re-record</button>
+        </div>
+        <audio id="audio-player-2" style="display:none;"></audio>
+        <video id="video-player-2" style="display:none;width:100%;max-height:200px;border-radius:8px;margin-top:10px;" controls></video>
+      </div>
+    </div>
+
+    <div class="input-group mt-16">
+      <label class="input-label">Message title</label>
+      <input class="input-field" id="rec2-title" type="text" placeholder="e.g. Wedding, Kids, Values…">
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">For recipient (relationship)</label>
+      <select class="input-field" id="rec2-recipient">
+        <option value="">Select recipient…</option>
+        <option value="Son">Son</option>
+        <option value="Daughter">Daughter</option>
+        <option value="Grandson">Grandson</option>
+        <option value="Granddaughter">Granddaughter</option>
+        <option value="Spouse / Partner">Spouse / Partner</option>
+        <option value="Sibling">Sibling</option>
+        <option value="Niece / Nephew">Niece / Nephew</option>
+        <option value="Close Friend">Close Friend</option>
+        <option value="Community Member">Community Member</option>
+        <option value="All">Everyone</option>
+      </select>
+    </div>
+
+    <!-- Unlock timing -->
+    <div class="card" style="margin-bottom:18px;">
+      <div style="font-size:12px;color:var(--gold);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;">🔓 When should this unlock?</div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;" id="unlock-options">
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:12px;border-radius:8px;border:1px solid rgba(156,111,46,0.2);transition:all 0.2s;" id="unlock-opt-always">
+          <input type="radio" name="unlock-type" value="always" checked style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" onchange="onUnlockTypeChange()">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--brown-dark);">🟢 Always unlocked</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:3px;">Recipient can play this message at any age, any time.</div>
+          </div>
+        </label>
+
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:12px;border-radius:8px;border:1px solid rgba(156,111,46,0.2);transition:all 0.2s;" id="unlock-opt-age">
+          <input type="radio" name="unlock-type" value="age" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" onchange="onUnlockTypeChange()">
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:600;color:var(--brown-dark);">🔒 Unlock when recipient turns a certain age</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:3px;">Sealed until they reach the age you set. Perfect for life milestone messages.</div>
+            <div id="age-input-row" style="display:none;margin-top:12px;">
+              <label style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Unlock at age</label>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;" id="age-presets">
+                <button type="button" class="age-preset-btn" onclick="setAgePreset(13)">13</button>
+                <button type="button" class="age-preset-btn" onclick="setAgePreset(16)">16</button>
+                <button type="button" class="age-preset-btn" onclick="setAgePreset(18)">18 ✦</button>
+                <button type="button" class="age-preset-btn" onclick="setAgePreset(21)">21</button>
+                <button type="button" class="age-preset-btn" onclick="setAgePreset(25)">25</button>
+                <button type="button" class="age-preset-btn" onclick="setAgePreset(30)">30</button>
+              </div>
+              <input class="input-field" id="rec2-minage" type="number" placeholder="Or type a custom age…" min="1" max="100" style="margin-bottom:0;">
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Notes (optional)</label>
+      <textarea class="input-field" id="rec2-notes" placeholder="Add context for this message..."></textarea>
+    </div>
+
+    <button class="btn-primary" onclick="saveMessageToVault()">Save to Vault →</button>
+    <div style="height:12px;"></div>
+    <button class="btn-secondary" onclick="goTo('screen-dashboard')">← Back to Vault</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 6b — EDIT / RE-RECORD A SAVED MESSAGE
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-edit-message">
+  <nav class="nav">
+    <button class="nav-back" onclick="goTo('screen-dashboard')">← Back</button>
+    <div class="nav-logo">Edit Recording</div>
+    <div></div>
+  </nav>
+  <div class="container">
+    <div class="label mb-8">EDITING</div>
+    <div class="section-title" id="edit-msg-title-display" style="margin-bottom:4px;">Message</div>
+    <p class="subtitle" style="margin-bottom:20px;">Listen to your recording. If you want to change it, tap Re-record and save again.</p>
+
+    <!-- Current recording playback -->
+    <div class="card" style="text-align:center;padding:28px;margin-bottom:20px;">
+      <div style="font-size:13px;color:var(--gold);font-weight:500;margin-bottom:12px;">Current Recording</div>
+      <div class="waveform idle" id="edit-waveform">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <div style="height:14px;"></div>
+      <audio id="edit-audio-player" style="display:none;"></audio>
+      <button class="btn-sm" id="edit-play-btn" onclick="playEditAudio()">▶ Listen to Recording</button>
+    </div>
+
+    <!-- Re-record section -->
+    <div class="card" style="text-align:center;padding:28px;margin-bottom:20px;" id="edit-rerecord-card">
+      <div id="edit-rec-status" style="font-size:13px;color:var(--muted);margin-bottom:16px;">Tap to record a new version</div>
+      <div class="waveform idle" id="edit-waveform2">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <div style="height:16px;"></div>
+      <button class="record-btn" id="edit-recBtn" onclick="toggleEditRecord()">🎙️</button>
+      <div style="height:12px;"></div>
+      <div id="edit-rec-timer" style="font-size:12px;color:var(--muted);">0:00</div>
+      <div id="edit-new-controls" style="display:none;margin-top:16px;">
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button id="edit-playback-btn" onclick="playEditNewAudio()" style="display:inline-flex;align-items:center;gap:6px;background:rgba(156,111,46,0.12);color:var(--gold);border:1px solid rgba(156,111,46,0.35);padding:9px 18px;border-radius:6px;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">▶ Play New Version</button>
+          <button onclick="resetEditRecord()" style="display:inline-flex;align-items:center;gap:6px;background:rgba(160,57,31,0.08);color:var(--danger);border:1px solid rgba(160,57,31,0.3);padding:9px 18px;border-radius:6px;font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;">🔄 Try Again</button>
+        </div>
+        <audio id="edit-new-audio" style="display:none;"></audio>
+      </div>
+    </div>
+
+    <!-- Title edit -->
+    <div class="input-group">
+      <label class="input-label">Message title</label>
+      <input class="input-field" id="edit-title-input" type="text" placeholder="e.g. Wedding, Kids, Values…">
+    </div>
+
+    <button class="btn-primary" onclick="saveEditedMessage()">Save Changes →</button>
+    <div style="height:12px;"></div>
+    <button class="btn-secondary" onclick="goTo('screen-dashboard')">Cancel</button>
+    <div style="height:24px;"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 7 — CONSENT & UNLOCK SETTINGS
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-consent">
+  <nav class="nav">
+    <button class="nav-back" onclick="goTo('screen-dashboard')">← Back</button>
+    <div class="nav-logo">Consent Settings</div>
+    <div></div>
+  </nav>
+  <div class="container">
+
+    <div class="label mb-8">LAND & PROPERTY MEMORY</div>
+    <div class="section-title" style="margin-bottom:4px;">Eastern Field Boundary</div>
+    <p class="text-muted text-small" style="margin-bottom:20px;">Configure exactly when and how this message is delivered.</p>
+
+    <div class="gold-bar"></div>
+
+    <!-- TRIGGER TYPE -->
+    <div class="card">
+      <div class="section-title" style="font-size:16px;margin-bottom:12px;">🔓 Unlock Trigger</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+          <input type="radio" name="trigger" checked style="accent-color:var(--gold);"> 
+          <div><div style="font-size:13px;font-weight:500;">Life Event</div><div class="text-muted text-small">Unlocks at a specific milestone</div></div>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+          <input type="radio" name="trigger" style="accent-color:var(--gold);"> 
+          <div><div style="font-size:13px;font-weight:500;">Age Gate</div><div class="text-muted text-small">Unlocks when recipient reaches an age</div></div>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+          <input type="radio" name="trigger" style="accent-color:var(--gold);"> 
+          <div><div style="font-size:13px;font-weight:500;">Emotion State</div><div class="text-muted text-small">AI detects recipient's emotional moment</div></div>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+          <input type="radio" name="trigger" style="accent-color:var(--gold);"> 
+          <div><div style="font-size:13px;font-weight:500;">Dead Man's Switch</div><div class="text-muted text-small">Releases upon confirmed death</div></div>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+          <input type="radio" name="trigger" style="accent-color:var(--gold);"> 
+          <div><div style="font-size:13px;font-weight:500;">Dual Authentication</div><div class="text-muted text-small">Two family members unlock together</div></div>
+        </label>
+      </div>
+    </div>
+
+    <!-- LIFE EVENT SELECTOR -->
+    <div class="card">
+      <div class="section-title" style="font-size:16px;margin-bottom:12px;">📅 Life Event</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <button class="tag tag-gold" style="cursor:pointer;">Land Dispute</button>
+        <button class="tag" style="background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);cursor:pointer;padding:5px 12px;border-radius:20px;font-size:11px;" onclick="this.className='tag tag-gold'">Marriage</button>
+        <button class="tag" style="background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);cursor:pointer;padding:5px 12px;border-radius:20px;font-size:11px;">First Child</button>
+        <button class="tag" style="background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);cursor:pointer;padding:5px 12px;border-radius:20px;font-size:11px;">Graduation</button>
+        <button class="tag" style="background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);cursor:pointer;padding:5px 12px;border-radius:20px;font-size:11px;">Bereavement</button>
+        <button class="tag" style="background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);cursor:pointer;padding:5px 12px;border-radius:20px;font-size:11px;">+ Custom</button>
+      </div>
+    </div>
+
+    <!-- TOGGLES -->
+    <div class="card">
+      <div class="section-title" style="font-size:16px;margin-bottom:4px;">⚙️ Additional Controls</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Time-lock this message</h4>
+          <p>Seal for a set number of years before any unlock is possible</p>
+        </div>
+        <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Require dual authentication</h4>
+          <p>Two family members must unlock simultaneously</p>
+        </div>
+        <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Allow recipient response</h4>
+          <p>Recipient can record a reply — cross-generational dialogue</p>
+        </div>
+        <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Tamper-evidence ledger</h4>
+          <p>Message timestamped on immutable ledger — unmodifiable</p>
+        </div>
+        <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Archive to village collective</h4>
+          <p>Share anonymised wisdom with community archive</p>
+        </div>
+        <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="showToast('Consent settings saved ✓'); goTo('screen-dashboard')">Save Consent Settings ✓</button>
+    <div style="height:12px;"></div>
+    <button class="btn-secondary" onclick="goTo('screen-recipient')">Preview as Recipient →</button>
+    <div style="height:24px;"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 8a — RECIPIENT AUTH (SIGN UP / SIGN IN)
+═══════════════════════════════════════ -->
+
+
+<!-- ═══════════════════════════════════════
+     SCREEN 8 — RECIPIENT VIEW
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-recipient">
+  <nav class="nav">
+    <button class="nav-back" onclick="signOut()">← Exit</button>
+    <div class="nav-logo">Your Messages</div>
+    <button onclick="openSettings('recipient')" style="background:none;border:none;font-size:22px;cursor:pointer;padding:4px;line-height:1;transition:transform 0.2s;" onmouseover="this.style.transform='rotate(30deg)'" onmouseout="this.style.transform='rotate(0deg)'" title="Settings">&#x2699;&#xFE0F;</button>
+  </nav>
+  <div class="container">
+
+    <!-- Personalised banner (filled by recipientLogin()) -->
+    <div class="recipient-banner" id="recipient-banner" style="display:none;"></div>
+
+    <div class="label mb-8" id="recipient-greeting">WELCOME</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--brown-dark);margin-bottom:4px;" id="recipient-subtext">Messages left for you</div>
+    <p class="text-muted text-small" style="margin-bottom:20px;">3 unlocked · 2 sealed · 1 awaiting your response</p>
+
+    <!-- Emotion check -->
+    <div class="card" style="margin-bottom:20px;">
+      <div style="font-size:13px;font-weight:500;margin-bottom:10px;">How are you feeling right now?</div>
+      <p style="font-size:11px;color:var(--muted);margin-bottom:12px;">Heiryn surfaces the right message for your current emotional moment.</p>
+      <div class="emotion-bar">
+        <div class="emotion-pill" onclick="selectEmotion(this)"><span>😔</span>Grief</div>
+        <div class="emotion-pill active" onclick="selectEmotion(this)"><span>😰</span>Anxious</div>
+        <div class="emotion-pill" onclick="selectEmotion(this)"><span>💪</span>Strong</div>
+        <div class="emotion-pill" onclick="selectEmotion(this)"><span>🎉</span>Joyful</div>
+      </div>
+      <div style="margin-top:12px;padding:10px 14px;background:rgba(156,111,46,0.1);border-radius:8px;border-left:3px solid var(--gold);">
+        <div style="font-size:12px;color:var(--gold);font-weight:500;">💙 Message surfaced for you</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">Your father recorded a message about handling difficult decisions — unlocking now.</div>
+      </div>
+    </div>
+
+    <div class="gold-bar"></div>
+    <div class="section-title mb-8">Your Vault</div>
+
+    <!-- DYNAMIC RECORDED MESSAGES -->
+    <div id="recipient-vault-messages">
+      <div style="text-align:center;padding:32px 20px;color:var(--muted);">
+        <div style="font-size:32px;margin-bottom:10px;">📭</div>
+        <div style="font-size:14px;">No messages yet.</div>
+        <div style="font-size:12px;margin-top:6px;">When someone records a message for you, it will appear here.</div>
+      </div>
+    </div>
+
+    <div style="height:24px;"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MODAL — MESSAGE PLAYBACK
+═══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-message">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="label">LAND & PROPERTY MEMORY</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--brown-dark);">Eastern Field Boundary</div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('modal-message').classList.remove('show')">✕</button>
+    </div>
+
+    <div style="background:#F0E8D8;border-radius:10px;padding:20px;margin-bottom:16px;text-align:center;">
+      <div class="waveform" style="margin-bottom:12px;">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);">2:34 · Recorded in Hindi (Awadhi dialect)</div>
+      <div style="margin-top:12px;display:flex;gap:10px;justify-content:center;">
+        <button class="btn-sm" onclick="showToast('Playing...')">▶ Play</button>
+        <button class="btn-ghost">⬇ Download</button>
+      </div>
+    </div>
+
+    <div style="background:rgba(156,111,46,0.08);border-radius:8px;padding:14px;margin-bottom:16px;">
+      <div style="font-size:11px;color:var(--gold);margin-bottom:6px;">TRANSCRIPT</div>
+      <p style="font-size:13px;color:var(--brown-dark);line-height:1.7;font-style:italic;">"Dear Arjun, the eastern field boundary runs along the old banyan tree your grandfather planted in 1962. The neighbour's claim on the northern patch is wrong — our deed from 1978 covers it. Keep the original deed in the red tin box behind the puja shelf..."</p>
+    </div>
+
+    <div style="display:flex;align-items:center;gap-8;margin-bottom:16px;">
+      <div style="font-size:12px;color:var(--muted);">🔒 Tamper-verified · Timestamped 14 March 2025</div>
+    </div>
+
+    <button class="btn-primary" onclick="document.getElementById('modal-message').classList.remove('show'); showToast('Recording your response...')">🎙️ Record Your Response</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ══════════════════════════════════════════
+  //  LOCALSTORE PERSISTENCE LAYER
+  // ══════════════════════════════════════════
+  const LS_VAULT       = 'heiryn_vault_v1';
+  const LS_USERS       = 'heiryn_users_v1';
+  const LS_RECIPIENTS  = 'heiryn_recipients_v1';
+  const LS_SESSION     = 'heiryn_session_v1';
+
+  function lsGet(key) {
+    try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : null; } catch(e) { return null; }
+  }
+  function lsSet(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) { console.warn('localStorage full', e); }
+  }
+
+  // ── Save audio blob as base64 ──
+  function blobToBase64(blob) {
+    return new Promise(function(resolve) {
+      var reader = new FileReader();
+      reader.onloadend = function() { resolve(reader.result); };
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  // ── SHARED VAULT ──
+  const vault = {
+    get messages() { return lsGet(LS_VAULT) || []; },
+    set messages(arr) { lsSet(LS_VAULT, arr); },
+    currentUser: null,
+    addMessage(msg) {
+      var msgs = this.messages;
+      msgs.push(msg);
+      this.messages = msgs;
+    },
+    updateMessage(id, changes) {
+      var msgs = this.messages.map(function(m) { return m.id === id ? Object.assign({}, m, changes) : m; });
+      this.messages = msgs;
+    },
+    deleteMessage(id) {
+      this.messages = this.messages.filter(function(m) { return m.id !== id; });
+    }
+  };
+
+  // ── SCREEN NAVIGATION with history stack ──
+  // ── AUTH NAVIGATION ──
+  function goAuth(id) {
+    document.querySelectorAll('.auth-screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    var el = document.getElementById(id);
+    if (el) { el.classList.add('active'); window.scrollTo(0,0); }
+  }
+  // ── USER REGISTRY — localStorage backed ──
+  const userRegistry = {
+    get(email) { var r = lsGet(LS_USERS) || {}; return r[email] || null; },
+    set(email, data) { var r = lsGet(LS_USERS) || {}; r[email] = data; lsSet(LS_USERS, r); },
+    has(email) { return !!(lsGet(LS_USERS) || {})[email]; }
+  };
+
+  function validatePassword(pass) {
+    if (pass.length < 8)       return 'Password must be at least 8 characters.';
+    if (!/[A-Z]/.test(pass))   return 'Password must contain at least one uppercase letter.';
+    if (!/[0-9]/.test(pass))   return 'Password must contain at least one number.';
+    return null;
+  }
+
+  function handleSignIn() {
+    var email = document.getElementById('signin-email').value.trim().toLowerCase();
+    var pass  = document.getElementById('signin-pass').value;
+    if (!email || !pass) { showToast('Please enter your email and password.'); return; }
+    if (!userRegistry.has(email)) {
+      showToast('No account found. Please create an account first.');
+      return;
+    }
+    if (userRegistry.get(email).password !== pass) {
+      showToast('Incorrect password. Please try again.');
+      return;
+    }
+    lsSet(LS_SESSION, { email: email, type: 'creator' });
+    showToast('Welcome back, ' + userRegistry.get(email).name + '!');
+    window._authOrigin = 'signin';
+    setTimeout(function(){ goTo('screen-welcome'); }, 1000);
+  }
+
+  function handleCreateAccount() {
+    var name    = document.getElementById('ca-name').value.trim();
+    var email   = document.getElementById('ca-email').value.trim().toLowerCase();
+    var pass    = document.getElementById('ca-pass').value;
+    var confirm = document.getElementById('ca-confirm').value;
+    if (!name)  { showToast('Please enter your full name.'); return; }
+    if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+    var passError = validatePassword(pass);
+    if (passError) { showToast(passError); return; }
+    if (pass !== confirm) { showToast('Passwords do not match.'); return; }
+    if (userRegistry.has(email)) { showToast('An account with this email already exists. Please sign in.'); return; }
+    userRegistry.set(email, { name: name, password: pass });
+    lsSet(LS_SESSION, { email: email, type: 'creator' });
+    showToast('Account created! Welcome, ' + name + '.');
+    window._authOrigin = 'create';
+    setTimeout(function(){ goTo('screen-welcome'); }, 1000);
+  }
+  function togglePass(id, btn) {
+    var el = document.getElementById(id);
+    if (el.type === 'password') { el.type = 'text'; btn.textContent = 'Hide'; }
+    else { el.type = 'password'; btn.textContent = 'Show'; }
+  }
+  function checkStrength(val) {
+    var segs = ['s1','s2','s3','s4'];
+    var colors = ['#A0391F','#C49A4A','#9C6F2E','#4A7C59'];
+    var score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+    segs.forEach(function(sid, i) {
+      document.getElementById(sid).style.background = i < score ? colors[Math.min(score-1,3)] : '#D4C5AE';
+    });
+  }
+
+  // ── SCREEN NAVIGATION ──
+  const screenHistory = ['screen-landing'];
+
+  function goTo(id) {
+    const current = document.querySelector('.screen.active') || document.querySelector('.auth-screen.active');
+    if (current && current.id !== id) screenHistory.push(current.id);
+    document.querySelectorAll('.auth-screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+    history.pushState({ screen: id }, '', '');
+    if (id === 'screen-dashboard') refreshDashboard();
+    if (id === 'screen-onboard-2') { if(typeof ob2RenderList==='function') ob2RenderList(); }
+  }
+
+  // Intercept phone/browser back button
+  window.addEventListener('popstate', function(e) {
+    if (screenHistory.length > 1) {
+      screenHistory.pop();
+      const prev = screenHistory[screenHistory.length - 1];
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(prev).classList.add('active');
+      window.scrollTo(0, 0);
+      history.pushState({ screen: prev }, '', '');
+      if (prev === 'screen-dashboard') refreshDashboard();
+    } else {
+      // Already at welcome — push state again so back doesn't exit
+      history.pushState({}, '', '');
+    }
+  });
+
+  // Seed initial history state so popstate fires
+  history.replaceState({ screen: 'screen-welcome' }, '', '');
+
+  // ── TOAST ──
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // ── CATEGORY / EMOTION SELECT ──
+  // ── FIRST RECORDING UNLOCK TYPE ──
+  function onFirstUnlockTypeChange() {
+    const val = document.querySelector('input[name="first-unlock-type"]:checked').value;
+    const ageRow = document.getElementById('first-age-input-row');
+    if (ageRow) ageRow.style.display = val === 'age' ? 'block' : 'none';
+    document.getElementById('first-unlock-opt-always').style.borderColor = val === 'always' ? 'var(--gold)' : 'rgba(156,111,46,0.2)';
+    document.getElementById('first-unlock-opt-always').style.background  = val === 'always' ? 'rgba(156,111,46,0.06)' : '';
+    document.getElementById('first-unlock-opt-age').style.borderColor    = val === 'age'    ? 'var(--gold)' : 'rgba(156,111,46,0.2)';
+    document.getElementById('first-unlock-opt-age').style.background     = val === 'age'    ? 'rgba(156,111,46,0.06)' : '';
+  }
+
+  function setFirstAgePreset(age) {
+    document.getElementById('first-msg-minage').value = age;
+    document.querySelectorAll('#first-unlock-opt-age .age-preset-btn').forEach(b => b.classList.remove('selected'));
+    event.target.classList.add('selected');
+  }
+
+  // ── UNLOCK TYPE TOGGLE ──
+  function onUnlockTypeChange() {
+    const val = document.querySelector('input[name="unlock-type"]:checked').value;
+    const ageRow = document.getElementById('age-input-row');
+    if (ageRow) ageRow.style.display = val === 'age' ? 'block' : 'none';
+    // Highlight selected option
+    document.getElementById('unlock-opt-always').style.borderColor = val === 'always' ? 'var(--gold)' : 'rgba(156,111,46,0.2)';
+    document.getElementById('unlock-opt-always').style.background  = val === 'always' ? 'rgba(156,111,46,0.06)' : '';
+    document.getElementById('unlock-opt-age').style.borderColor    = val === 'age'    ? 'var(--gold)' : 'rgba(156,111,46,0.2)';
+    document.getElementById('unlock-opt-age').style.background     = val === 'age'    ? 'rgba(156,111,46,0.06)' : '';
+  }
+
+  function setAgePreset(age) {
+    document.getElementById('rec2-minage').value = age;
+    document.querySelectorAll('.age-preset-btn').forEach(b => b.classList.remove('selected'));
+    event.target.classList.add('selected');
+  }
+
+  function selectCategory(el) {
+    document.querySelectorAll('#screen-record .tag').forEach(t => {
+      t.className = 'tag';
+      t.style.cssText = 'cursor:pointer;padding:8px 14px;font-size:12px;background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);';
+    });
+    el.className = 'tag tag-gold';
+    el.style.cssText = 'cursor:pointer;padding:8px 14px;font-size:12px;';
+  }
+
+  function selectFirstCategory(el) {
+    document.querySelectorAll('#screen-onboard-3 .tag').forEach(t => {
+      t.className = 'tag';
+      t.style.cssText = 'cursor:pointer;padding:8px 14px;font-size:12px;background:#F0E8D8;border:1px solid rgba(255,255,255,0.1);color:var(--muted);';
+    });
+    el.className = 'tag tag-gold';
+    el.style.cssText = 'cursor:pointer;padding:8px 14px;font-size:12px;';
+  }
+
+  function selectEmotion(el) {
+    document.querySelectorAll('.emotion-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // ══════════════════════════════════════════
+  //  REAL AUDIO RECORDER — shared factory
+  // ══════════════════════════════════════════
+  function createRecorder(cfg) {
+    let mediaRecorder = null;
+    let audioChunks   = [];
+    let timerInterval = null;
+    let seconds       = 0;
+    let stream        = null;
+    cfg._audioBlob    = null;
+
+    const btn      = () => document.getElementById(cfg.btnId);
+    const status   = () => document.getElementById(cfg.statusId);
+    const wf       = () => document.getElementById(cfg.waveformId);
+    const timerEl  = () => document.getElementById(cfg.timerId);
+    const playerEl = () => document.getElementById(cfg.playerId);
+    const playBtn  = () => document.getElementById(cfg.playBtnId);
+
+    function tickTimer() {
+      seconds++;
+      const m = Math.floor(seconds / 60), s = seconds % 60;
+      timerEl().textContent = m + ':' + s.toString().padStart(2, '0');
+    }
+
+    async function startRecording() {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      } catch (err) {
+        showToast('🎤 Microphone access denied — please allow it in your browser settings.');
+        return;
+      }
+      audioChunks = [];
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+      mediaRecorder.onstop = () => {
+        cfg._audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        const url = URL.createObjectURL(cfg._audioBlob);
+        const audio = playerEl();
+        if (audio) { audio.src = url; audio.load(); }
+        // Show post-recording controls panel if it exists
+        const controls = cfg.controlsId ? document.getElementById(cfg.controlsId) : null;
+        if (controls) controls.style.display = 'block';
+        if (playBtn()) playBtn().style.display = 'inline-flex';
+        var rrSec = document.getElementById('rerecord-section'); if(rrSec) rrSec.style.display='block';
+        stream.getTracks().forEach(t => t.stop());
+        showToast('Done! Tap ▶ Play Back to hear it, or 🔄 Re-record to redo.');
+      };
+      mediaRecorder.start();
+      btn().classList.add('recording');
+      btn().textContent = '⏹️';
+      status().textContent = 'Recording…';
+      wf().classList.remove('idle');
+      seconds = 0;
+      timerEl().textContent = '0:00';
+      timerInterval = setInterval(tickTimer, 1000);
+    }
+
+    function stopRecording() {
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+      clearInterval(timerInterval);
+      btn().classList.remove('recording');
+      btn().textContent = '🎙️';
+      status().textContent = '✓ Recording saved — tap ▶ to preview';
+      wf().classList.add('idle');
+    }
+
+    return {
+      toggle() {
+        if (!mediaRecorder || mediaRecorder.state === 'inactive') startRecording();
+        else stopRecording();
+      },
+      playback() {
+        const audio = playerEl();
+        if (!audio || !audio.src) { showToast('No recording yet — record something first!'); return; }
+        if (audio.paused) {
+          audio.play();
+          if (playBtn()) playBtn().textContent = '⏸ Pause';
+          audio.onended = () => { if (playBtn()) playBtn().textContent = '▶ Play Back'; };
+        } else {
+          audio.pause();
+          if (playBtn()) playBtn().textContent = '▶ Play Back';
+        }
+      },
+      getBlob() { return cfg._audioBlob; },
+      reset() {
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+        clearInterval(timerInterval);
+        audioChunks = [];
+        cfg._audioBlob = null;
+        mediaRecorder = null;
+        if (btn()) { btn().classList.remove('recording'); btn().textContent = '🎙️'; }
+        if (status()) status().textContent = 'Tap to start recording';
+        if (wf()) wf().classList.add('idle');
+        if (timerEl()) timerEl().textContent = '0:00';
+        if (playBtn()) playBtn().textContent = '▶ Play Back';
+        var controls = cfg.controlsId ? document.getElementById(cfg.controlsId) : null;
+        if (controls) controls.style.display = 'none';
+        var audio = playerEl(); if (audio) { audio.pause(); audio.src = ''; }
+      }
+    };
+  }
+
+  // ── RECORDER INSTANCES ──
+  const recorder1 = createRecorder({
+    btnId: 'recBtn', statusId: 'rec-status', waveformId: 'waveform',
+    timerId: 'rec-timer', playerId: 'audio-player-1', playBtnId: 'playBtn1',
+    controlsId: 'rec1-controls'
+  });
+  const recorder2 = createRecorder({
+    btnId: 'recBtn2', statusId: 'rec2-status', waveformId: 'waveform2',
+    timerId: 'rec2-timer', playerId: 'audio-player-2', playBtnId: 'playBtn2',
+    controlsId: 'rec2-controls'
+  });
+  function toggleRecord()   { recorder1.toggle(); }
+  function playRecording1() { recorder1.playback(); }
+  function toggleRecord2()  { recorder2.toggle(); }
+  function playRecording2() { recorder2.playback(); }
+  function reRecord2() {
+    // Hide controls, reset audio, reset status so user can record again
+    const controls = document.getElementById('rec2-controls');
+    const audio    = document.getElementById('audio-player-2');
+    const playBtn  = document.getElementById('playBtn2');
+    if (controls) controls.style.display = 'none';
+    if (audio)    { audio.pause(); audio.src = ''; }
+    if (playBtn)  playBtn.textContent = '▶ Play Back';
+    recorder2._audioBlob = null;
+    document.getElementById('rec2-status').textContent = 'Tap to start a new recording';
+    document.getElementById('rec2-timer').textContent  = '0:00';
+    document.getElementById('waveform2').classList.add('idle');
+    showToast('Ready to re-record 🎙️');
+  }
+
+  // ══════════════════════════════════════════
+  //  SAVE MESSAGE — from screen-record
+  // ══════════════════════════════════════════
+  function saveMessageToVault() {
+    const title     = (document.getElementById('rec2-title').value || '').trim();
+    const recipient = document.getElementById('rec2-recipient').value;
+    const notes     = (document.getElementById('rec2-notes').value || '').trim();
+    const blob      = recorder2.getBlob();
+
+    var videoBlob2 = (rec2MediaType === 'video' && videoChunks2.length > 0) ? new Blob(videoChunks2, {type:'video/webm'}) : null;
+    var effectiveBlob2 = blob || videoBlob2;
+    if (!effectiveBlob2) { showToast('Please record a message first.'); return; }
+    if (!title) { showToast('Please give your message a title.'); return; }
+    if (!recipient) { showToast('Please choose who this message is for.'); return; }
+
+    const senderName = (document.getElementById('legacy-email') &&
+                        document.querySelector('#screen-onboard-1 .input-field') &&
+                        document.querySelectorAll('#screen-onboard-1 .input-field')[0].value) || 'Your loved one';
+
+    const unlockType = document.querySelector('input[name="unlock-type"]:checked');
+    const unlockVal  = unlockType ? unlockType.value : 'always';
+    const minAgeVal  = unlockVal === 'age' ? (parseInt(document.getElementById('rec2-minage').value) || 0) : 0;
+    blobToBase64(effectiveBlob2).then(function(audioData) {
+      vault.addMessage({
+        id: Date.now(),
+        title: title,
+        relation: recipient,
+        notes: notes,
+        senderName: senderName,
+        audioUrl: audioData,
+        minAge: minAgeVal,
+        mediaType: window._currentMediaType2 || 'voice',
+        timestamp: new Date().toLocaleString()
+      });
+      showToast('Message saved to vault ✓');
+
+    // Reset form fully for next recording
+    document.getElementById('rec2-title').value = '';
+    document.getElementById('rec2-recipient').value = '';
+    document.getElementById('rec2-minage').value = '';
+    document.querySelectorAll('input[name="unlock-type"]')[0].checked = true;
+    document.getElementById('age-input-row').style.display = 'none';
+    document.getElementById('rec2-notes').value = '';
+    document.getElementById('rec2-controls').style.display = 'none';
+    document.getElementById('playBtn2').textContent = '▶ Play Back';
+    document.getElementById('rec2-status').textContent = 'Tap to start recording';
+    document.getElementById('rec2-timer').textContent = '0:00';
+    document.getElementById('waveform2').classList.add('idle');
+    const a2 = document.getElementById('audio-player-2');
+    if (a2) { a2.pause(); a2.src = ''; }
+
+      setTimeout(() => goTo('screen-dashboard'), 800);
+    });
+  }
+
+  // ── REFRESH DASHBOARD ──
+  function refreshDashboard() {
+    const count = vault.messages.length;
+    const uniqueRecipients = new Set(vault.messages.map(m => m.relation)).size;
+
+    const countEl   = document.getElementById('dash-count');
+    const recipEl   = document.getElementById('dash-recipients');
+    const summaryEl = document.getElementById('dash-summary');
+    const listEl    = document.getElementById('dash-messages');
+    const badgeEl   = document.getElementById('vault-count-badge');
+
+    if (countEl)   countEl.textContent   = count;
+    if (recipEl)   recipEl.textContent   = uniqueRecipients;
+    if (summaryEl) summaryEl.textContent = count + ' message' + (count !== 1 ? 's' : '') + ' saved';
+    if (badgeEl) {
+      badgeEl.textContent = count + ' recording' + (count !== 1 ? 's' : '');
+      badgeEl.style.display = count > 0 ? 'inline-block' : 'none';
+    }
+
+    if (!listEl) return;
+    if (count === 0) {
+      listEl.innerHTML =
+        '<div style="text-align:center;padding:32px 20px;color:var(--muted);">'
+        + '<div style="font-size:36px;margin-bottom:10px;">🎙️</div>'
+        + '<div style="font-size:14px;font-weight:500;margin-bottom:6px;">Your vault is empty</div>'
+        + '<div style="font-size:12px;">Tap <strong>Record Message</strong> to save your first legacy.</div>'
+        + '</div>';
+      return;
+    }
+
+    listEl.innerHTML = vault.messages.map(function(m) {
+      return '<div class="card card-gold" style="margin-bottom:14px;">'
+        // Header row: icon + title + saved tag
+        + '<div class="flex-center gap-12 justify-between" style="margin-bottom:10px;">'
+          + '<div class="flex-center gap-12">'
+            + '<div class="badge badge-gold" style="font-size:20px;">🎙️</div>'
+            + '<div>'
+              + '<div style="font-size:15px;font-weight:600;color:var(--brown-dark);">' + m.title + '</div>'
+              + '<div style="font-size:11px;color:var(--muted);margin-top:2px;">For: ' + m.relation + ' · ' + m.timestamp + '</div>'
+            + '</div>'
+          + '</div>'
+          + '<span class="tag tag-green" style="white-space:nowrap;">✓ Saved</span>'
+        + '</div>'
+        // Hidden audio
+        + (m.mediaType === 'video'
+          ? '<video src="' + m.audioUrl + '" style="width:100%;max-height:160px;border-radius:8px;margin-bottom:10px;" controls></video>'
+          : '<audio id="dash-audio-' + m.id + '" src="' + m.audioUrl + '" style="display:none;"></audio>')
+        // Action buttons
+        + '<div style="display:flex;gap:8px;flex-wrap:wrap;">'
+          + (m.mediaType === 'video' ? '' : '<button class="btn-sm" id="dash-play-' + m.id + '" onclick="playDashMessage(' + m.id + ')">&#9654; Play</button>')
+          + '<button onclick="openEditMessage(' + m.id + ')" style="background:rgba(156,111,46,0.08);color:var(--gold);border:1px solid rgba(156,111,46,0.3);padding:6px 14px;border-radius:4px;font-size:12px;cursor:pointer;font-family:Jost,sans-serif;font-weight:500;">✏️ Re-record</button>'
+          + '<button onclick="deleteVaultMessage(' + m.id + ')" style="background:rgba(160,57,31,0.06);color:var(--danger);border:1px solid rgba(160,57,31,0.25);padding:6px 14px;border-radius:4px;font-size:12px;cursor:pointer;font-family:Jost,sans-serif;">🗑</button>'
+        + '</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  // ── SAVE from onboarding screen 3 (recorder1) ──
+  function saveFirstMessage() {
+    const title     = (document.getElementById('first-msg-title').value || '').trim();
+    const recipient = document.getElementById('first-msg-recipient').value;
+    const msgText   = (document.getElementById('first-msg-text').value || '').trim();
+    const senderName = document.querySelectorAll('#screen-onboard-1 .input-field')[0].value || 'You';
+
+    if (!title)     { showToast('Please give your message a title.'); return; }
+    if (!recipient) { showToast('Please choose who this message is for.'); return; }
+
+    const blob = recorder1.getBlob();
+    var videoBlob1 = (rec1MediaType === 'video' && videoChunks1.length > 0) ? new Blob(videoChunks1, {type:'video/webm'}) : null;
+    var effectiveBlob1 = blob || videoBlob1;
+    if (!effectiveBlob1 && !msgText) { showToast('Please record or type your message first.'); return; }
+
+    const firstUnlockType = document.querySelector('input[name="first-unlock-type"]:checked');
+    const firstUnlockVal  = firstUnlockType ? firstUnlockType.value : 'always';
+    const firstMinAge     = firstUnlockVal === 'age' ? (parseInt(document.getElementById('first-msg-minage').value) || 0) : 0;
+
+    function _doSaveFirst(audioData) {
+      vault.addMessage({
+        id: Date.now(),
+        title: title,
+        relation: recipient,
+        notes: msgText,
+        senderName: senderName,
+        audioUrl: audioData || null,
+        minAge: firstMinAge,
+        mediaType: window._currentMediaType1 || 'voice',
+        timestamp: new Date().toLocaleString()
+      });
+      showToast('Message saved to your vault!');
+      goTo('screen-dashboard');
+    }
+    if (effectiveBlob1) { blobToBase64(effectiveBlob1).then(_doSaveFirst); } else { _doSaveFirst(null); }
+  }
+
+  function setNav(activeId) {
+    document.querySelectorAll('.bottom-nav-item').forEach(el => el.classList.remove('active'));
+    const el = document.getElementById(activeId);
+    if (el) el.classList.add('active');
+  }
+
+  function reRecord() {
+    recorder1.reset();
+    showToast('Ready to re-record — tap the mic!');
+  }
+
+  // ══════════════════════════════════════════
+  //  RECIPIENT LOGIN — loads their messages
+  // ══════════════════════════════════════════
+  function setRelationTile(el, value) {
+    document.querySelectorAll('.relation-tile').forEach(t => t.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('recipient-relation').value = value;
+  }
+
+  // ── RECIPIENT REGISTRY — localStorage backed ──
+  const recipientRegistry = {
+    get(email) { var r = lsGet(LS_RECIPIENTS) || {}; return r[email] || null; },
+    set(email, data) { var r = lsGet(LS_RECIPIENTS) || {}; r[email] = data; lsSet(LS_RECIPIENTS, r); },
+    has(email) { return !!(lsGet(LS_RECIPIENTS) || {})[email]; }
+  };
+
+  function checkRcpStrength(val) {
+    var segs = ['rs1','rs2','rs3','rs4'];
+    var colors = ['#A0391F','#C49A4A','#9C6F2E','#4A7C59'];
+    var score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+    segs.forEach(function(sid, i) {
+      document.getElementById(sid).style.background = i < score ? colors[Math.min(score-1,3)] : '#D4C5AE';
+    });
+  }
+
+  function switchRecipientTab(tab) {
+    const isSignup = tab === 'signup';
+    document.getElementById('rpanel-signup').style.display = isSignup ? 'block' : 'none';
+    document.getElementById('rpanel-signin').style.display = isSignup ? 'none'  : 'block';
+    document.getElementById('rtab-signup').style.background = isSignup ? 'var(--gold)' : '#F5EFE4';
+    document.getElementById('rtab-signup').style.color      = isSignup ? '#FAF7F2'     : 'var(--muted)';
+    document.getElementById('rtab-signup').style.fontWeight = isSignup ? '600'         : '500';
+    document.getElementById('rtab-signin').style.background = isSignup ? '#F5EFE4'     : 'var(--gold)';
+    document.getElementById('rtab-signin').style.color      = isSignup ? 'var(--muted)': '#FAF7F2';
+    document.getElementById('rtab-signin').style.fontWeight = isSignup ? '500'         : '600';
+  }
+
+  function _enterRecipientVault(user) {
+    vault.currentUser = user;
+    const greetEl  = document.getElementById('recipient-greeting');
+    const subEl    = document.getElementById('recipient-subtext');
+    const bannerEl = document.getElementById('recipient-banner');
+    if (greetEl)  greetEl.textContent = 'Welcome, ' + user.name;
+    var relationLabel = {
+      'Son':'son','Daughter':'daughter','Grandson':'grandson','Granddaughter':'granddaughter',
+      'Spouse / Partner':'partner','Sibling':'sibling','Niece / Nephew':'niece/nephew',
+      'Close Friend':'close friend','Community Member':'community member','Other':'loved one',
+      'Son':'son','Daughter':'daughter'
+    };
+    // Recipient's relation IS the creator's relation to them — flip it for display
+    var senderLabel = {
+      'Son':'father/mother','Daughter':'father/mother','Grandson':'grandfather/grandmother',
+      'Granddaughter':'grandfather/grandmother','Spouse / Partner':'partner',
+      'Sibling':'sibling','Niece / Nephew':'uncle/aunt','Close Friend':'close friend',
+      'Community Member':'community elder','Other':'loved one'
+    };
+    var fromLabel = senderLabel[user.relation] || 'loved one';
+    if (subEl) subEl.textContent = 'Messages from your ' + fromLabel + ' · ' + user.creatorName;
+    if (bannerEl) {
+      bannerEl.innerHTML =
+        '<div style="font-size:12px;color:var(--gold);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Verified Recipient</div>' +
+        '<div style="font-size:14px;font-weight:600;color:var(--brown-dark);margin-bottom:2px;">' + user.name + ' · Age ' + user.age + '</div>' +
+        '<div style="font-size:12px;color:var(--muted);">' + user.area + ' &nbsp;·&nbsp; ' + user.relation + ' of ' + user.creatorName + '</div>';
+      bannerEl.style.display = 'block';
+    }
+    renderRecipientVault(user.relation, parseInt(user.age) || 0);
+    goTo('screen-recipient');
+  }
+
+  function recipientSignUp() {
+    const creatorName = document.getElementById('legacy-creator-name').value.trim();
+    const name        = document.getElementById('recipient-name').value.trim();
+    const age         = document.getElementById('recipient-age').value.trim();
+    const area        = document.getElementById('recipient-area').value.trim();
+    const email       = document.getElementById('recipient-email').value.trim().toLowerCase();
+    const relation    = document.getElementById('recipient-relation').value;
+    const pass        = document.getElementById('rcp-pass').value;
+    const confirm     = document.getElementById('rcp-confirm').value;
+
+    if (!creatorName) { showToast('Please enter the name of the person who left this legacy.'); return; }
+    if (!name)        { showToast('Please enter your full name.'); return; }
+    if (!age)         { showToast('Please enter your age.'); return; }
+    if (!area)        { showToast('Please enter your area or city.'); return; }
+    if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+    if (!relation)    { showToast('Please select your relationship.'); return; }
+    var passError = validatePassword(pass);
+    if (passError)    { showToast(passError); return; }
+    if (pass !== confirm) { showToast('Passwords do not match.'); return; }
+    if (recipientRegistry.has(email)) { showToast('An account with this email already exists. Please sign in.'); return; }
+
+    var rData = { name: name, age: age, area: area, email: email, relation: relation, creatorName: creatorName, password: pass };
+    recipientRegistry.set(email, rData);
+    lsSet(LS_SESSION, { email: email, type: 'recipient' });
+    showToast('Account created! Welcome, ' + name + ' ✓');
+    setTimeout(function() { _enterRecipientVault(rData); }, 800);
+  }
+
+  function recipientSignIn() {
+    const email = document.getElementById('rsi-email').value.trim().toLowerCase();
+    const pass  = document.getElementById('rsi-pass').value;
+    if (!email || !email.includes('@')) { showToast('Please enter your email address.'); return; }
+    if (!pass)  { showToast('Please enter your password.'); return; }
+    if (!recipientRegistry.has(email)) {
+      showToast('No recipient account found. Please create an account first.');
+      return;
+    }
+    if (recipientRegistry.get(email).password !== pass) {
+      showToast('Incorrect password. Please try again.');
+      return;
+    }
+    lsSet(LS_SESSION, { email: email, type: 'recipient' });
+    showToast('Welcome back, ' + recipientRegistry.get(email).name + '!');
+    setTimeout(function() { _enterRecipientVault(recipientRegistry.get(email)); }, 800);
+  }
+
+  // kept for backward compat (preview button from consent screen)
+  function recipientLogin() { recipientSignIn(); }
+
+  // ── RENDER messages for this recipient ──
+  function renderRecipientVault(relation) {
+    const container = document.getElementById('recipient-vault-messages');
+    if (!container) return;
+
+    const recipientAge = vault.currentUser ? parseInt(vault.currentUser.age) || 0 : 0;
+
+    // Match messages for this relation OR "All"
+    const myMessages = vault.messages.filter(m =>
+      m.relation === relation || m.relation === 'All'
+    );
+
+    if (myMessages.length === 0) {
+      container.innerHTML =
+        '<div style="text-align:center;padding:32px 20px;color:var(--muted);">' +
+        '<div style="font-size:32px;margin-bottom:10px;">📭</div>' +
+        '<div style="font-size:14px;">No messages for you yet.</div>' +
+        '<div style="font-size:12px;margin-top:6px;">When someone records a message for you, it will appear here.</div>' +
+        '</div>';
+      return;
+    }
+
+    container.innerHTML = myMessages.map(function(m) {
+      const minAge  = m.minAge || 0;
+      const locked  = minAge > 0 && recipientAge < minAge;
+
+      if (locked) {
+        // Show a sealed card — no audio, no play button
+        return '<div class="unlock-card locked" style="margin-bottom:16px;">'
+          + '<div class="flex-center gap-12 justify-between mb-8">'
+          + '<span class="tag tag-red">🔒 Age Locked</span>'
+          + '<span style="font-size:11px;color:var(--muted);">Unlocks at age ' + minAge + '</span>'
+          + '</div>'
+          + '<div class="lock-icon">🔐</div>'
+          + '<div style="font-size:16px;font-weight:500;margin-bottom:6px;">' + m.title + '</div>'
+          + '<p style="font-size:13px;color:var(--muted);">This message will be available when you turn ' + minAge + '. Your loved one wanted you to receive it at the right time.</p>'
+          + '</div>';
+      }
+
+      // Unlocked — show full card with play/video + reply section
+      var isVideo = m.mediaType === 'video';
+      var mediaEl = isVideo
+        ? '<video src="' + m.audioUrl + '" style="width:100%;max-height:180px;border-radius:8px;margin-bottom:10px;" controls></video>'
+        : '<audio id="vault-audio-' + m.id + '" src="' + m.audioUrl + '" style="display:none;"></audio>';
+      var playBtnHtml = isVideo ? '' : '<button class="btn-sm" data-mid="' + m.id + '" id="vault-btn-' + m.id + '" onclick="playVaultMessage(this.dataset.mid)" style="margin-bottom:12px;">&#9654; Play Voice Message</button>';
+
+      // Replies
+      var replies = m.replies || [];
+      var repliesHtml = '';
+      if (replies.length > 0) {
+        repliesHtml = '<div style="margin-top:12px;border-top:1px solid rgba(156,111,46,0.15);padding-top:12px;">'
+          + '<div style="font-size:11px;color:var(--gold);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">Your Replies (' + replies.length + ')</div>';
+        for (var ri = 0; ri < replies.length; ri++) {
+          var r = replies[ri];
+          var rMedia = r.mediaType === 'video'
+            ? '<video src="' + r.mediaUrl + '" style="width:100%;max-height:120px;border-radius:6px;margin-top:6px;" controls></video>'
+            : '<button data-amid="' + m.id + '" data-ridx="' + ri + '" onclick="playReply(this.dataset.amid,this.dataset.ridx)" style="background:rgba(156,111,46,0.08);color:var(--gold);border:1px solid rgba(156,111,46,0.25);padding:5px 12px;border-radius:4px;font-size:11px;cursor:pointer;font-family:Jost,sans-serif;margin-top:4px;">&#9654; Play Voice Reply</button>'
+              + '<audio id="reply-audio-' + m.id + '-' + ri + '" src="' + r.mediaUrl + '" style="display:none;"></audio>';
+          repliesHtml += '<div style="background:rgba(156,111,46,0.06);border-radius:8px;padding:10px;margin-bottom:6px;">'
+            + '<div style="font-size:11px;color:var(--muted);">' + r.timestamp + ' &middot; ' + (r.mediaType === 'video' ? '&#127909; Video reply' : '&#127908; Voice reply') + '</div>'
+            + rMedia + '</div>';
+        }
+        repliesHtml += '</div>';
+      }
+
+      var html = '<div class="unlock-card unlocked" style="margin-bottom:16px;">'
+        + '<div class="flex-center gap-12 justify-between mb-8">'
+        + '<span class="tag tag-green">' + (isVideo ? '&#127909; Video' : '&#127908; Voice') + ' Unlocked</span>'
+        + '<span style="font-size:11px;color:var(--muted);">' + m.timestamp + '</span>'
+        + '</div>'
+        + '<div style="font-size:22px;margin-bottom:8px;">' + (isVideo ? '&#127909;' : '&#127908;') + '</div>'
+        + '<div style="font-size:16px;font-weight:500;margin-bottom:4px;">' + m.title + '</div>'
+        + (m.notes ? '<p style="font-size:13px;color:var(--muted);margin-bottom:10px;">' + m.notes + '</p>' : '<div style="height:8px;"></div>')
+        + mediaEl + playBtnHtml
+        + repliesHtml
+        + '<div style="margin-top:12px;border-top:1px solid rgba(156,111,46,0.15);padding-top:12px;">'
+        + '<div style="font-size:11px;color:var(--gold);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">Leave a Reply</div>'
+        + '<div style="display:flex;gap:0;border:1px solid rgba(156,111,46,0.2);border-radius:6px;overflow:hidden;margin-bottom:10px;">'
+        + '<button id="rtype-voice-' + m.id + '" data-mid="' + m.id + '" data-rtype="voice" onclick="setReplyType(this.dataset.mid,this.dataset.rtype)" style="flex:1;padding:8px;font-family:Jost,sans-serif;font-size:12px;font-weight:600;cursor:pointer;border:none;background:var(--gold);color:#FAF7F2;transition:all 0.2s;">&#127908; Voice</button>'
+        + '<button id="rtype-video-' + m.id + '" data-mid="' + m.id + '" data-rtype="video" onclick="setReplyType(this.dataset.mid,this.dataset.rtype)" style="flex:1;padding:8px;font-family:Jost,sans-serif;font-size:12px;font-weight:500;cursor:pointer;border:none;background:#F5EFE4;color:var(--muted);transition:all 0.2s;">&#127909; Video</button>'
+        + '</div>'
+        + '<div id="reply-preview-' + m.id + '" style="display:none;margin-bottom:8px;">'
+        + '<video id="reply-cam-' + m.id + '" style="width:100%;max-height:140px;border-radius:6px;background:#000;" autoplay muted playsinline></video>'
+        + '</div>'
+        + '<div style="display:flex;align-items:center;gap:8px;">'
+        + '<button id="reply-rec-btn-' + m.id + '" class="record-btn" data-mid="' + m.id + '" style="width:44px;height:44px;font-size:18px;flex-shrink:0;" onclick="toggleReply(this.dataset.mid)">&#127908;</button>'
+        + '<div style="flex:1;">'
+        + '<div id="reply-status-' + m.id + '" style="font-size:12px;color:var(--muted);">Tap to record your reply</div>'
+        + '<div id="reply-timer-' + m.id + '" style="font-size:11px;color:var(--muted);">0:00</div>'
+        + '</div>'
+        + '</div>'
+        + '<div id="reply-controls-' + m.id + '" style="display:none;margin-top:10px;">'
+        + '<div style="background:rgba(156,111,46,0.06);border-radius:8px;padding:10px;margin-bottom:10px;">'
+        + '<div style="font-size:11px;color:var(--muted);margin-bottom:6px;">Preview your reply before sending:</div>'
+        + '<audio id="reply-preview-audio-' + m.id + '" style="display:none;"></audio>'
+        + '<video id="reply-preview-video-' + m.id + '" style="display:none;width:100%;max-height:120px;border-radius:6px;" controls></video>'
+        + '<button id="reply-play-btn-' + m.id + '" data-mid="' + m.id + '" onclick="playReplyPreview(this.dataset.mid)" style="background:rgba(156,111,46,0.12);color:var(--gold);border:1px solid rgba(156,111,46,0.3);padding:6px 14px;border-radius:6px;font-family:Jost,sans-serif;font-size:12px;cursor:pointer;">&#9654; Play Back</button>'
+        + '</div>'
+        + '<div style="display:flex;gap:8px;flex-wrap:wrap;">'
+        + '<button data-mid="' + m.id + '" onclick="saveReply(this.dataset.mid)" style="background:var(--gold);color:#FAF7F2;border:none;padding:8px 16px;border-radius:6px;font-family:Jost,sans-serif;font-size:12px;font-weight:600;cursor:pointer;">&#10003; Send Reply</button>'
+        + '<button data-mid="' + m.id + '" onclick="reRecordReply(this.dataset.mid)" style="background:rgba(156,111,46,0.08);color:var(--gold);border:1px solid rgba(156,111,46,0.3);padding:8px 14px;border-radius:6px;font-family:Jost,sans-serif;font-size:12px;cursor:pointer;">&#128260; Re-record</button>'
+        + '<button data-mid="' + m.id + '" onclick="discardReply(this.dataset.mid)" style="background:rgba(160,57,31,0.08);color:var(--danger);border:1px solid rgba(160,57,31,0.3);padding:8px 14px;border-radius:6px;font-family:Jost,sans-serif;font-size:12px;cursor:pointer;">&#128465; Discard</button>'
+        + '</div>'
+        + '</div>'
+        + '</div>'
+        + '</div>';
+      return html;
+    }).join('');
+  }
+
+  function playDashMessage(id) {
+    const audio = document.getElementById('dash-audio-' + id);
+    const btn   = document.getElementById('dash-play-' + id);
+    if (!audio) return;
+    if (audio.paused) {
+      document.querySelectorAll('[id^="dash-audio-"]').forEach(a => { if (a !== audio) { a.pause(); a.currentTime = 0; } });
+      document.querySelectorAll('[id^="dash-play-"]').forEach(b => b.textContent = '▶ Play');
+      audio.play();
+      btn.textContent = '⏸ Pause';
+      audio.onended = () => { btn.textContent = '▶ Play'; };
+    } else {
+      audio.pause();
+      btn.textContent = '▶ Play';
+    }
+  }
+
+  function deleteVaultMessage(id) {
+    vault.deleteMessage(id);
+    refreshDashboard();
+    showToast('Recording deleted.');
+  }
+
+  // ── EDIT / RE-RECORD a saved message ──
+  let editingId = null;
+  let editRecorder = null;
+
+  function openEditMessage(id) {
+    const msg = vault.messages.find(m => m.id === id);
+    if (!msg) return;
+    editingId = id;
+
+    // Populate edit screen
+    const titleDisplay = document.getElementById('edit-msg-title-display');
+    const titleInput   = document.getElementById('edit-title-input');
+    const audioEl      = document.getElementById('edit-audio-player');
+    const playBtn      = document.getElementById('edit-play-btn');
+    const wf           = document.getElementById('edit-waveform');
+
+    if (titleDisplay) titleDisplay.textContent = msg.title;
+    if (titleInput)   titleInput.value = msg.title;
+    if (audioEl)      { audioEl.src = msg.audioUrl; audioEl.load(); }
+    if (playBtn)      playBtn.textContent = '▶ Listen to Recording';
+    if (wf)           wf.classList.remove('idle'); // show active waveform style
+
+    // Reset re-record section
+    resetEditRecord();
+
+    goTo('screen-edit-message');
+  }
+
+  function playEditAudio() {
+    const audio  = document.getElementById('edit-audio-player');
+    const btn    = document.getElementById('edit-play-btn');
+    const wf     = document.getElementById('edit-waveform');
+    if (!audio || !audio.src) { showToast('No recording found.'); return; }
+    if (audio.paused) {
+      audio.play();
+      btn.textContent = '⏸ Pause';
+      wf.classList.remove('idle');
+      audio.onended = () => { btn.textContent = '▶ Listen to Recording'; wf.classList.add('idle'); };
+    } else {
+      audio.pause();
+      btn.textContent = '▶ Listen to Recording';
+      wf.classList.add('idle');
+    }
+  }
+
+  // Re-record inside edit screen
+  let editMediaRecorder = null, editAudioChunks = [], editTimerInterval = null, editSeconds = 0, editBlob = null, editStream = null;
+
+  function toggleEditRecord() {
+    if (!editMediaRecorder || editMediaRecorder.state === 'inactive') {
+      startEditRecording();
+    } else {
+      stopEditRecording();
+    }
+  }
+
+  async function startEditRecording() {
+    try { editStream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+    catch(e) { showToast('🎤 Microphone access denied.'); return; }
+    editAudioChunks = [];
+    editMediaRecorder = new MediaRecorder(editStream);
+    editMediaRecorder.ondataavailable = e => { if (e.data.size > 0) editAudioChunks.push(e.data); };
+    editMediaRecorder.onstop = () => {
+      editBlob = new Blob(editAudioChunks, { type: 'audio/webm' });
+      const url = URL.createObjectURL(editBlob);
+      const newAudio = document.getElementById('edit-new-audio');
+      if (newAudio) { newAudio.src = url; newAudio.load(); }
+      document.getElementById('edit-new-controls').style.display = 'block';
+      document.getElementById('edit-rec-status').textContent = '✓ New version recorded — play it back or try again';
+      editStream.getTracks().forEach(t => t.stop());
+      showToast('New version ready! Tap ▶ Play New Version to hear it.');
+    };
+    editMediaRecorder.start();
+    document.getElementById('edit-recBtn').classList.add('recording');
+    document.getElementById('edit-recBtn').textContent = '⏹️';
+    document.getElementById('edit-rec-status').textContent = 'Recording…';
+    document.getElementById('edit-waveform2').classList.remove('idle');
+    editSeconds = 0;
+    document.getElementById('edit-rec-timer').textContent = '0:00';
+    editTimerInterval = setInterval(() => {
+      editSeconds++;
+      const m = Math.floor(editSeconds/60), s = editSeconds%60;
+      document.getElementById('edit-rec-timer').textContent = m + ':' + s.toString().padStart(2,'0');
+    }, 1000);
+  }
+
+  function stopEditRecording() {
+    if (editMediaRecorder && editMediaRecorder.state !== 'inactive') editMediaRecorder.stop();
+    clearInterval(editTimerInterval);
+    document.getElementById('edit-recBtn').classList.remove('recording');
+    document.getElementById('edit-recBtn').textContent = '🎙️';
+    document.getElementById('edit-waveform2').classList.add('idle');
+  }
+
+  function playEditNewAudio() {
+    const audio = document.getElementById('edit-new-audio');
+    const btn   = document.getElementById('edit-playback-btn');
+    if (!audio || !audio.src) return;
+    if (audio.paused) {
+      audio.play();
+      btn.textContent = '⏸ Pause New Version';
+      audio.onended = () => { btn.textContent = '▶ Play New Version'; };
+    } else {
+      audio.pause();
+      btn.textContent = '▶ Play New Version';
+    }
+  }
+
+  function resetEditRecord() {
+    editBlob = null;
+    if (editMediaRecorder && editMediaRecorder.state !== 'inactive') editMediaRecorder.stop();
+    clearInterval(editTimerInterval);
+    const newAudio = document.getElementById('edit-new-audio');
+    if (newAudio) { newAudio.pause(); newAudio.src = ''; }
+    const controls = document.getElementById('edit-new-controls');
+    if (controls) controls.style.display = 'none';
+    document.getElementById('edit-recBtn').classList.remove('recording');
+    document.getElementById('edit-recBtn').textContent = '🎙️';
+    document.getElementById('edit-rec-status').textContent = 'Tap to record a new version';
+    document.getElementById('edit-rec-timer').textContent = '0:00';
+    document.getElementById('edit-waveform2').classList.add('idle');
+    const playbackBtn = document.getElementById('edit-playback-btn');
+    if (playbackBtn) playbackBtn.textContent = '▶ Play New Version';
+  }
+
+  function saveEditedMessage() {
+    const newTitle = document.getElementById('edit-title-input').value.trim();
+    if (!newTitle) { showToast('Please give the message a title.'); return; }
+
+    const msg = vault.messages.find(m => m.id === editingId);
+    if (!msg) { showToast('Message not found.'); return; }
+
+    if (editBlob) {
+      blobToBase64(editBlob).then(function(audioData) {
+        vault.updateMessage(editingId, { title: newTitle, audioUrl: audioData, timestamp: new Date().toLocaleString() + ' (edited)' });
+        showToast('Recording updated ✓');
+        editingId = null; editBlob = null;
+        refreshDashboard(); goTo('screen-dashboard');
+      });
+    } else {
+      vault.updateMessage(editingId, { title: newTitle });
+      showToast('Title updated ✓');
+      editingId = null; editBlob = null;
+      refreshDashboard(); goTo('screen-dashboard');
+    }
+  }
+
+  function playVaultMessage(id) {
+    const audio = document.getElementById('vault-audio-' + id);
+    const btn   = document.getElementById('vault-btn-' + id);
+    if (!audio) return;
+    if (audio.paused) {
+      // Pause all others first
+      document.querySelectorAll('[id^="vault-audio-"]').forEach(a => {
+        if (a !== audio) { a.pause(); a.currentTime = 0; }
+      });
+      document.querySelectorAll('[id^="vault-btn-"]').forEach(b => b.textContent = '▶ Play Message');
+      audio.play();
+      btn.textContent = '⏸ Pause';
+      audio.onended = () => { btn.textContent = '▶ Play Message'; };
+    } else {
+      audio.pause();
+      btn.textContent = '▶ Play Message';
+    }
+  }
+
+  // ══════════════════════════════════════════
+  //  SESSION RESTORE — auto-login on page load
+  // ══════════════════════════════════════════
+  (function restoreSession() {
+    var session = lsGet(LS_SESSION);
+    if (!session) return;
+
+    if (session.type === 'creator') {
+      var user = userRegistry.get(session.email);
+      if (user) {
+        // Restore to welcome screen directly
+        setTimeout(function() { goTo('screen-welcome'); }, 100);
+        return;
+      }
+    }
+
+    if (session.type === 'recipient') {
+      var rUser = recipientRegistry.get(session.email);
+      if (rUser) {
+        setTimeout(function() { _enterRecipientVault(rUser); }, 100);
+        return;
+      }
+    }
+
+    // Session invalid — clear it
+    lsSet(LS_SESSION, null);
+  })();
+
+  // ── SIGN OUT ──
+  function signOut() {
+    lsSet(LS_SESSION, null);
+    vault.currentUser = null;
+    showToast('Signed out successfully.');
+    setTimeout(function() {
+      document.querySelectorAll('.screen,.auth-screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen-landing').classList.add('active');
+      window.scrollTo(0,0);
+    }, 600);
+  }
+
+  // ══════════════════════════════════════════
+  //  MEDIA TYPE TOGGLES (Voice / Video)
+  // ══════════════════════════════════════════
+  var rec1MediaType = 'voice';
+  var rec2MediaType = 'voice';
+  var rec1VideoStream = null;
+  var rec2VideoStream = null;
+
+  function _setTypeUI(btnVoiceId, btnVideoId, type) {
+    var isVoice = type === 'voice';
+    var bv = document.getElementById(btnVoiceId), bvid = document.getElementById(btnVideoId);
+    if (!bv || !bvid) return;
+    bv.style.background   = isVoice ? 'var(--gold)' : '#F5EFE4';
+    bv.style.color        = isVoice ? '#FAF7F2'     : 'var(--muted)';
+    bv.style.fontWeight   = isVoice ? '600'         : '500';
+    bvid.style.background = isVoice ? '#F5EFE4'     : 'var(--gold)';
+    bvid.style.color      = isVoice ? 'var(--muted)': '#FAF7F2';
+    bvid.style.fontWeight = isVoice ? '500'         : '600';
+  }
+
+  function setRec1Type(type) {
+    rec1MediaType = type;
+    _setTypeUI('rec1-type-voice', 'rec1-type-video', type);
+    var wf = document.getElementById('waveform');
+    var vp = document.getElementById('rec1-video-preview');
+    var btn = document.getElementById('recBtn');
+    if (type === 'video') {
+      wf.style.display = 'none'; vp.style.display = 'block';
+      btn.textContent = '🎥';
+      navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(function(s) {
+        rec1VideoStream = s; vp.srcObject = s;
+      }).catch(function() { showToast('Camera access denied.'); rec1MediaType = 'voice'; setRec1Type('voice'); });
+    } else {
+      wf.style.display = ''; vp.style.display = 'none';
+      btn.textContent = '🎙️';
+      if (rec1VideoStream) { rec1VideoStream.getTracks().forEach(function(t){t.stop();}); rec1VideoStream = null; }
+    }
+  }
+
+  function setRec2Type(type) {
+    rec2MediaType = type;
+    _setTypeUI('rec2-type-voice', 'rec2-type-video', type);
+    var wf = document.getElementById('waveform2');
+    var vp = document.getElementById('rec2-video-preview');
+    var btn = document.getElementById('recBtn2');
+    if (type === 'video') {
+      wf.style.display = 'none'; vp.style.display = 'block';
+      btn.textContent = '🎥';
+      navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(function(s) {
+        rec2VideoStream = s; vp.srcObject = s;
+      }).catch(function() { showToast('Camera access denied.'); rec2MediaType = 'voice'; setRec2Type('voice'); });
+    } else {
+      wf.style.display = ''; vp.style.display = 'none';
+      btn.textContent = '🎙️';
+      if (rec2VideoStream) { rec2VideoStream.getTracks().forEach(function(t){t.stop();}); rec2VideoStream = null; }
+    }
+  }
+
+  // Override toggleRecord2 to handle video mode
+  var _origToggleRecord2 = toggleRecord2;
+  toggleRecord2 = function() {
+    if (rec2MediaType === 'video') { toggleVideoRecord2(); } else { _origToggleRecord2(); }
+  };
+  var _origToggleRecord1 = toggleRecord;
+  toggleRecord = function() {
+    if (rec1MediaType === 'video') { toggleVideoRecord1(); } else { _origToggleRecord1(); }
+  };
+
+  var videoRecorder1 = null, videoRecorder2 = null;
+  var videoChunks1 = [], videoChunks2 = [];
+  var videoTimerInterval1 = null, videoTimerInterval2 = null;
+  var videoSeconds1 = 0, videoSeconds2 = 0;
+
+  function _startVideoRecorder(stream, chunks, btnId, statusId, timerId, onStop, timerRef, secRef) {
+    chunks.length = 0;
+    var mr = new MediaRecorder(stream);
+    mr.ondataavailable = function(e) { if (e.data.size > 0) chunks.push(e.data); };
+    mr.onstop = onStop;
+    mr.start();
+    document.getElementById(btnId).classList.add('recording');
+    document.getElementById(btnId).textContent = '⏹️';
+    document.getElementById(statusId).textContent = 'Recording…';
+    return mr;
+  }
+
+  function toggleVideoRecord1() {
+    if (!videoRecorder1 || videoRecorder1.state === 'inactive') {
+      videoRecorder1 = _startVideoRecorder(rec1VideoStream, videoChunks1, 'recBtn', 'rec-status', 'rec-timer',
+        function() {
+          clearInterval(videoTimerInterval1);
+          var blob = new Blob(videoChunks1, { type: 'video/webm' });
+          recorder1._audioBlob = blob;
+          var url = URL.createObjectURL(blob);
+          var vp = document.getElementById('video-player-1'); if(vp){vp.src=url;vp.style.display='block';}
+          document.getElementById('rec1-controls').style.display = 'block';
+          document.getElementById('rec-status').textContent = '✓ Video recorded — play it back!';
+          document.getElementById('recBtn').classList.remove('recording');
+          document.getElementById('recBtn').textContent = '🎥';
+        }, videoTimerInterval1, videoSeconds1);
+      videoSeconds1 = 0;
+      document.getElementById('rec-timer').textContent = '0:00';
+      videoTimerInterval1 = setInterval(function(){
+        videoSeconds1++;
+        var m=Math.floor(videoSeconds1/60),s=videoSeconds1%60;
+        document.getElementById('rec-timer').textContent=m+':'+s.toString().padStart(2,'0');
+      },1000);
+    } else {
+      videoRecorder1.stop();
+    }
+  }
+
+  function toggleVideoRecord2() {
+    if (!videoRecorder2 || videoRecorder2.state === 'inactive') {
+      videoRecorder2 = _startVideoRecorder(rec2VideoStream, videoChunks2, 'recBtn2', 'rec2-status', 'rec2-timer',
+        function() {
+          clearInterval(videoTimerInterval2);
+          var blob = new Blob(videoChunks2, { type: 'video/webm' });
+          recorder2._audioBlob = blob;
+          var url = URL.createObjectURL(blob);
+          var vp = document.getElementById('video-player-2'); if(vp){vp.src=url;vp.style.display='block';}
+          document.getElementById('rec2-controls').style.display = 'block';
+          document.getElementById('rec2-status').textContent = '✓ Video recorded — play it back!';
+          document.getElementById('recBtn2').classList.remove('recording');
+          document.getElementById('recBtn2').textContent = '🎥';
+        }, videoTimerInterval2, videoSeconds2);
+      videoSeconds2 = 0;
+      document.getElementById('rec2-timer').textContent = '0:00';
+      videoTimerInterval2 = setInterval(function(){
+        videoSeconds2++;
+        var m=Math.floor(videoSeconds2/60),s=videoSeconds2%60;
+        document.getElementById('rec2-timer').textContent=m+':'+s.toString().padStart(2,'0');
+      },1000);
+    } else {
+      videoRecorder2.stop();
+    }
+  }
+
+  // Save mediaType alongside message
+  var _origSaveMessageToVault = saveMessageToVault;
+  saveMessageToVault = function() {
+    window._currentMediaType2 = rec2MediaType;
+    _origSaveMessageToVault();
+  };
+  var _origSaveFirstMessage = saveFirstMessage;
+  saveFirstMessage = function() {
+    window._currentMediaType1 = rec1MediaType;
+    _origSaveFirstMessage();
+  };
+
+  // ══════════════════════════════════════════
+  //  RECIPIENT REPLY SYSTEM
+  // ══════════════════════════════════════════
+  var replyRecorders = {};   // msgId -> MediaRecorder
+  var replyChunks    = {};
+  var replyTimers    = {};
+  var replySeconds   = {};
+  var replyStreams    = {};
+  var replyTypes     = {};   // msgId -> 'voice'|'video'
+  var replyBlobs     = {};
+
+  function setReplyType(msgId, type) {
+    replyTypes[msgId] = type;
+    var bv   = document.getElementById('rtype-voice-' + msgId);
+    var bvid = document.getElementById('rtype-video-' + msgId);
+    var prev = document.getElementById('reply-preview-' + msgId);
+    var btn  = document.getElementById('reply-rec-btn-' + msgId);
+    if (!bv) return;
+    var isVoice = type === 'voice';
+    bv.style.background   = isVoice ? 'var(--gold)' : '#F5EFE4';
+    bv.style.color        = isVoice ? '#FAF7F2'     : 'var(--muted)';
+    bvid.style.background = isVoice ? '#F5EFE4'     : 'var(--gold)';
+    bvid.style.color      = isVoice ? 'var(--muted)': '#FAF7F2';
+    if (btn) btn.textContent = isVoice ? '🎙️' : '🎥';
+    if (prev) {
+      if (!isVoice) {
+        prev.style.display = 'block';
+        navigator.mediaDevices.getUserMedia({ video:true, audio:true }).then(function(s) {
+          replyStreams[msgId] = s;
+          var cam = document.getElementById('reply-cam-' + msgId);
+          if (cam) cam.srcObject = s;
+        }).catch(function(){ showToast('Camera access denied.'); setReplyType(msgId,'voice'); });
+      } else {
+        prev.style.display = 'none';
+        if (replyStreams[msgId]) { replyStreams[msgId].getTracks().forEach(function(t){t.stop();}); delete replyStreams[msgId]; }
+      }
+    }
+  }
+
+  function toggleReply(msgId) {
+    var mr = replyRecorders[msgId];
+    if (!mr || mr.state === 'inactive') {
+      startReply(msgId);
+    } else {
+      mr.stop();
+      clearInterval(replyTimers[msgId]);
+      document.getElementById('reply-rec-btn-' + msgId).classList.remove('recording');
+      document.getElementById('reply-rec-btn-' + msgId).textContent = replyTypes[msgId]==='video' ? '🎥' : '🎙️';
+    }
+  }
+
+  async function startReply(msgId) {
+    var type = replyTypes[msgId] || 'voice';
+    var stream;
+    try {
+      stream = type === 'video'
+        ? (replyStreams[msgId] || await navigator.mediaDevices.getUserMedia({video:true,audio:true}))
+        : await navigator.mediaDevices.getUserMedia({audio:true});
+    } catch(e) { showToast('Microphone/camera access denied.'); return; }
+
+    replyStreams[msgId] = stream;
+    replyChunks[msgId] = [];
+    var mr = new MediaRecorder(stream);
+    replyRecorders[msgId] = mr;
+
+    mr.ondataavailable = function(e) { if(e.data.size>0) replyChunks[msgId].push(e.data); };
+    mr.onstop = function() {
+      var mimeType = type === 'video' ? 'video/webm' : 'audio/webm';
+      replyBlobs[msgId] = new Blob(replyChunks[msgId], { type: mimeType });
+      var previewUrl = URL.createObjectURL(replyBlobs[msgId]);
+      if (type === 'video') {
+        var pv = document.getElementById('reply-preview-video-' + msgId);
+        var pb = document.getElementById('reply-play-btn-' + msgId);
+        if (pv) { pv.src = previewUrl; pv.style.display = 'block'; }
+        if (pb) pb.style.display = 'none';
+      } else {
+        var pa = document.getElementById('reply-preview-audio-' + msgId);
+        if (pa) { pa.src = previewUrl; }
+      }
+      document.getElementById('reply-status-' + msgId).textContent = '✓ Recorded — preview, re-record or send';
+      document.getElementById('reply-controls-' + msgId).style.display = 'block';
+      if (type !== 'video') stream.getTracks().forEach(function(t){t.stop();});
+    };
+    mr.start();
+
+    var btn = document.getElementById('reply-rec-btn-' + msgId);
+    btn.classList.add('recording');
+    btn.textContent = '⏹️';
+    document.getElementById('reply-status-' + msgId).textContent = 'Recording…';
+    replySeconds[msgId] = 0;
+    document.getElementById('reply-timer-' + msgId).textContent = '0:00';
+    replyTimers[msgId] = setInterval(function() {
+      replySeconds[msgId]++;
+      var m=Math.floor(replySeconds[msgId]/60),s=replySeconds[msgId]%60;
+      document.getElementById('reply-timer-' + msgId).textContent=m+':'+s.toString().padStart(2,'0');
+    },1000);
+  }
+
+  function saveReply(msgId) {
+    var blob = replyBlobs[msgId];
+    if (!blob) { showToast('Please record a reply first.'); return; }
+    var type = replyTypes[msgId] || 'voice';
+
+    blobToBase64(blob).then(function(mediaData) {
+      var msgs = vault.messages;
+      var msg = msgs.find(function(m) { return m.id == msgId; });
+      if (!msg) { showToast('Message not found.'); return; }
+      if (!msg.replies) msg.replies = [];
+      msg.replies.push({ mediaUrl: mediaData, mediaType: type, timestamp: new Date().toLocaleString() });
+      vault.messages = msgs;
+      showToast('Reply sent! ✓');
+      // cleanup
+      delete replyBlobs[msgId];
+      document.getElementById('reply-controls-' + msgId).style.display = 'none';
+      document.getElementById('reply-status-' + msgId).textContent = 'Tap to record your reply';
+      document.getElementById('reply-timer-' + msgId).textContent = '0:00';
+      if (replyStreams[msgId]) { replyStreams[msgId].getTracks().forEach(function(t){t.stop();}); delete replyStreams[msgId]; }
+      // Re-render so reply appears
+      renderRecipientVault(vault.currentUser.relation, parseInt(vault.currentUser.age)||0);
+    });
+  }
+
+  function discardReply(msgId) {
+    delete replyBlobs[msgId];
+    document.getElementById('reply-controls-' + msgId).style.display = 'none';
+    document.getElementById('reply-status-' + msgId).textContent = 'Tap to record your reply';
+    document.getElementById('reply-timer-' + msgId).textContent = '0:00';
+    showToast('Reply discarded.');
+  }
+
+  function playReply(msgId, idx) {
+    var audio = document.getElementById('reply-audio-' + msgId + '-' + idx);
+    if (audio) { audio.paused ? audio.play() : audio.pause(); }
+  }
+
+  // ========================================
+  //  AUTH-LEVEL RECIPIENT FUNCTIONS
+  // ========================================
+  function setCRTile(el, value) {
+    document.querySelectorAll('#cr-relation-tiles .relation-tile').forEach(function(t){ t.classList.remove('selected'); });
+    el.classList.add('selected');
+    document.getElementById('cr-relation').value = value;
+  }
+
+  function checkCRStrength(val) {
+    var segs = ['crs1','crs2','crs3','crs4'];
+    var colors = ['#A0391F','#C49A4A','#9C6F2E','#4A7C59'];
+    var score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+    segs.forEach(function(sid, i) {
+      var el = document.getElementById(sid);
+      if (el) el.style.background = i < score ? colors[Math.min(score-1,3)] : '#D4C5AE';
+    });
+  }
+
+  function handleCreateRecipient() {
+    var creatorName = document.getElementById('cr-creator-name').value.trim();
+    var name        = document.getElementById('cr-name').value.trim();
+    var age         = document.getElementById('cr-age').value.trim();
+    var area        = document.getElementById('cr-area').value.trim();
+    var email       = document.getElementById('cr-email').value.trim().toLowerCase();
+    var relation    = document.getElementById('cr-relation').value;
+    var pass        = document.getElementById('cr-pass').value;
+    var confirm     = document.getElementById('cr-confirm').value;
+    if (!creatorName) { showToast('Please enter the name of the person who left this legacy.'); return; }
+    if (!name)        { showToast('Please enter your full name.'); return; }
+    if (!age)         { showToast('Please enter your age.'); return; }
+    if (!area)        { showToast('Please enter your area or city.'); return; }
+    if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+    if (!relation)    { showToast('Please select your relationship.'); return; }
+    var passError = validatePassword(pass);
+    if (passError)    { showToast(passError); return; }
+    if (pass !== confirm) { showToast('Passwords do not match.'); return; }
+    if (recipientRegistry.has(email)) { showToast('An account with this email already exists. Please sign in.'); return; }
+    var rData = { name:name, age:age, area:area, email:email, relation:relation, creatorName:creatorName, password:pass };
+    recipientRegistry.set(email, rData);
+    lsSet(LS_SESSION, { email:email, type:'recipient' });
+    showToast('Account created! Welcome, ' + name + ' \u2713');
+    setTimeout(function() { _enterRecipientVault(rData); }, 800);
+  }
+
+  function handleRecipientSignIn() {
+    var email = document.getElementById('rsi2-email').value.trim().toLowerCase();
+    var pass  = document.getElementById('rsi2-pass').value;
+    if (!email || !email.includes('@')) { showToast('Please enter your email address.'); return; }
+    if (!pass)  { showToast('Please enter your password.'); return; }
+    if (!recipientRegistry.has(email)) { showToast('No recipient account found. Please create an account first.'); return; }
+    if (recipientRegistry.get(email).password !== pass) { showToast('Incorrect password. Please try again.'); return; }
+    lsSet(LS_SESSION, { email:email, type:'recipient' });
+    showToast('Welcome back, ' + recipientRegistry.get(email).name + '!');
+    setTimeout(function() { _enterRecipientVault(recipientRegistry.get(email)); }, 800);
+  }
+
+  // ========================================
+  //  REPLY PLAYBACK + RE-RECORD
+  // ========================================
+  function playReplyPreview(msgId) {
+    var audio = document.getElementById('reply-preview-audio-' + msgId);
+    var btn   = document.getElementById('reply-play-btn-' + msgId);
+    if (!audio || !audio.src) { showToast('No reply recorded yet.'); return; }
+    if (audio.paused) {
+      audio.play();
+      if (btn) btn.textContent = '\u23F8 Pause';
+      audio.onended = function() { if (btn) btn.textContent = '\u25B6 Play Back'; };
+    } else {
+      audio.pause();
+      if (btn) btn.textContent = '\u25B6 Play Back';
+    }
+  }
+
+  function reRecordReply(msgId) {
+    delete replyBlobs[msgId];
+    var pv = document.getElementById('reply-preview-video-' + msgId);
+    var pa = document.getElementById('reply-preview-audio-' + msgId);
+    var pb = document.getElementById('reply-play-btn-' + msgId);
+    if (pv) { pv.src = ''; pv.style.display = 'none'; }
+    if (pa) { pa.src = ''; }
+    if (pb) { pb.textContent = '\u25B6 Play Back'; }
+    document.getElementById('reply-controls-' + msgId).style.display = 'none';
+    document.getElementById('reply-status-' + msgId).textContent = 'Tap to record your reply';
+    document.getElementById('reply-timer-' + msgId).textContent = '0:00';
+    showToast('Ready to re-record your reply!');
+  }
+
+
+  // ══════════════════════════════════════════
+  //  SETTINGS
+  // ══════════════════════════════════════════
+  var _settingsRole = 'creator';
+
+  function openSettings(role) {
+    _settingsRole = role;
+    var session = lsGet(LS_SESSION);
+    var email   = session ? session.email : '';
+    var prefs   = lsGet('heiryn_prefs_' + email) || {};
+
+    // Populate account info
+    var nameEl  = document.getElementById('settings-name-display');
+    var emailEl = document.getElementById('settings-email-display');
+    var typeEl  = document.getElementById('settings-type-display');
+    var roleEl  = document.getElementById('settings-role-label');
+
+    if (role === 'creator') {
+      var u = userRegistry.get(email);
+      if (nameEl)  nameEl.textContent  = u ? u.name  : 'Legacy Creator';
+      if (roleEl)  roleEl.textContent  = 'CREATOR SETTINGS';
+      if (typeEl)  typeEl.textContent  = 'Legacy Creator Account';
+    } else {
+      var r = recipientRegistry.get(email);
+      if (nameEl)  nameEl.textContent  = r ? r.name  : 'Recipient';
+      if (roleEl)  roleEl.textContent  = 'RECIPIENT SETTINGS';
+      if (typeEl)  typeEl.textContent  = r ? ('Recipient · ' + r.relation + ' of ' + r.creatorName) : 'Recipient Account';
+    }
+    if (emailEl) emailEl.textContent = email || '—';
+
+    // Load saved prefs
+    var notif   = document.getElementById('pref-notifications');
+    var emotion = document.getElementById('pref-emotion');
+    var privacy = document.getElementById('pref-privacy');
+    var archive = document.getElementById('pref-archive');
+    var archRow = document.getElementById('pref-archive-row');
+
+    if (notif)   notif.checked   = prefs.notifications !== false;
+    if (emotion) emotion.checked = prefs.emotion       !== false;
+    if (privacy) privacy.checked = prefs.privacy       === true;
+    if (archive) archive.checked = prefs.archive       === true;
+
+    // Only show archive row for creators
+    if (archRow) archRow.style.display = role === 'creator' ? '' : 'none';
+
+    document.getElementById('modal-settings').classList.add('show');
+  }
+
+  function closeSettings() {
+    document.getElementById('modal-settings').classList.remove('show');
+  }
+
+  function savePref(key, val) {
+    var session = lsGet(LS_SESSION);
+    if (!session) return;
+    var prefsKey = 'heiryn_prefs_' + session.email;
+    var prefs = lsGet(prefsKey) || {};
+    prefs[key] = val;
+    lsSet(prefsKey, prefs);
+  }
+
+  function confirmDeleteAccount() {
+    document.getElementById('modal-settings').classList.remove('show');
+    document.getElementById('modal-delete-confirm').classList.add('show');
+  }
+
+  function deleteAccountConfirmed() {
+    var session = lsGet(LS_SESSION);
+    if (session) {
+      var email = session.email;
+      var type  = session.type;
+
+      // Delete account from registry
+      if (type === 'creator') {
+        var users = lsGet(LS_USERS) || {};
+        delete users[email];
+        lsSet(LS_USERS, users);
+        // Also wipe vault messages
+        lsSet(LS_VAULT, []);
+      } else {
+        var recs = lsGet(LS_RECIPIENTS) || {};
+        delete recs[email];
+        lsSet(LS_RECIPIENTS, recs);
+      }
+
+      // Delete preferences
+      localStorage.removeItem('heiryn_prefs_' + email);
+    }
+
+    // Clear session
+    lsSet(LS_SESSION, null);
+    vault.currentUser = null;
+
+    // Close modals
+    document.getElementById('modal-delete-confirm').classList.remove('show');
+
+    showToast('Account deleted. All data has been removed.');
+
+    // Return to landing after short delay
+    setTimeout(function() {
+      document.querySelectorAll('.screen, .auth-screen').forEach(function(s) { s.classList.remove('active'); });
+      document.getElementById('screen-landing').classList.add('active');
+      window.scrollTo(0, 0);
+    }, 1200);
+  }
+
+
+  // ══ ONBOARDING STEP 2 — RECIPIENTS ══
+  var ob2Recipients = [];
+  function ob2RenderList() {
+    var listEl = document.getElementById('ob2-recipient-list');
+    if (!listEl) return;
+    if (ob2Recipients.length === 0) {
+      listEl.innerHTML = '<p style="font-size:13px;color:var(--muted);margin-bottom:14px;">No recipients added yet.</p>';
+      return;
+    }
+    var AV = {'Son':'&#x1F466;','Daughter':'&#x1F467;','Grandson':'&#x1F9D2;','Granddaughter':'&#x1F476;','Spouse / Partner':'&#x1F491;','Sibling':'&#x1F91D;','Niece / Nephew':'&#x1F46B;','Close Friend':'&#x1F49B;','Community Member':'&#x1F33E;','Other':'&#x1F464;'};
+    listEl.innerHTML = ob2Recipients.map(function(r,i){
+      return '<div class="card card-gold" style="margin-bottom:10px;">'
+        +'<div class="flex-center gap-12 justify-between">'
+        +'<div class="flex-center gap-12">'
+        +'<div class="avatar">'+(AV[r.relation]||'&#x1F464;')+'</div>'
+        +'<div><div style="font-size:14px;font-weight:500;">'+r.name+'</div>'
+        +'<div class="text-muted text-small">'+r.relation+(r.age?' &middot; Age '+r.age:'')+'</div></div>'
+        +'</div>'
+        +'<div style="display:flex;align-items:center;gap:8px;">'
+        +'<span class="tag tag-green">Added</span>'
+        +'<button data-idx="'+i+'" onclick="ob2Remove(this.dataset.idx)" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:18px;padding:2px 6px;">&times;</button>'
+        +'</div></div></div>';
+    }).join('');
+  }
+  function ob2AddRecipient() {
+    var name=(document.getElementById('ob2-rname').value||'').trim();
+    var rel=document.getElementById('ob2-rrelation').value;
+    var age=(document.getElementById('ob2-rage').value||'').trim();
+    if(!name){showToast('Please enter a name.');return;}
+    if(!rel){showToast('Please select a relationship.');return;}
+    ob2Recipients.push({name:name,relation:rel,age:age});
+    document.getElementById('ob2-rname').value='';
+    document.getElementById('ob2-rrelation').value='';
+    document.getElementById('ob2-rage').value='';
+    ob2RenderList();
+    showToast(name+' added \u2713');
+  }
+  function ob2Remove(idx){
+    ob2Recipients.splice(parseInt(idx),1);
+    ob2RenderList();
+  }
+  function ob2Continue(){
+    if(ob2Recipients.length===0){showToast('Please add at least one recipient.');return;}
+    goTo('screen-onboard-3');
+  }
+
+</script>
+
+<!-- ═══════════════════════════════════════
+     SCREEN — FAMILY
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-family">
+  <nav class="nav">
+    <button class="nav-back" onclick="setNav('nav-home');goTo('screen-dashboard')">← Back</button>
+    <div class="nav-logo">Family</div>
+    <div></div>
+  </nav>
+  <div class="container">
+    <div class="label mb-8">YOUR CIRCLE</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--brown-dark);margin-bottom:6px;">Family Members</div>
+    <p class="subtitle" style="margin-bottom:24px;">The people who will receive your legacy.</p>
+
+    <div class="card card-gold">
+      <div class="flex-center gap-12 justify-between">
+        <div class="flex-center gap-12">
+          <div class="avatar">👦</div>
+          <div>
+            <div style="font-size:14px;font-weight:500;">Arjun Sharma</div>
+            <div class="text-muted text-small">Son · Age 32</div>
+          </div>
+        </div>
+        <span class="tag tag-green">Added</span>
+      </div>
+    </div>
+
+    <div class="card card-gold">
+      <div class="flex-center gap-12 justify-between">
+        <div class="flex-center gap-12">
+          <div class="avatar">👧</div>
+          <div>
+            <div style="font-size:14px;font-weight:500;">Priya Sharma</div>
+            <div class="text-muted text-small">Granddaughter · Age 14</div>
+          </div>
+        </div>
+        <span class="tag tag-green">Added</span>
+      </div>
+    </div>
+
+    <div class="card card-gold">
+      <div class="flex-center gap-12 justify-between">
+        <div class="flex-center gap-12">
+          <div class="avatar">👨‍🌾</div>
+          <div>
+            <div style="font-size:14px;font-weight:500;">Village Community</div>
+            <div class="text-muted text-small">Collective archive access</div>
+          </div>
+        </div>
+        <span class="tag tag-blue">Archive</span>
+      </div>
+    </div>
+
+    <button class="btn-ghost mt-16" onclick="showToast('Recipient added!')">+ Add family member</button>
+  </div>
+  <nav class="bottom-nav">
+    <div class="bottom-nav-item" id="fam-nav-home" onclick="setNav('nav-home');goTo('screen-dashboard')"><span>🏠</span><span>Home</span></div>
+    <div class="bottom-nav-item" onclick="setNav('nav-record');goTo('screen-record')"><span>🎙️</span><span>Record</span></div>
+    <div class="bottom-nav-item" onclick="setNav('nav-consent');goTo('screen-consent')"><span>🔐</span><span>Consent</span></div>
+    <div class="bottom-nav-item active"><span>👥</span><span>Family</span></div>
+  </nav>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SETTINGS MODAL
+═══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-settings">
+  <div class="modal" style="max-width:420px;width:100%;">
+
+    <div class="modal-header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">&#x2699;&#xFE0F;</span>
+        <div>
+          <div class="label" style="margin-bottom:0;" id="settings-role-label">SETTINGS</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--brown-dark);" id="settings-name-display">Your Account</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeSettings()">&#x2715;</button>
+    </div>
+
+    <!-- Account Info -->
+    <div style="background:#F5EFE4;border-radius:10px;padding:14px 16px;margin-bottom:16px;">
+      <div style="font-size:11px;color:var(--gold);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">Account</div>
+      <div style="font-size:13px;color:var(--brown-dark);margin-bottom:3px;" id="settings-email-display">—</div>
+      <div style="font-size:12px;color:var(--muted);" id="settings-type-display">—</div>
+    </div>
+
+    <!-- Notifications toggle -->
+    <div class="card" style="margin-bottom:12px;padding:16px;">
+      <div style="font-size:11px;color:var(--gold);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Preferences</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Unlock Notifications</h4>
+          <p>Get notified when a message unlocks for you</p>
+        </div>
+        <label class="toggle"><input type="checkbox" id="pref-notifications" checked onchange="savePref('notifications',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Emotion Check-in Reminders</h4>
+          <p>Heiryn prompts you to check in periodically</p>
+        </div>
+        <label class="toggle"><input type="checkbox" id="pref-emotion" checked onchange="savePref('emotion',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row" id="pref-privacy-row">
+        <div class="toggle-info">
+          <h4>Private Vault Mode</h4>
+          <p>Require password confirmation before playing messages</p>
+        </div>
+        <label class="toggle"><input type="checkbox" id="pref-privacy" onchange="savePref('privacy',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row" id="pref-archive-row">
+        <div class="toggle-info">
+          <h4>Archive to Village Collective</h4>
+          <p>Share anonymised wisdom with the community</p>
+        </div>
+        <label class="toggle"><input type="checkbox" id="pref-archive" onchange="savePref('archive',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+    </div>
+
+    <!-- Sign Out -->
+    <button onclick="closeSettings();signOut();" style="width:100%;background:transparent;border:1px solid rgba(156,111,46,0.3);color:var(--muted);padding:12px;border-radius:8px;font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;margin-bottom:10px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='rgba(156,111,46,0.3)';this.style.color='var(--muted)'">
+      &#x1F6AA; Sign Out
+    </button>
+
+    <!-- Delete Account -->
+    <button onclick="confirmDeleteAccount()" style="width:100%;background:rgba(160,57,31,0.06);border:1px solid rgba(160,57,31,0.3);color:var(--danger);padding:12px;border-radius:8px;font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(160,57,31,0.12)'" onmouseout="this.style.background='rgba(160,57,31,0.06)'">
+      &#x1F5D1; Delete Account &amp; All Data
+    </button>
+    <div style="font-size:10px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.5;">This will permanently erase your account, all messages,<br>recordings and data from this device.</div>
+
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" id="modal-delete-confirm">
+  <div class="modal" style="max-width:360px;width:100%;text-align:center;">
+    <div style="font-size:40px;margin-bottom:12px;">&#x26A0;&#xFE0F;</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--brown-dark);margin-bottom:8px;">Are you sure?</div>
+    <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:24px;">This will permanently delete your account and <strong>all data</strong> — messages, recordings, and settings — from this device. This cannot be undone.</p>
+    <div style="display:flex;gap:10px;">
+      <button onclick="document.getElementById('modal-delete-confirm').classList.remove('show')" style="flex:1;background:transparent;border:1px solid rgba(156,111,46,0.3);color:var(--muted);padding:12px;border-radius:8px;font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;">Cancel</button>
+      <button onclick="deleteAccountConfirmed()" style="flex:1;background:var(--danger);border:none;color:#FAF7F2;padding:12px;border-radius:8px;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">Yes, Delete Everything</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
